@@ -1,0 +1,213 @@
+NAD0 Select myth
+NAD1 Locations
+NAD2 Location
+NAD3 all
+NAD4 time
+NAD5 Features
+NAD6 Scenario
+NAD7 Resistences
+NAD8 Misc
+NAD9 Radius
+
+NAD10 Starting hour
+NAD11 Ending hour
+NAD12 Spawn time
+NAD13 Time
+NAD16 Respawn time
+
+NAD25 Quantity
+NAD17 Interaction
+NAD18 Health
+NAD19 Damage
+NAD20 Attack accuracy
+NAD21 Attack rate
+NAD22 Animation
+NAD23 Fighting style
+
+NAD26 Can be beaheaded
+NAD27 Does damage animation
+NAD28 Bulletproof
+NAD29 Fireproof
+NAD30 Explosionproof
+NAD31 Meleeproof
+
+NAD32 no
+NAD33 yes
+
+NAD34 Walk mode
+NAD35 Atacks peds
+NAD36 Atacks animals
+NAD37 Recruitable
+
+NAD38 Spawn tipe
+NAD39 Created in sidewalks
+NAD40 Peds runaway
+NAD41 Car turn off
+NAD42 Found by car
+
+NAD43 Interaction distance
+NAD44 Weapon
+NAD45 Blood stain
+NAD46 Money
+
+NAD47 Area+
+NAD48 Area-
+
+NAD49 Return
+
+NAD50 Can be found from this time
+NAD51 Can be found until this time
+NAD52 Minutes (ingame) to delay the myth spawn
+NAD53 Hours (ingame) to find it again
+
+//NAD 54 Can be found in any location
+//NAD 55 Can be found in any location~n~(it can be created in many places at the same time)
+//NAD 56 Can be found in a random location available
+
+NAD54 It is created in the center of the chosen area
+NAD55 It is created around the player
+NAD56 It can be created in any spot of the chosen area
+NAD57 If it will be created only in sidewalks
+NAD58 If peds will run away
+NAD59 If enabled, your vehicle will turn off
+NAD60 If you will be able to find it while using a vehicle
+
+NAD61 If a headshot kill it instantly
+NAD62 If it reacts to damage
+NAD63 If it takes damage from guns
+NAD64 If it takes fire damage
+NAD65 If it takes explosion damage
+NAD66 If it takes melee damage
+
+NAD67 How many of them will be created in the area
+NAD68 It attacks
+NAD69 It runs away
+NAD70 Distance for him to attack or flee
+NAD71 How many health points does it have~n~(normal pedestrians have 100)
+NAD72 Extra damage dealt
+NAD73 How much he hits attacks/shots
+NAD74 The frequency of attacks, the higher, the fewer pauses
+
+NAD75 Common man
+NAD76 Old man
+NAD77 Gang 1
+NAD78 Gang 2
+NAD79 Fat old man
+NAD80 Fat man
+NAD81 Athlete (male)
+NAD82 Drunk
+NAD83 Blind (walks with hand pointed forward)
+NAD84 Police
+NAD85 Ordinary woman
+NAD86 Carrying bags
+NAD87 Rich woman
+NAD88 Sensual woman
+NAD89 Prostitute
+NAD90 Old woman
+NAD91 Fat woman
+NAD92 Athlete (female)
+NAD93 Fat old woman
+NAD94 Custom animation, defined in the "ATTRIBUTES" section~in the "custom animgroup" line of the corresponding .ini
+
+NAD95 Standard
+NAD96 Boxing
+NAD97 Kung Fu
+NAD98 Kickboxing
+
+NAD99 Stands still at selected location
+NAD100 Walks in any direction
+NAD101 Walks on the sidewalks
+NAD102 Walks slowly towards you
+NAD103 Runs quickly to you
+
+NAD104 If you attack other pedestrians besides you
+NAD105 If animals are attacked
+NAD106 If it is possible to recruit him to follow you
+
+NAD107 No weapon
+NAD108 Brass Punch
+NAD109 Golf Club
+NAD110 Club
+NAD111 Knife
+NAD112 baseball bat
+NAD113 Shovel
+NAD114 Pool cue
+NAD115 Katana
+NAD116 Chainsaw
+NAD117 Purple Dildo
+NAD118 Dildo
+NAD119 Vibrator
+NAD120 Silver vibrated
+NAD121 Flowers
+NAD122 Cane
+NAD123 Grenade
+NAD124 Smoke Grenade
+NAD125 Molotov
+NAD126 9mm
+NAD127 9mm with silencer
+NAD128 Desert Eagle
+NAD129 Shotgun
+NAD130 Sawed-off Shotgun
+NAD131 Combat Shotgun
+NAD132 Mini Uzi
+NAD133 MP5
+NAD134 AK-47
+NAD135 M4
+NAD136 Tec-9
+NAD137 Caeine Rifle
+NAD138 Sniper
+NAD139 Bazooka
+NAD140 Flamethrower
+NAD141 Minigun
+NAD142 Spray can
+NAD143 Fire extinguisher
+NAD144 Any melee weapon
+NAD145 Any melee weapon (no brass knuckles, dildos and flower)
+NAD146 Any violent melee weapon (knife, chainsaw, or baseball bat)
+NAD147 Any pistol
+NAD148 Any submachine gun
+NAD149 Any machine gun
+NAD150 Any Shotgun
+NAD151 Any sniper rifle
+NAD152 Any heavy weapon
+NAD153 Any dildo
+NAD154 Any gang weapon
+NAD155 Any weapon of the site
+NAD156 Any police weapon
+NAD157 Any urban weapon
+
+NAD158 If the myth leaves blood wherever it goes
+NAD159 How much money does the myth carry
+
+NAD160 Locations Mode
+NAD161 Demographic density
+
+NAD162 Can appear in any location
+NAD163 Can appear in any location~n~(can be created in more than one location at the same time)
+NAD164 Appears in a random location among those available
+
+NAD165 Percentage of pedestrians and vehicles on the streets
+
+NAD166 Weather
+NAD167 Game mood will change to selected
+
+NAD168 Error loading model
+
+NAD169 Go to the desired location and hold ~k~~CONVERSATION_YES~ to confirm the location.
+NAD170 Hold ~k~~CONVERSATION_NO~ to cancel.
+
+NAD171 Improved Combat
+NAD172 Jumpscare
+NAD173 Deadly Stab
+NAD174 Super hit
+NAD175 Teleportation
+
+NAD176 If enabled the myth significantly improves your skill in fights
+NAD177 The camera approaches the myth and the audio is played~n~Myths\MythX\jumpsca.mp3
+NAD178 If you reach half health and take damage from myth, you will not take a fatal blow
+NAD179 You will fall when taking damage from the myth
+NAD180 If you try to run away, the myth will teleport closer~n~(without being noticeable)
+
+NAD181 Skills
+
+NAD182 Restarting mod...
