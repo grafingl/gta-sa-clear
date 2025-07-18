@@ -1,7 +1,7 @@
 {
   "meta": {
-    "last_update": 1752166191082,
-    "version": "0.995",
+    "last_update": 1752276909381,
+    "version": "0.997",
     "url": "https://library.sannybuilder.com/#/sa"
   },
   "extensions": [
@@ -46821,7 +46821,7 @@
               "type": "string"
             },
             {
-              "name": "",
+              "name": "args",
               "type": "arguments"
             }
           ],
@@ -46846,7 +46846,7 @@
               "type": "string"
             },
             {
-              "name": "",
+              "name": "args",
               "type": "arguments"
             }
           ],
@@ -47184,7 +47184,7 @@
               "type": "int"
             },
             {
-              "name": "numParams",
+              "name": "numArgs",
               "type": "int"
             },
             {
@@ -47192,7 +47192,7 @@
               "type": "int"
             },
             {
-              "name": "funcParams",
+              "name": "args",
               "type": "arguments"
             }
           ],
@@ -47217,7 +47217,7 @@
               "type": "int"
             },
             {
-              "name": "numParams",
+              "name": "numArgs",
               "type": "int"
             },
             {
@@ -47225,7 +47225,7 @@
               "type": "int"
             },
             {
-              "name": "funcParams",
+              "name": "args",
               "type": "arguments"
             }
           ],
@@ -47246,7 +47246,7 @@
               "type": "int"
             },
             {
-              "name": "numParams",
+              "name": "numArgs",
               "type": "int"
             },
             {
@@ -47254,7 +47254,7 @@
               "type": "int"
             },
             {
-              "name": "funcParams",
+              "name": "args",
               "type": "arguments"
             }
           ],
@@ -47286,7 +47286,7 @@
               "type": "int"
             },
             {
-              "name": "numParams",
+              "name": "numArgs",
               "type": "int"
             },
             {
@@ -47294,7 +47294,7 @@
               "type": "int"
             },
             {
-              "name": "funcParams",
+              "name": "args",
               "type": "arguments"
             }
           ],
@@ -47394,11 +47394,11 @@
               "type": "label"
             },
             {
-              "name": "numParams",
+              "name": "numArgs",
               "type": "int"
             },
             {
-              "name": "params",
+              "name": "args",
               "type": "arguments"
             }
           ],
@@ -66753,11 +66753,11 @@
               "type": "string"
             },
             {
-              "name": "numParam",
+              "name": "numArgs",
               "type": "int"
             },
             {
-              "name": "params",
+              "name": "args",
               "type": "arguments"
             }
           ],
