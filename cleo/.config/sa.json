@@ -1,7 +1,7 @@
 {
   "meta": {
-    "last_update": 1752276909381,
-    "version": "0.997",
+    "last_update": 1755183949095,
+    "version": "1.8",
     "url": "https://library.sannybuilder.com/#/sa"
   },
   "extensions": [
@@ -13533,27 +13533,27 @@
               "type": "Object"
             },
             {
-              "name": "fromX",
+              "name": "posX",
               "type": "float"
             },
             {
-              "name": "fromY",
+              "name": "posY",
               "type": "float"
             },
             {
-              "name": "fromZ",
+              "name": "posZ",
               "type": "float"
             },
             {
-              "name": "xSpeed",
+              "name": "speedX",
               "type": "float"
             },
             {
-              "name": "ySpeed",
+              "name": "speedY",
               "type": "float"
             },
             {
-              "name": "zSpeed",
+              "name": "speedZ",
               "type": "float"
             },
             {
@@ -13569,7 +13569,7 @@
           "member": "Slide",
           "name": "SLIDE_OBJECT",
           "num_params": 8,
-          "short_desc": "Returns true if the object has finished moving"
+          "short_desc": "Animates object movement toward specified coordinates. Returns true if the object has finished moving"
         },
         {
           "input": [
@@ -14413,7 +14413,7 @@
         {
           "input": [
             {
-              "name": "memorySlot",
+              "name": "spriteSlot",
               "type": "int"
             },
             {
@@ -14507,11 +14507,11 @@
         {
           "input": [
             {
-              "name": "memorySlot",
+              "name": "spriteSlot",
               "type": "int"
             },
             {
-              "name": "spriteName",
+              "name": "textureName",
               "type": "string"
             }
           ],
@@ -22934,12 +22934,12 @@
         {
           "input": [
             {
-              "name": "str1",
+              "name": "",
               "type": "string",
               "source": "var_global"
             },
             {
-              "name": "str2",
+              "name": "",
               "type": "string"
             }
           ],
@@ -22955,12 +22955,12 @@
         {
           "input": [
             {
-              "name": "str1",
+              "name": "",
               "type": "string",
               "source": "var_local"
             },
             {
-              "name": "str2",
+              "name": "",
               "type": "string"
             }
           ],
@@ -30427,12 +30427,12 @@
               "type": "float"
             },
             {
-              "name": "boneId",
-              "type": "int"
+              "name": "bone",
+              "type": "PedBoneId"
             },
             {
-              "name": "_p7",
-              "type": "int"
+              "name": "orientation",
+              "type": "HoldOrientation"
             },
             {
               "name": "animationName",
@@ -31719,7 +31719,7 @@
         {
           "input": [
             {
-              "name": "memorySlot",
+              "name": "spriteSlot",
               "type": "int"
             },
             {
@@ -40074,12 +40074,12 @@
         {
           "input": [
             {
-              "name": "_p1",
+              "name": "",
               "type": "string",
               "source": "var_global"
             },
             {
-              "name": "_p2",
+              "name": "",
               "type": "string"
             }
           ],
@@ -40095,12 +40095,12 @@
         {
           "input": [
             {
-              "name": "_p1",
+              "name": "",
               "type": "string",
               "source": "var_local"
             },
             {
-              "name": "_p2",
+              "name": "",
               "type": "string"
             }
           ],
@@ -40246,8 +40246,8 @@
         {
           "input": [
             {
-              "name": "hudObject",
-              "type": "HudObject"
+              "name": "color",
+              "type": "HudColors"
             }
           ],
           "output": [
@@ -42662,7 +42662,7 @@
           "id": "097D",
           "name": "GET_NUM_CAR_COLOURS",
           "num_params": 2,
-          "short_desc": "",
+          "short_desc": "Returns number of color variations defined for the model of this car in carcols.dat",
           "class": "Car",
           "member": "GetNumColors"
         },
@@ -43305,11 +43305,11 @@
             },
             {
               "name": "boneId",
-              "type": "int"
+              "type": "PedBoneId"
             },
             {
-              "name": "_p7",
-              "type": "int"
+              "name": "orientation",
+              "type": "HoldOrientation"
             },
             {
               "name": "animationName",
@@ -50443,7 +50443,7 @@
           "num_params": 15,
           "class": "Txd",
           "member": "DrawTexturePlus",
-          "short_desc": "Draws RwTexture or sprite ID once on specific drawing event and optional mask, no limits",
+          "short_desc": "Draws RwTexture or spriteSlot once on specific drawing event and optional mask, no limits",
           "attrs": {
             "is_static": true
           }
@@ -51193,7 +51193,7 @@
         {
           "input": [
             {
-              "name": "sprite",
+              "name": "spriteSlot",
               "type": "int"
             }
           ],
@@ -60222,7 +60222,7 @@
           "id": "0B25",
           "name": "SAMP_GET_PLAYER_HEALTH",
           "num_params": 2,
-          "short_desc": "Gets the amount of health the specified player has",
+          "short_desc": "Returns the amount of health the specified player has",
           "class": "SampPlayer",
           "member": "GetHealth"
         },
@@ -60243,7 +60243,7 @@
           "id": "0B26",
           "name": "SAMP_GET_PLAYER_ARMOR",
           "num_params": 2,
-          "short_desc": "Gets the amount of armor the specified player has",
+          "short_desc": "Returns the amount of armor the specified player has",
           "class": "SampPlayer",
           "member": "GetArmor"
         },
@@ -61641,7 +61641,7 @@
             "is_condition": true,
             "is_static": true
           },
-          "short_desc": "Removes all callbacks hooked from a client sided chat command created by SAMP_REGISTER_CLIENTSIDE_COMMAND, suppressing all its callback's operation ",
+          "short_desc": "Removes all callbacks hooked from a chatCommand created by SAMP_REGISTER_CLIENTSIDE_COMMAND, suppressing all its callback's operation ",
           "class": "SampLocalChatCmd",
           "member": "Unhook"
         },
@@ -61929,8 +61929,8 @@
               "type": "int"
             },
             {
-              "name": "flags",
-              "type": "int"
+              "name": "styleFlags",
+              "type": "SampTextStyle"
             }
           ],
           "output": [
@@ -63897,7 +63897,7 @@
         {
           "input": [
             {
-              "name": "stOnFootData",
+              "name": "payloadPointer",
               "type": "int"
             }
           ],
@@ -63909,12 +63909,12 @@
           "attrs": {
             "is_static": true
           },
-          "short_desc": "Sends SampPacket.OnFootSync to the server"
+          "short_desc": "Sends SampPacket.OnFootSync containing stOnFootData payload to the server"
         },
         {
           "input": [
             {
-              "name": "stInCarData",
+              "name": "payloadPointer",
               "type": "int"
             }
           ],
@@ -63926,12 +63926,12 @@
           "attrs": {
             "is_static": true
           },
-          "short_desc": "Sends SampPacket.DrivingSync to the server"
+          "short_desc": "Sends SampPacket.DrivingSync containing stInCarData payload to the server"
         },
         {
           "input": [
             {
-              "name": "stPassengerData",
+              "name": "payloadPointer",
               "type": "int"
             }
           ],
@@ -63943,12 +63943,12 @@
           "attrs": {
             "is_static": true
           },
-          "short_desc": "Sends SampPacket.PassengerSync to the server"
+          "short_desc": "Sends SampPacket.PassengerSync containing stPassengerData payload to the server"
         },
         {
           "input": [
             {
-              "name": "stAimData",
+              "name": "payloadPointer",
               "type": "int"
             }
           ],
@@ -63960,12 +63960,12 @@
           "attrs": {
             "is_static": true
           },
-          "short_desc": "Sends SampPacket.AimSync to the server"
+          "short_desc": "Sends SampPacket.AimSync containing stAimData payload to the server "
         },
         {
           "input": [
             {
-              "name": "stBulletData",
+              "name": "payloadPointer",
               "type": "int"
             }
           ],
@@ -63977,12 +63977,12 @@
           "attrs": {
             "is_static": true
           },
-          "short_desc": "Sends SampPacket.BulletSync to the server"
+          "short_desc": "Sends SampPacket.BulletSync containing stBulletData payload to the server"
         },
         {
           "input": [
             {
-              "name": "stTrailerData",
+              "name": "payloadPointer",
               "type": "int"
             }
           ],
@@ -63994,12 +63994,12 @@
           "attrs": {
             "is_static": true
           },
-          "short_desc": "Sends SampPacket.TrailerSync to the server"
+          "short_desc": "Sends SampPacket.TrailerSync containing stTrailerData payload to the server"
         },
         {
           "input": [
             {
-              "name": "stUnoccupiedData",
+              "name": "payloadPointer",
               "type": "int"
             }
           ],
@@ -64011,12 +64011,12 @@
           "attrs": {
             "is_static": true
           },
-          "short_desc": "Sends SampPacket.UnoccupiedCarSync to the server"
+          "short_desc": "Sends SampPacket.UnoccupiedCarSync containing stUnoccupiedData payload to the server"
         },
         {
           "input": [
             {
-              "name": "stSpectatorData",
+              "name": "payloadPointer",
               "type": "int"
             }
           ],
@@ -64028,7 +64028,7 @@
           "attrs": {
             "is_static": true
           },
-          "short_desc": "Sends SampPacket.SpectatorSync to the server"
+          "short_desc": "Sends SampPacket.SpectatorSync containing stSpectatorData  payload to the server"
         },
         {
           "input": [
