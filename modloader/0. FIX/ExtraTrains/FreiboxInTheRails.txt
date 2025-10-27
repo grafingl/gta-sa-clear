@@ -1,0 +1,2 @@
+569, 	freibox,	freibox,	train, 		FREIFLAT,	FRBOX,		null,	ignore,	 	10,	0,	0,		-1, 1.06, 1.06,		-1
+590, 	freiflat,	freiflat,	train, 		FREIFLAT,	FRFLAT,		null,	ignore,	 	10,	0,	0,		-1, 1.06, 1.06,		-1
