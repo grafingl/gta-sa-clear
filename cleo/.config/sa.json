@@ -1,7 +1,7 @@
 {
   "meta": {
-    "last_update": 1760906881866,
-    "version": "1.12",
+    "last_update": 1764468698122,
+    "version": "1.19",
     "url": "https://library.sannybuilder.com/#/sa"
   },
   "extensions": [
@@ -9551,7 +9551,7 @@
           "member": "ChangeColor",
           "name": "CHANGE_CAR_COLOUR",
           "num_params": 3,
-          "short_desc": "Sets the car's primary and secondary colors. See also 0A11"
+          "short_desc": "Sets the car's primary and secondary colors"
         },
         {
           "input": [
@@ -16098,7 +16098,7 @@
           "member": "GetColors",
           "name": "GET_CAR_COLOURS",
           "num_params": 3,
-          "short_desc": "Gets the car's primary and secondary colors. See also 0A12"
+          "short_desc": "Gets the car's primary and secondary colors"
         },
         {
           "input": [
@@ -19032,8 +19032,8 @@
               "type": "Char"
             },
             {
-              "name": "weaponSlotId",
-              "type": "WeaponSlot"
+              "name": "slot",
+              "type": "int"
             }
           ],
           "output": [
@@ -32734,7 +32734,7 @@
           "output": [
             {
               "name": "slot",
-              "type": "int",
+              "type": "WeaponSlot",
               "source": "var_any"
             }
           ],
@@ -34165,7 +34165,7 @@
               "type": "script_id"
             },
             {
-              "name": "_p2",
+              "name": "scriptName",
               "type": "string"
             }
           ],
@@ -37608,7 +37608,7 @@
               "type": "script_id"
             },
             {
-              "name": "_p2",
+              "name": "scriptName",
               "type": "string"
             }
           ],
@@ -41005,7 +41005,7 @@
               "type": "float"
             },
             {
-              "name": "type",
+              "name": "groupingId",
               "type": "int"
             }
           ],
@@ -45526,7 +45526,7 @@
           "id": "0A12",
           "name": "GET_EXTRA_CAR_COLOURS",
           "num_params": 3,
-          "short_desc": "Returns the car's tertiary and quaternary colors (0A11)",
+          "short_desc": "Returns the car's tertiary and quaternary colors. See also 03F3",
           "class": "Car",
           "member": "GetExtraColors"
         },
@@ -51527,11 +51527,15 @@
             {
               "name": "self",
               "type": "Char"
+            },
+            {
+              "name": "includeAnims",
+              "type": "bool"
             }
           ],
           "id": "0E4B",
           "name": "IS_CHAR_PLAYING_ANY_SCRIPT_ANIMATION",
-          "num_params": 1,
+          "num_params": 2,
           "class": "Char",
           "member": "IsPlayingAnyScriptAnimation",
           "attrs": {
@@ -51544,11 +51548,15 @@
             {
               "name": "self",
               "type": "Char"
+            },
+            {
+              "name": "includeAnims",
+              "type": "bool"
             }
           ],
           "id": "0E4C",
           "name": "IS_CHAR_DOING_ANY_IMPORTANT_TASK",
-          "num_params": 1,
+          "num_params": 2,
           "class": "Char",
           "member": "IsDoingAnyImportantTask",
           "attrs": {
