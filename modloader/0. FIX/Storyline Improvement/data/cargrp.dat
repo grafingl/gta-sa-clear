@@ -6,7 +6,7 @@ S##
 #
 	  
 
-linerun, packer, taxi, cabbie, mule, bus, coach, rumpo, pony, flatbed, yankee, topfun, cement, towtruck, burrito, boxburg, benson, utility, pizzaboy, trash, dft30	# POPCYCLE_GROUP_WORKERS
+linerun, packer, taxi, cabbie, mule, bus, coach, rumpo, pony, flatbed, yankee, topfun, cement, towtruck, burrito, boxville, benson, utility, pizzaboy, trash, dft30	# POPCYCLE_GROUP_WORKERS
 bravura, taxi, cabbie, premier, securica, elegant, fortune, feltzer, merit, elegant, huntley, zr350, sentinel 	# POPCYCLE_GROUP_BUSINESS
 buffalo, stretch, taxi, cabbie, coach, flash, sultan, club 	# POPCYCLE_GROUP_CLUBBERS
 sanchez, walton, rancher, journey, tractor, wayfarer, freeway, linerun, petro, towtruck 	# POPCYCLE_GROUP_FARMERS
@@ -21,7 +21,7 @@ caddy	# POPCYCLE_GROUP_GOLFERS
 stretch, broadway, bobcat 	# POPCYCLE_GROUP_SERVANTS
 bravura, washing, previon, admiral, solair, pcj600, blistac, nebula, cadrona, vincent, sunrise, yosemite, uranus, stratum, bf400, emperor, wayfarer	# POPCYCLE_GROUP_AIRCREW
 turismo, hustler, bullet, buffalo, stretch, taxi, cabbie, coach, flash, sultan, club	# POPCYCLE_GROUP_ENTERTAINERS
-mule, rumpo, pony, flatbed, yankee, topfun, cement, burrito, boxburg, benson, utility, dft30, forklift  	# POPCYCLE_GROUP_OUT_OF_TOWN_FACTORY
+mule, rumpo, pony, flatbed, yankee, topfun, cement, burrito, boxville, benson, utility, dft30, forklift  	# POPCYCLE_GROUP_OUT_OF_TOWN_FACTORY
 sanchez, walton, rancher, wayfarer, freeway, petro, rdtrain   	# POPCYCLE_GROUP_DESERT_FOLK
 baggage, tug, forklift	# POPCYCLE_GROUP_AIRCREW_RUNWAY
 majestic, tahoma, voodoo 		 									 # Gang 1 (BALLAS - BLACK)
