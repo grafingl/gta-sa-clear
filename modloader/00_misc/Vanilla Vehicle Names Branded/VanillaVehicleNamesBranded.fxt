@@ -1,0 +1,385 @@
+
+########## All VANILLA Vehicles Branded (& Fun Changes) List ##########
+
+
+### Land Vehicles ###
+
+# (Super) Sports Cars #
+
+BULLET ~g~~h~Vapid ~G~Bullet
+CHEETAH ~g~~h~Grotti ~G~Cheetah
+INFERNU ~g~~h~Pegassi ~G~Infernus
+SUPERGT ~g~~h~Dewbauchee ~G~Super GT
+TURISMO ~g~~h~Grotti ~G~Turismo
+ZR350 ~g~~h~Annis ~G~ZR-350
+
+
+# Sports Cars #
+
+ALPHA ~g~~h~Albany ~G~Alpha
+BANSHEE ~g~~h~Bravado ~G~Banshee
+COMET ~g~~h~Pfister ~G~Comet
+EUROS ~g~~h~Annis ~G~Euros
+FELTZER ~g~~h~Benefactor ~G~Feltzer
+WINDSOR ~g~~h~Enus ~G~Windsor
+
+
+# Wheel Arch Angels (Tuners) #
+
+ELEGY ~g~~h~Annis ~G~Elegy
+FLASH ~g~~h~Annis ~G~Flash
+JESTER ~g~~h~Dinka ~G~Jester
+STRATUM ~g~~h~Zirconium ~G~Stratum
+SULTAN ~g~~h~Karin ~G~Sultan
+URANUS ~g~~h~Vapid ~G~Uranus
+
+
+# Loco Low Co. Lowriders (Tuners) #
+
+BLADE ~g~~h~Vapid ~G~Blade
+BROADWY ~g~~h~Classique ~G~Broadway
+REMING ~g~~h~Dundreary ~G~Remington
+SAVANNA ~g~~h~Declasse ~G~Savanna
+SLAMVAN ~g~~h~Vapid ~G~Slamvan
+TAHOMA ~g~~h~Imponte ~G~Tahoma
+TORNADO ~g~~h~Declasse ~G~Tornado
+VOODOO ~g~~h~Declasse ~G~Voodoo
+
+
+# Muscle Cars #
+
+BUFFALO ~g~~h~Bravado ~G~Buffalo
+CLOVER ~g~~h~Classique ~G~Clover
+HERMES ~g~~h~Albany ~G~Hermes
+HOTKNIF ~g~~h~Vapid ~G~Hotknife
+HUSTLER ~g~~h~Vapid ~G~Hustler
+PHOENIX ~g~~h~Imponte ~G~Phoenix
+SABRE ~g~~h~Declasse ~G~Sabre
+STALION ~g~~h~Declasse ~G~Stallion
+#STALION ~g~~h~Classique ~G~Stallion
+TAMPA ~g~~h~Declasse ~G~Tampa
+
+
+# Coupes & Compacts #
+
+BLISTAC ~g~~h~Dinka ~G~Blista Compact
+BRAVURA ~g~~h~Vapid ~G~Bravura
+BUCCANE ~g~~h~Albany ~G~Buccaneer
+CADRONA ~g~~h~Declasse ~G~Cadrona
+CLUB ~g~~h~BF ~G~Club
+ESPERAN ~g~~h~Albany ~G~Esperanto
+FORTUNE ~g~~h~Vapid ~G~Fortune
+MAJESTC ~g~~h~Willard ~G~Majestic
+MANANA ~g~~h~Albany ~G~Manana
+PREVION ~g~~h~Karin ~G~Previon
+VIRGO ~g~~h~Albany ~G~Virgo
+
+
+# Sedans & Station Wagons #
+
+ADMIRAL ~g~~h~Benefactor ~G~Admiral
+ELEGANT ~g~~h~Willard ~G~Elegant
+EMPEROR ~g~~h~Albany ~G~Emperor
+GLENDAL ~g~~h~Benefactor ~G~Glendale
+GLENSHI ~g~~h~Benefactor ~G~Glendale ~R~Beater
+GREENWO ~g~~h~Bravado ~G~Greenwood
+INTRUDR ~g~~h~Karin ~G~Intruder
+MERIT ~g~~h~Declasse ~G~Merit
+NEBULA ~g~~h~Dundreary ~G~Nebula
+OCEANIC ~g~~h~Bravado ~G~Oceanic
+PEREN ~g~~h~Dinka ~G~Perennial
+PREMIER ~g~~h~Declasse ~G~Premier
+PRIMO ~g~~h~Albany ~G~Primo
+REGINA ~g~~h~Dundreary ~G~Regina
+ROMERO ~g~~h~Chariot ~G~Romero Hearse
+#ROMERO ~g~~h~Albany ~G~Romero Hearse
+SENTINL ~g~~h~Ubermacht ~G~Sentinel
+SOLAIR ~g~~h~Willard ~G~Solair
+STAFFRD ~g~~h~Enus ~G~Stafford
+STRETCH ~g~~h~Albany ~G~Stretch
+#STRETCH ~g~~h~Dundreary ~G~Stretch
+SUNRISE ~g~~h~Declasse ~G~Sunrise
+VINCENT ~g~~h~Maibatsu ~G~Vincent
+WASHING ~g~~h~Albany ~G~Washington
+WILLARD ~g~~h~Willard ~G~Willard
+
+
+# SUVs & Pickup Trucks #
+
+BOBCAT ~g~~h~Vapid ~G~Bobcat
+HUNTLEY ~g~~h~Gallivanter ~G~Huntley
+#HUNTLEY ~g~~h~Enus ~G~Huntley
+#HUNTLEY ~g~~h~Vapid ~G~Huntley
+LANDSTK ~g~~h~Dundreary ~G~Landstalker
+MESAA ~g~~h~Canis ~G~Mesa
+PICADOR ~g~~h~Cheval ~G~Picador
+RANCHER ~g~~h~Declasse ~G~Rancher
+RANCLUR ~g~~h~Declasse ~G~Rancher
+#RANCLUR ~g~~h~Declasse ~G~Rancher ~r~Lure
+SADLER ~g~~h~Vapid ~G~Sadler
+SADLSHI ~g~~h~Vapid ~G~Sadler ~R~Beater
+WALTON ~g~~h~Declasse ~G~Walton
+YOSEMIT ~g~~h~Declasse ~G~Yosemite
+
+
+# Vans #
+
+BURRITO ~g~~h~Declasse ~G~Burrito
+MOONBM ~g~~h~Declasse ~G~Moonbean
+PONY ~g~~h~Brute ~G~Pony
+RUMPO ~g~~h~Bravado ~G~Rumpo
+
+
+# Off-Road #
+
+BANDITO ~g~~h~BF ~G~Bandito
+BFINJC ~g~~h~BF ~G~Injection
+
+
+# Motorcycles & Bicycles #
+
+BF400 ~g~~h~Nagasaki ~G~BF-400
+BIKE ~G~Bicycle
+BMX ~G~BMX
+FAGGIO ~g~~h~Pegassi ~G~Faggio
+FCR900 ~g~~h~Pegassi ~G~FCR-900
+FREEWAY ~g~~h~Western MC ~G~Freeway
+MTBIKE ~G~Mountain Bike
+NRG500 ~g~~h~Dinka ~G~NRG-500
+PCJ600 ~g~~h~Shitzu ~G~PCJ-600
+SANCHEZ ~g~~h~Maibatsu ~G~Sanchez
+WAYFARE ~g~~h~Western MC ~G~Wayfarer
+
+
+# Commercial & Industrial #
+
+BENSON ~g~~h~Vapid ~G~Benson
+BOXBURG ~g~~h~Brute ~G~Boxburg
+BOXVILL ~g~~h~Brute ~G~Boxville
+CEMENT ~g~~h~DUDE ~G~Cement Truck
+COMBINE ~r~Betsy ~G~Combine Harvester
+#COMBINE ~r~~h~Betsy ~G~Combine Harvester
+#COMBINE ~r~Betsy
+#COMBINE ~r~~h~Betsy
+DFT30 ~g~~h~Maibatsu ~G~DFT-30
+DOZER ~g~~h~DUDE ~G~Dozer
+DUMPER ~g~~h~DUDE ~G~Dumper
+FLATBED ~g~~h~MTL ~G~Flatbed
+FORKLFT ~g~~h~HVY ~G~Forklift
+LINERUN ~g~~h~JoBuilt ~G~Linerunner
+#LINERUN ~g~~h~MTL ~G~Linerunner
+MULE ~g~~h~Maibatsu ~G~Mule
+PACKER ~g~~h~MTL ~G~Packer
+ROADTRAIN ~g~~h~MTL ~G~Roadtrain
+#ROADTRAIN ~g~~h~JoBuilt ~G~Roadtrain
+PETROL ~g~~h~MTL ~G~Tanker
+TRACTOR ~g~~h~Stanley ~G~Tractor
+YANKEE ~g~~h~Vapid ~G~Yankee
+
+
+# Public Service #
+
+BAGGAGE ~G~Baggage Handler
+BUS ~g~~h~Brute ~G~Bus
+#BUS ~g~~h~Brute ~b~~h~~h~CBG ~G~Bus
+#BUS ~g~~h~Canny ~G~Bus
+#BUS ~g~~h~Canny ~G~Bus ~g~~h~Group
+#BUS ~g~~h~Canny Bus Group ~G~Bus
+#BUS ~g~~h~Canny Bus Group Brute ~G~Bus
+CABBIE ~y~~h~Taxicab
+#CABBIE ~y~~h~Cabbie
+COACH ~g~~h~Big O Tours ~G~Coach
+HOTDOG ~r~Alex's Dog'z Food Van
+#HOTDOG ~r~Alex's Dog'z
+NEWSVAN ~b~~h~~h~SAN News Van
+#NEWSVAN ~b~~h~~h~SAN News ~G~Van
+PIZZABO ~y~The Well Stacked ~r~PizzaBoy
+#PIZZABO ~y~The Well Stacked ~y~~h~PizzaBoy
+#PIZZABO ~y~~h~The Well Stacked ~r~PizzaBoy
+#PIZZABO ~y~~h~The Well Stacked ~r~~h~PizzaBoy
+#PIZZABO ~y~~h~The Well Stacked PizzaBoy
+#PIZZABO ~y~TWSP ~G~Delivery Scooter
+#PIZZABO ~y~The Well Stacked's ~G~Scooter
+#PIZZABO ~y~The Well Stacked Pizza's ~G~Scooter
+#PIZZABO ~y~TWSP PizzaBoy ~G~Delivery Scooter
+SECURI ~g~~h~Brute ~b~~h~Security ~G~Van
+SWEEPER ~w~Sanitary Andreas ~G~Sweeper
+#SWEEPER ~w~Sanitary Andreas Sweeper
+TAXI ~y~~h~Taxi
+TOWTRUK ~g~~h~Vapid ~G~Tow Truck
+TRASHM ~w~Sanitary Andreas ~G~Trashmaster
+#TRASHM ~w~Sanitary Andreas Trashmaster
+#TRASHM ~g~~h~JoBuilt Trashmaster
+#TRASHM ~g~~h~JoBuilt ~G~Trashmaster
+#TRASHM ~g~~h~JoBuilt ~w~Sanitary Andreas Trashmaster
+#TRASHM ~g~~h~JoBuilt ~w~Sanitary Andreas ~G~Trashmaster
+TUG ~g~~h~HVY ~G~Tug
+#TUG ~g~~h~HVY ~G~Airtug
+#TUG ~g~~h~HVY ~G~Airport Tug
+UTILITY ~w~Sanitary Andreas ~G~Utility Van
+#UTILITY ~w~Sanitary Andreas Utility Van
+WHOOPEE ~r~Mr Whoopee ~w~Ice Cream ~R~Van
+#WHOOPEE ~r~Mr. Whoopee's ~w~Ice Cream ~R~Van
+#WHOOPEE ~r~Mr. Whoopee's ~w~Ice ~y~~h~Cream ~R~Van
+#WHOOPEE ~r~Mr. Whoopee's ~w~Ice Cream ~G~Van
+#WHOOPEE ~r~Mr. Whoopee's ~w~Ice ~y~~h~Cream ~G~Van
+
+
+# Trains #
+
+CSTREAK ~g~Brown Streak ~g~~h~Railroad
+#CSTREAK ~w~309 ~g~Brown Streak ~g~~h~Railroad
+#CSTREAK ~w~Brown Streak Railroad
+FREIGHT ~g~Freight ~g~~h~Railroad
+#FREIGHT ~w~309 ~g~Freight ~g~~h~Railroad
+#FREIGHT ~w~Freight Railroad
+STREAK ~g~Brown Streak ~g~~h~Railroad
+#STREAK ~w~309 ~g~Brown Streak ~g~~h~Railroad
+#STREAK ~w~Brown Streak Railroad
+TRAM ~w~San Fierro ~G~Tram
+#TRAM ~b~~h~San Fierro ~G~Tram
+#TRAM ~b~~h~SF ~G~Tram
+#TRAM ~b~~h~SF Garcia ~G~Tram
+
+
+### Aircrafts ###
+
+# Helicopters #
+
+CARGOBB ~g~~h~Western Co. ~G~Cargobob
+LEVIATH ~g~~h~Western Co. ~G~Leviathan
+MAVERIC ~g~~h~Buckingham ~G~Maverick
+SANMAV ~b~~h~~h~SAN News Maverick
+#SANMAV ~b~~h~~h~SAN News ~G~Maverick
+#SANMAV ~b~~h~~h~SAN News ~G~Maverick Helicopter
+#SANMAV ~b~~h~~h~SAN News ~g~~h~Buckingham ~G~Maverick
+#SANMAV ~b~~h~~h~SAN News ~G~Helicopter
+SEASPAR ~g~~h~Nagasaki ~G~Seasparrow
+#SEASPAR ~g~~h~Western Co. ~G~Seasparrow
+SPARROW ~g~~h~Nagasaki ~G~Sparrow
+#SPARROW ~g~~h~Western Co. ~G~Sparrow
+
+
+# Planes #
+
+ANDROM ~g~~h~Western Co. ~G~Andromada
+AT400 ~g~~h~Western Co. ~G~AT-400
+#AT400 ~g~~h~Buckingham ~G~AT-400
+BEAGLE ~g~~h~Mammoth ~G~Beagle
+#BEAGLE ~g~~h~Buckingham ~G~Beagle
+CROPDST ~g~~h~Western Co. ~G~Cropduster
+DODO ~g~~h~Mammoth ~G~Dodo
+NEVADA ~g~~h~Western Co. ~G~Nevada
+RUSTLER ~g~~h~Mammoth ~G~Rustler
+SHAMAL ~g~~h~Buckingham ~G~Shamal
+SKIMMER ~g~~h~Mammoth ~G~Skimmer
+STUNT ~g~~h~Western Co. ~G~Stuntplane
+
+
+### Boats ###
+
+DINGHY ~g~~h~Nagasaki ~G~Dinghy
+JETMAX ~g~~h~Grotti ~G~Jetmax
+MARQUIS ~g~~h~Dinka ~G~Marquis
+REEFER ~g~~h~Shitzu ~G~Reefer
+SPEEDER ~g~~h~Pegassi ~G~Speeder
+SQUALO ~g~~h~Shitzu ~G~Squalo
+#SQUALO ~g~~h~Grotti ~G~Squalo
+TROPIC ~g~~h~Shitzu ~G~Tropic
+#TROPIC ~g~~h~Grotti ~G~Tropic
+
+
+### Emergency / Law Enforcement / Military  ###
+
+# Emergency / Law Enforcement / Military # (Land) #
+
+AMBULAN ~w~SA Emergency Ambulance
+#AMBULAN ~w~SA EMS Ambulance
+#AMBULAN ~w~EMS Ambulance
+BARRCKS ~g~~h~HVY ~G~Barracks
+#BARRCKS ~w~NG ~g~~h~HVY ~G~Barracks
+#BARRCKS ~w~National Guard ~g~~h~HVY ~G~Barracks
+#BARRCKS ~g~~h~HVY ~w~National Guard ~G~Barracks
+ENFORCR ~b~~h~SWAT ~b~Enforcer
+#ENFORCR ~b~~h~Police ~b~Enforcer
+FBIRANC ~b~~h~FBI ~b~Rancher
+FBITRUK ~b~~h~SAPD ~b~Truck
+FIRELA ~w~FDSA ~r~~h~Firetruck
+FIRETRK ~w~FDSA ~r~~h~Firetruck
+HPV1000 ~b~~h~SAPD ~B~Motorcycle
+PATRIOT ~g~~h~Mammoth ~G~Patriot
+#PATRIOT ~g~~h~National Guard ~G~Patriot
+#PATRIOT ~g~~h~Mammoth ~w~NG ~G~Patriot
+#PATRIOT ~g~~h~Mammoth ~w~NG ~R~Patriot
+#PATRIOT ~g~~h~Mammoth ~b~National ~r~Guard ~G~Patriot
+POLICLS ~b~~h~LSPD ~b~Cruiser
+POLICLV ~b~~h~LVPD ~b~Cruiser
+POLICSF ~b~~h~SFPD ~b~Cruiser
+RANGER ~b~~h~SASD ~b~Ranger
+#RANGER ~b~~h~SASD ~b~County Sheriff
+#RANGER ~b~~h~SASD ~b~County Sheriff Ranger
+#RANGER ~b~~h~County Sheriff Ranger
+RHINO ~G~Rhino Tank
+SWATVAN ~b~~h~SWAT ~b~Van
+#SWATVAN ~g~~h~HVY ~b~~h~SWAT ~b~Van
+
+
+# Emergency / Law Enforcement / Military # (Aircrafts) #
+
+HUNTER ~g~~h~Western Co. ~G~Hunter
+#HUNTER ~g~~h~Western Co. ~G~FH-1 Hunter
+#HUNTER ~g~Hunter ~r~Attack ~G~Helicopter
+HYDRA ~g~~h~Mammoth ~G~Hydra
+#HYDRA ~g~~h~Mammoth ~G~Hydra ~r~Attack ~G~Jet
+POLMAV ~b~~h~SAPD ~b~Maverick
+RAINDNC ~w~FDSA ~r~~h~Raindance
+
+
+# Emergency / Law Enforcement / Military # (Boats) #
+
+COASTG ~b~~h~SA ~b~Coastguard
+LAUNCH ~g~~h~Nagasaki ~G~Launch
+#LAUNCH ~g~~h~Nagasaki ~w~NG ~G~Launch
+#LAUNCH ~g~~h~Nagasaki ~b~Patrol Boat ~G~Launch
+#LAUNCH ~g~~h~Nagasaki ~w~National Guard ~G~Launch
+#LAUNCH ~g~~h~Military ~b~Patrol Boat ~G~Launch
+PREDATR ~b~~h~SAPD ~b~Predator
+
+
+### Other / Unique / Special ###
+
+# Nascar / Rally / Kart / Monster Jam #
+
+BLOODRA ~g~~h~Benefactor ~G~Bloodring Banger
+DUNE ~g~~h~MTL ~G~Dune
+HOTRINA ~g~~h~Imponte ~G~Hotring Racer
+HOTRINB ~g~~h~Willard ~G~Hotring Racer
+HOTRING ~g~~h~Vapid ~G~Hotring Racer
+MONSTA ~g~~h~Vapid ~r~Monster ~B~Truck
+MONSTB ~g~~h~Declasse ~r~Monster ~B~Truck
+MONSTER ~g~~h~Vapid ~G~Monster Truck
+KART ~g~~h~Dinka ~G~Veto
+SANDKIN ~g~~h~Maibatsu ~G~Sandking
+
+
+# Misc #
+
+CADDY ~g~~h~Nagasaki ~G~Caddy
+CAMPER ~g~~h~Brute ~G~Camper
+JOURNEY ~g~~h~Zirconium ~G~Journey
+MOWER ~g~~h~Jack Sheepe ~G~Mower
+QUAD ~g~~h~Nagasaki ~G~Quad
+TOPFUN ~r~Berkleys RC Van
+#TOPFUN ~r~Berkley's RC Van
+VORTEX ~G~Vortex
+#VORTEX ~g~~h~Hovercraft ~G~Vortex
+
+
+# RC #
+
+RCBANDT ~G~RC Bandit
+RCBARON ~G~RC Baron
+RCCAM ~G~RC Cam
+RCGOBLI ~G~RC Goblin
+RCRAIDE ~G~RC Raider
+RCTIGER ~G~RC Tiger

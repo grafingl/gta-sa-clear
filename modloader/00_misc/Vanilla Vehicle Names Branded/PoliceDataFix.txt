@@ -1,0 +1,4 @@
+596, 	copcarla, 	copcarla, 	car, 		POLICE_LA, 	POLICLS,	null,	ignore,		10,	0,	0,		-1, 0.7, 0.7,	-1
+597, 	copcarsf, 	copcarsf, 	car, 		POLICE_SF, 	POLICSF,	null,	ignore,		10,	0,	0,		-1, 0.7, 0.7,	-1
+598, 	copcarvg,	copcarvg,	car, 		POLICE_VG, 	POLICLV,	null,	ignore,		10,	0,	0,		-1, 0.7, 0.7,	-1
+505,	rnchlure, 	rnchlure, 	car,		RANCHER, 	RANCLUR, 	null,	normal,		10,	0,	0,		-1, 0.9, 0.9,		-1
