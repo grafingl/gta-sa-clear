@@ -431,10 +431,6 @@
     "PurpleFix": -939472641,
     "CyanFix": 13172735
   },
-  "ScriptBrainAttachType": {
-    "Ped": 0,
-    "Object": 1
-  },
   "TempAction": {
     "None": 0,
     "Wait": 1,
@@ -4218,5 +4214,21 @@
     "TaskPlayAnimSecondary": 2586,
     "TaskHandGesture": 2589,
     "TaskFollowPathNodesToCoordWithRadius": 2606
+  },
+  "CutsceneTrackStatus": {
+    "Stopped": 0,
+    "Loading": 1,
+    "Loaded": 2,
+    "Playing": 3,
+    "Stopping": 4
+  },
+  "CarPanel": {
+    "FrontLeft": 0,
+    "FrontRight": 1,
+    "RearLeft": 2,
+    "RearRight": 3,
+    "Windscreen": 4,
+    "FrontBumper": 5,
+    "RearBumper": 6
   }
 }

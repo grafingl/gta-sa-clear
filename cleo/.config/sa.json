@@ -1,7 +1,7 @@
 {
   "meta": {
-    "last_update": 1765469969510,
-    "version": "1.23",
+    "last_update": 1768272848339,
+    "version": "1.43",
     "url": "https://library.sannybuilder.com/#/sa"
   },
   "extensions": [
@@ -2848,7 +2848,7 @@
           "member": "Random",
           "name": "GENERATE_RANDOM_FLOAT",
           "num_params": 1,
-          "short_desc": "Returns a random float between 0.0 to 1.0"
+          "short_desc": "Returns a random float between 0.0 to 1.0; excluding 1.0"
         },
         {
           "output": [
@@ -7491,7 +7491,7 @@
           "member": "IsStoppedInArea2D",
           "name": "IS_CAR_STOPPED_IN_AREA_2D",
           "num_params": 6,
-          "short_desc": ""
+          "short_desc": "Returns true if the car stopped within the specified 2D area"
         },
         {
           "input": [
@@ -7536,7 +7536,7 @@
           "member": "IsStoppedInArea3D",
           "name": "IS_CAR_STOPPED_IN_AREA_3D",
           "num_params": 8,
-          "short_desc": ""
+          "short_desc": "Returns true if the car stopped within the specified 3D area"
         },
         {
           "input": [
@@ -7573,7 +7573,7 @@
           "member": "Locate2D",
           "name": "LOCATE_CAR_2D",
           "num_params": 6,
-          "short_desc": ""
+          "short_desc": "Returns true if the car is within the 2D radius of the point"
         },
         {
           "input": [
@@ -7610,7 +7610,7 @@
           "member": "LocateStopped2D",
           "name": "LOCATE_STOPPED_CAR_2D",
           "num_params": 6,
-          "short_desc": ""
+          "short_desc": "Returns true if the car is stopped within the 2D radius of the point"
         },
         {
           "input": [
@@ -7655,7 +7655,7 @@
           "member": "Locate3D",
           "name": "LOCATE_CAR_3D",
           "num_params": 8,
-          "short_desc": ""
+          "short_desc": "Returns true if the car is within the 3D radius of the point"
         },
         {
           "input": [
@@ -9061,7 +9061,7 @@
           "member": "RandomFloatInRange",
           "name": "GENERATE_RANDOM_FLOAT_IN_RANGE",
           "num_params": 3,
-          "short_desc": "Returns a random float between the specified ranges"
+          "short_desc": "Returns a random float within the specified range; including min and max values"
         },
         {
           "input": [
@@ -9089,7 +9089,7 @@
           "member": "RandomIntInRange",
           "name": "GENERATE_RANDOM_INT_IN_RANGE",
           "num_params": 3,
-          "short_desc": "Returns a random integer greater or equal to min and lesser or equal to max"
+          "short_desc": "Returns a random integer within the specified range; including min and excluding max values"
         },
         {
           "input": [
@@ -24678,7 +24678,7 @@
           "id": "05FE",
           "name": "IS_CHAR_IN_ANGLED_AREA_IN_CAR_3D",
           "num_params": 9,
-          "short_desc": "",
+          "short_desc": "Checks if the character is in a car which is within the angled 3D area",
           "attrs": {
             "is_condition": true
           },
@@ -24727,7 +24727,7 @@
           "id": "05FF",
           "name": "IS_CHAR_STOPPED_IN_ANGLED_AREA_3D",
           "num_params": 9,
-          "short_desc": "",
+          "short_desc": "Checks if the character is within the angled 3D area and is motionless",
           "attrs": {
             "is_condition": true
           },
@@ -24776,7 +24776,7 @@
           "id": "0600",
           "name": "IS_CHAR_STOPPED_IN_ANGLED_AREA_ON_FOOT_3D",
           "num_params": 9,
-          "short_desc": "",
+          "short_desc": "Checks if the character is on foot within the angled 3D area and is motionless",
           "attrs": {
             "is_condition": true
           },
@@ -24825,7 +24825,7 @@
           "id": "0601",
           "name": "IS_CHAR_STOPPED_IN_ANGLED_AREA_IN_CAR_3D",
           "num_params": 9,
-          "short_desc": "",
+          "short_desc": "Checks if the character is in a motionless car within the angled 3D area",
           "attrs": {
             "is_condition": true
           },
@@ -27950,17 +27950,17 @@
             },
             {
               "name": "panelId",
-              "type": "int"
+              "type": "CarPanel"
             },
             {
-              "name": "visibility",
+              "name": "drop",
               "type": "bool"
             }
           ],
           "id": "0697",
           "name": "POP_CAR_PANEL",
           "num_params": 3,
-          "short_desc": "",
+          "short_desc": "Detatches or deletes car's body part",
           "class": "Car",
           "member": "PopPanel"
         },
@@ -27972,13 +27972,13 @@
             },
             {
               "name": "panelId",
-              "type": "int"
+              "type": "CarPanel"
             }
           ],
           "id": "0698",
           "name": "FIX_CAR_PANEL",
           "num_params": 2,
-          "short_desc": "",
+          "short_desc": "Repairs or reinstalls car's body part",
           "class": "Car",
           "member": "FixPanel"
         },
@@ -28779,14 +28779,14 @@
               "type": "float"
             },
             {
-              "name": "energy",
+              "name": "damage",
               "type": "int"
             }
           ],
           "id": "06BC",
           "name": "FIRE_SINGLE_BULLET",
           "num_params": 7,
-          "short_desc": "",
+          "short_desc": "Creates firearm projectile effect between two coordinates. Leaves visible trace and deals damage on hit",
           "class": "World",
           "member": "FireSingleBullet",
           "attrs": {
@@ -32263,7 +32263,7 @@
           "id": "0767",
           "name": "SET_ZONE_POPULATION_TYPE",
           "num_params": 2,
-          "short_desc": "",
+          "short_desc": "Sets which population type from popcycle.dat will inhabit this zone",
           "class": "Zone",
           "member": "SetPopulationType",
           "attrs": {
@@ -33570,23 +33570,23 @@
         {
           "input": [
             {
-              "name": "_p1",
+              "name": "offset",
               "type": "int"
             }
           ],
           "output": [
             {
-              "name": "_p2",
+              "name": "beatTime",
               "type": "int",
               "source": "var_any"
             },
             {
-              "name": "_p3",
+              "name": "beatType",
               "type": "int",
               "source": "var_any"
             },
             {
-              "name": "_p4",
+              "name": "beatIndex",
               "type": "int",
               "source": "var_any"
             }
@@ -33594,7 +33594,7 @@
           "id": "07B1",
           "name": "GET_BEAT_PROXIMITY",
           "num_params": 4,
-          "short_desc": "",
+          "short_desc": "Returns information about a beat offset from the current playback position of the active beat track (0954)",
           "class": "Audio",
           "member": "GetBeatProximity",
           "attrs": {
@@ -34012,7 +34012,7 @@
           "id": "07C9",
           "name": "TASK_COMPLEX_PICKUP_OBJECT",
           "num_params": 2,
-          "short_desc": "",
+          "short_desc": "Makes character walk to the object and pick it up",
           "attrs": {
             "is_static": true
           },
@@ -34842,26 +34842,26 @@
               "type": "Car"
             },
             {
-              "name": "_p2",
+              "name": "frontLeftWheelSuspension",
               "type": "float"
             },
             {
-              "name": "_p3",
+              "name": "rearLeftWheelSuspension",
               "type": "float"
             },
             {
-              "name": "_p4",
+              "name": "frontRightWheelSuspension",
               "type": "float"
             },
             {
-              "name": "_p5",
+              "name": "rearRightWheelSuspension",
               "type": "float"
             }
           ],
           "id": "07F5",
           "name": "CONTROL_CAR_HYDRAULICS",
           "num_params": 5,
-          "short_desc": "",
+          "short_desc": "Changes the car wheels' suspension level",
           "class": "Car",
           "member": "ControlHydraulics"
         },
@@ -37323,7 +37323,7 @@
           "id": "0874",
           "name": "SET_ZONE_POPULATION_RACE",
           "num_params": 2,
-          "short_desc": "",
+          "short_desc": "Sets which races will inhabit this zone",
           "class": "Zone",
           "member": "SetPopulationRace",
           "attrs": {
@@ -39125,14 +39125,14 @@
           "output": [
             {
               "name": "type",
-              "type": "int",
+              "type": "ZoneType",
               "source": "var_any"
             }
           ],
           "id": "08D3",
           "name": "GET_CURRENT_POPULATION_ZONE_TYPE",
           "num_params": 1,
-          "short_desc": "",
+          "short_desc": "Returns the population type in the zone the player is currently in",
           "class": "Zone",
           "member": "GetCurrentPopulationZoneType",
           "attrs": {
@@ -39569,7 +39569,7 @@
           "id": "08E3",
           "name": "IS_OBJECT_IN_ANGLED_AREA_2D",
           "num_params": 7,
-          "short_desc": "",
+          "short_desc": "Checks if the object is within the angled 2D area",
           "attrs": {
             "is_condition": true
           },
@@ -39618,7 +39618,7 @@
           "id": "08E4",
           "name": "IS_OBJECT_IN_ANGLED_AREA_3D",
           "num_params": 9,
-          "short_desc": "",
+          "short_desc": "Checks if the object is within the angled 3D area",
           "attrs": {
             "is_condition": true
           },
@@ -39786,7 +39786,7 @@
           "id": "08EB",
           "name": "ADD_SPARKS",
           "num_params": 7,
-          "short_desc": "",
+          "short_desc": "Creates single burst of spark particles",
           "class": "Fx",
           "member": "AddSparks",
           "attrs": {
@@ -41794,7 +41794,7 @@
           "id": "0952",
           "name": "PRELOAD_BEAT_TRACK",
           "num_params": 1,
-          "short_desc": "",
+          "short_desc": "Loads the soundtrack audio that is stored in the audio\\streams\\BEATS file",
           "class": "Audio",
           "member": "PreloadBeatTrack",
           "attrs": {
@@ -41805,14 +41805,14 @@
           "output": [
             {
               "name": "status",
-              "type": "int",
+              "type": "CutsceneTrackStatus",
               "source": "var_any"
             }
           ],
           "id": "0953",
           "name": "GET_BEAT_TRACK_STATUS",
           "num_params": 1,
-          "short_desc": "",
+          "short_desc": "Returns the status of the currenly active beat track (0954)",
           "class": "Audio",
           "member": "GetBeatTrackStatus",
           "attrs": {
@@ -41823,7 +41823,7 @@
           "id": "0954",
           "name": "PLAY_BEAT_TRACK",
           "num_params": 0,
-          "short_desc": "",
+          "short_desc": "Plays the last soundtrack loaded by PRELOAD_BEAT_TRACK",
           "class": "Audio",
           "member": "PlayBeatTrack",
           "attrs": {
@@ -41834,7 +41834,7 @@
           "id": "0955",
           "name": "STOP_BEAT_TRACK",
           "num_params": 0,
-          "short_desc": "",
+          "short_desc": "Stops any currently active beat track",
           "class": "Audio",
           "member": "StopBeatTrack",
           "attrs": {
@@ -42417,7 +42417,7 @@
           "id": "0970",
           "name": "FORCE_DEATH_RESTART",
           "num_params": 0,
-          "short_desc": "",
+          "short_desc": "Triggers usual after player death game bahavior (respawn in front of the hospital, weapons taken away, etc.)",
           "class": "Game",
           "member": "ForceDeathRestart",
           "attrs": {
@@ -43809,15 +43809,15 @@
               "type": "float"
             },
             {
-              "name": "offsetX",
+              "name": "velocityX",
               "type": "float"
             },
             {
-              "name": "offsetY",
+              "name": "velocityY",
               "type": "float"
             },
             {
-              "name": "offsetZ",
+              "name": "velocityZ",
               "type": "float"
             },
             {
@@ -43832,7 +43832,7 @@
           "id": "09B8",
           "name": "ADD_BLOOD",
           "num_params": 8,
-          "short_desc": "",
+          "short_desc": "Creates blood spray and ground splatter effects",
           "class": "Fx",
           "member": "AddBlood",
           "attrs": {
@@ -45534,7 +45534,7 @@
           "id": "0A13",
           "name": "MANAGE_ALL_POPULATION",
           "num_params": 0,
-          "short_desc": "",
+          "short_desc": "Deletes distant, no longer needed, objects and world dummy objects",
           "class": "Game",
           "member": "ManageAllPopulation",
           "attrs": {
@@ -46535,8 +46535,8 @@
         {
           "input": [
             {
-              "name": "type",
-              "type": "ScriptBrainAttachType"
+              "name": "groupingId",
+              "type": "int"
             },
             {
               "name": "state",
@@ -46546,7 +46546,7 @@
           "id": "0A46",
           "name": "SWITCH_OBJECT_BRAINS",
           "num_params": 2,
-          "short_desc": "Enables or disables all triggers of the specified type (0928 or 0929)",
+          "short_desc": "Enables or disables all object triggers with the specified grouping id (set with 0929)",
           "class": "Game",
           "member": "SwitchObjectBrains",
           "attrs": {
