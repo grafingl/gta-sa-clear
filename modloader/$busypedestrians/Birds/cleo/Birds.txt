@@ -1,0 +1,124 @@
+{$CLEO .cs}
+{$USE CLEO+}
+{$USE newOpcodes}
+{$USE ini}
+
+0000: NOP
+
+script_name "Birds"
+
+// By ArtemQa146
+
+const
+    spawn = 31@
+    render_model_1 = 30@
+    render_model_2 = 29@
+    render_model_3 = 28@
+    render_model_4 = 27@
+    render_model_5 = 26@
+    render_model_6 = 25@
+    delay_spawn = 24@
+    volume_ini = 23@
+    find = 22@
+    peds = 21@
+end
+
+
+
+if
+    0E2D: is_game_first_start
+then
+    0F00: load_special_model_dff "ModelsQa\bird_f1" txd "ModelsQa\birds" store_to 0@
+    0AF1: write_int 0@ to_ini_file "cleo\Birds.ini" section "Models" key "bird_f1"
+    0F00: load_special_model_dff "ModelsQa\bird_f2" txd "ModelsQa\birds" store_to 0@
+    0AF1: write_int 0@ to_ini_file "cleo\Birds.ini" section "Models" key "bird_f2"
+    0F00: load_special_model_dff "ModelsQa\bird_f3" txd "ModelsQa\birds" store_to 0@
+    0AF1: write_int 0@ to_ini_file "cleo\Birds.ini" section "Models" key "bird_f3"
+    0F00: load_special_model_dff "ModelsQa\bird_s1" txd "ModelsQa\birds" store_to 0@
+    0AF1: write_int 0@ to_ini_file "cleo\Birds.ini" section "Models" key "bird_s1"
+    0F00: load_special_model_dff "ModelsQa\bird_s2" txd "ModelsQa\birds" store_to 0@
+    0AF1: write_int 0@ to_ini_file "cleo\Birds.ini" section "Models" key "bird_s2"
+    0F00: load_special_model_dff "ModelsQa\bird_s3" txd "ModelsQa\birds" store_to 0@
+    0AF1: write_int 0@ to_ini_file "cleo\Birds.ini" section "Models" key "bird_s3"
+end
+
+0AF0: render_model_1 = read_int_from_ini_file "cleo\Birds.ini" section "Models" key "bird_s1"
+0AF0: render_model_2 = read_int_from_ini_file "cleo\Birds.ini" section "Models" key "bird_s2"
+0AF0: render_model_3 = read_int_from_ini_file "cleo\Birds.ini" section "Models" key "bird_s3"
+0AF0: render_model_4 = read_int_from_ini_file "cleo\Birds.ini" section "Models" key "bird_f1"
+0AF0: render_model_5 = read_int_from_ini_file "cleo\Birds.ini" section "Models" key "bird_f2"
+0AF0: render_model_6 = read_int_from_ini_file "cleo\Birds.ini" section "Models" key "bird_f3"
+
+0AF0: delay_spawn = read_int_from_ini_file "cleo\Birds.ini" section "Settings" key "Spawn delay"
+0AF2: volume_ini = read_float_from_ini_file "cleo\Birds.ini" section "Settings" key "Volume"
+
+timera = 0
+
+while true
+wait 1000
+    if and
+        $ACTIVE_INTERIOR == 0
+        player.Defined(0)
+    then
+
+        if
+            001D:   timera > delay_spawn  // (int)
+        then
+            0D59: get_current_weather_to 4@
+            0E40: get_current_hour 3@
+            06AC: 2@ = actor $player_actor movement_speed
+            0AAA: 1@ = get_script_struct_named "birds2"
+            if and
+                2@ < 30.0
+                1@ == 0
+                3@ >= 6
+                3@ <= 20
+                not 4@ == 8
+                not 4@ == 16
+            then
+
+                spawn = false
+
+                04C4: store_coords_to 1@ 2@ 3@ from_actor $player_actor with_offset 0.0 40.0 0.0
+                02C0: store_to 4@ 5@ 6@ ped_path_coords_closest_to 1@ 2@ 3@
+                04C4: store_coords_to 1@ 2@ 3@ from_actor $player_actor with_offset 0.0 0.0 0.0
+                0509: 7@ = distance_between_XY 4@ 5@ and_XY 1@ 2@
+                if and
+                    7@ > 30.0
+                    7@ < 50.0
+                then
+                    spawn = true
+                    find = 0
+                    while get_any_char_no_save_recursive find progress_to find char_to peds
+                        if
+                            0EEA: locate_char_distance_to_coordinates peds pos 4@ 5@ 6@  radius 3.3
+                        then
+                            spawn = false
+                            break
+                        end
+                    end
+                end
+
+
+
+                if
+                    spawn == true
+                then
+
+                    0209: 2@ = random_int_in_ranges 1 4
+                    for 3@ = 0 to 2@ step 1
+                    0A92: stream_custom_script "Birds2.qa" 4@ 5@ 6@ render_model_1 render_model_2 render_model_3 render_model_4 render_model_5 render_model_6 volume_ini
+                    end
+                    timera = 0
+                end
+            end
+        else
+            0AAA: 1@ = get_script_struct_named "birds2"
+            if
+                not 1@ == 0
+            then
+                timera = 0
+            end
+        end
+    end
+end

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "last_update": 1768272848339,
-    "version": "1.43",
+    "last_update": 1772237935497,
+    "version": "1.55",
     "url": "https://library.sannybuilder.com/#/sa"
   },
   "extensions": [
@@ -27578,26 +27578,26 @@
               "type": "Object"
             },
             {
-              "name": "x",
+              "name": "pitch",
               "type": "float"
             },
             {
-              "name": "y",
+              "name": "heading",
               "type": "float"
             },
             {
-              "name": "z",
+              "name": "strength",
               "type": "float"
             },
             {
-              "name": "collisionDetection",
+              "name": "applyTurnForce",
               "type": "bool"
             }
           ],
           "id": "0682",
           "name": "DETACH_OBJECT",
           "num_params": 5,
-          "short_desc": "",
+          "short_desc": "Detaches the object with optional rotation and force",
           "class": "Object",
           "member": "Detach"
         },
@@ -27650,26 +27650,26 @@
               "type": "Car"
             },
             {
-              "name": "x",
+              "name": "pitch",
               "type": "float"
             },
             {
-              "name": "y",
+              "name": "heading",
               "type": "float"
             },
             {
-              "name": "z",
+              "name": "strength",
               "type": "float"
             },
             {
-              "name": "collisionDetection",
+              "name": "applyTurnForce",
               "type": "bool"
             }
           ],
           "id": "0684",
           "name": "DETACH_CAR",
           "num_params": 5,
-          "short_desc": "",
+          "short_desc": "Detaches the car with optional rotation and force",
           "class": "Car",
           "member": "Detach"
         },
@@ -28206,14 +28206,14 @@
               "type": "Char"
             },
             {
-              "name": "time",
+              "name": "timeOnGround",
               "type": "int"
             }
           ],
           "id": "06A5",
           "name": "TASK_DIVE_FROM_ATTACHMENT_AND_GET_UP",
           "num_params": 2,
-          "short_desc": "",
+          "short_desc": "Makes character detach from host, perform dive then get up",
           "attrs": {
             "is_static": true
           },
@@ -34090,7 +34090,7 @@
               "type": "float"
             },
             {
-              "name": "radius",
+              "name": "slideSpeed",
               "type": "float"
             }
           ],
@@ -34195,6 +34195,18 @@
               "type": "Car"
             },
             {
+              "name": "xDir",
+              "type": "float"
+            },
+            {
+              "name": "yDir",
+              "type": "float"
+            },
+            {
+              "name": "zDir",
+              "type": "float"
+            },
+            {
               "name": "xOffset",
               "type": "float"
             },
@@ -34205,24 +34217,12 @@
             {
               "name": "zOffset",
               "type": "float"
-            },
-            {
-              "name": "xRotation",
-              "type": "float"
-            },
-            {
-              "name": "yRotation",
-              "type": "float"
-            },
-            {
-              "name": "zRotation",
-              "type": "float"
             }
           ],
           "id": "07D5",
           "name": "APPLY_FORCE_TO_CAR",
           "num_params": 7,
-          "short_desc": "",
+          "short_desc": "Applies force to car with offset from its center of mass",
           "class": "Car",
           "member": "ApplyForce"
         },
@@ -35143,7 +35143,7 @@
               "type": "float"
             },
             {
-              "name": "radius",
+              "name": "slideSpeed",
               "type": "float"
             },
             {
@@ -36370,8 +36370,8 @@
               "type": "Car"
             },
             {
-              "name": "_p2",
-              "type": "int"
+              "name": "weapon",
+              "type": "CarWeapon"
             }
           ],
           "id": "0841",
@@ -45559,16 +45559,16 @@
           }
         },
         {
-          "id": "0A15",
-          "name": "HAS_CAR_BEEN_RESPRAYED",
-          "num_params": 1,
-          "short_desc": "Returns true if the vehicle was resprayed in the last frame",
           "input": [
             {
               "name": "self",
               "type": "Car"
             }
           ],
+          "id": "0A15",
+          "name": "HAS_CAR_BEEN_RESPRAYED",
+          "num_params": 1,
+          "short_desc": "Returns true if the vehicle was resprayed in the last frame AND resets the resprayed state to false",
           "attrs": {
             "is_condition": true
           },
@@ -48713,6 +48713,30 @@
             "is_condition": true
           },
           "short_desc": "Returns from the current SCM function (0AB1) and sets the condition result to false, skipping variables in 0AB1"
+        },
+        {
+          "input": [
+            {
+              "name": "",
+              "type": "float"
+            },
+            {
+              "name": "",
+              "type": "float"
+            }
+          ],
+          "output": [
+            {
+              "name": "",
+              "type": "float",
+              "source": "var_any"
+            }
+          ],
+          "id": "290B",
+          "name": "FLOAT_MUL",
+          "num_params": 3,
+          "operator": "*",
+          "short_desc": "Multiplies two float values and writes the result into the variable"
         }
       ]
     },
@@ -66870,7 +66894,7 @@
         {
           "input": [
             {
-              "name": "var",
+              "name": "variable",
               "type": "int",
               "source": "var_any"
             },
@@ -66887,7 +66911,7 @@
           "name": "SF_STRING_POINTER",
           "num_params": 3,
           "class": "Sf",
-          "short_desc": "Stores a pointer to the specified string into the var",
+          "short_desc": "Stores a pointer to the specified string into the variable",
           "member": "StrPtr",
           "attrs": {
             "is_static": true
@@ -72865,6 +72889,102 @@
             "is_static": true,
             "is_condition": true
           }
+        },
+        {
+          "input": [
+            {
+              "name": "",
+              "type": "float"
+            },
+            {
+              "name": "",
+              "type": "float"
+            }
+          ],
+          "output": [
+            {
+              "name": "",
+              "type": "float",
+              "source": "var_any"
+            }
+          ],
+          "id": "2709",
+          "name": "FLOAT_ADD",
+          "num_params": 3,
+          "operator": "+",
+          "short_desc": "Adds together two float values and writes the result into the variable"
+        },
+        {
+          "input": [
+            {
+              "name": "",
+              "type": "float"
+            },
+            {
+              "name": "",
+              "type": "float"
+            }
+          ],
+          "output": [
+            {
+              "name": "",
+              "type": "float",
+              "source": "var_any"
+            }
+          ],
+          "id": "270A",
+          "name": "FLOAT_SUB",
+          "num_params": 3,
+          "short_desc": "Subtracts the float value from another float value and writes the result into the variable",
+          "operator": "-"
+        },
+        {
+          "input": [
+            {
+              "name": "",
+              "type": "float"
+            },
+            {
+              "name": "",
+              "type": "float"
+            }
+          ],
+          "output": [
+            {
+              "name": "",
+              "type": "float",
+              "source": "var_any"
+            }
+          ],
+          "id": "270B",
+          "name": "FLOAT_MUL",
+          "num_params": 3,
+          "operator": "*",
+          "short_desc": "Multiplies two float values and writes the result into the variable"
+        },
+        {
+          "input": [
+            {
+              "name": "",
+              "type": "float"
+            },
+            {
+              "name": "",
+              "type": "float"
+            }
+          ],
+          "output": [
+            {
+              "name": "",
+              "type": "float",
+              "source": "var_any"
+            }
+          ],
+          "id": "270C",
+          "name": "FLOAT_DIV",
+          "num_params": 3,
+          "operator": "/",
+          "short_desc": "Divides the float value by another float value and writes the result into the variable"
         }
       ]
     },

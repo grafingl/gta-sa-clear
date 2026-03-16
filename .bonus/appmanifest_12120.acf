@@ -2,16 +2,23 @@
 {
 	"appid"		"12120"
 	"Universe"		"1"
+	"LauncherPath"		"D:\\Games\\Steam\\steam.exe"
 	"name"		"Grand Theft Auto: San Andreas"
 	"StateFlags"		"4"
 	"installdir"		"Grand Theft Auto San Andreas"
-	"LastUpdated"		"1586274509"
-	"UpdateResult"		"0"
+	"LastUpdated"		"1771768198"
+	"LastPlayed"		"1771769125"
 	"SizeOnDisk"		"4923455331"
+	"StagingSize"		"0"
 	"buildid"		"459558"
-	"LastOwner"		"76561198109696236"
+	"LastOwner"		"76561198298624848"
+	"DownloadType"		"1"
+	"UpdateResult"		"0"
 	"BytesToDownload"		"4035644016"
 	"BytesDownloaded"		"4035644016"
+	"BytesToStage"		"4923455331"
+	"BytesStaged"		"4923455331"
+	"TargetBuildID"		"459558"
 	"AutoUpdateBehavior"		"0"
 	"AllowOtherDownloadsWhileRunning"		"0"
 	"ScheduledAutoUpdate"		"0"
@@ -20,27 +27,28 @@
 		"12123"
 		{
 			"manifest"		"3229936372288409207"
+			"size"		"1707644556"
 		}
 		"12122"
 		{
 			"manifest"		"5085199700668523983"
+			"size"		"1676856594"
 		}
 		"12121"
 		{
 			"manifest"		"242870450180196986"
+			"size"		"1538954181"
 		}
-	}
-	"MountedDepots"
-	{
-		"12123"		"3229936372288409207"
-		"12122"		"5085199700668523983"
-		"12121"		"242870450180196986"
 	}
 	"SharedDepots"
 	{
 		"228990"		"228980"
 	}
 	"UserConfig"
+	{
+		"language"		"english"
+	}
+	"MountedConfig"
 	{
 		"language"		"english"
 	}
