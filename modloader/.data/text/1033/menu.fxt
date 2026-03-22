@@ -1,22 +1,28 @@
-# Created with FXT_Editor (Rus) by yelmi
-# -------------- © 2009 --------------- 
+#
+#   Mod Loader Menu Localization File
+#
 
-ML_FEO Ko®˜œ™ypa œ¬ ¯ošo¢
-ML_ONN ‹K‡.
-ML_OFF ‹‘K‡.
-ML_FTN C‡Eƒ.
-ML_FTP ŒPEƒ.
-ML_FTB ­AˆAƒ
-ML_F0HH Ko®˜œ™ypa œ¬ ¯ošo¢
-ML_F0E0 ‹k«¤œ¦© ¯e®«
-ML_F0EP ‹k«¤œ¦© £a™œ®¨
-ML_F0EL ˆa£œc© o™a
-ML_F0LF –™®o¢e®®a¬ Ÿa£œc© o™a
-ML_F0LS –akcœ¯a©®¨ paŸ¯ep o™a
-ML_F0MM –ošœ˜œka œœ
-ML_F0RR O—®o¢œ¦© ˜a¨
-ML_F0RA A¢¦oo—®o¢e®œe ˜ao¢
-ML_FMHH –ošœ˜œka œœ
+# Common
+ML_FEO Mod Configuration
+ML_ONN ON
+ML_OFF OFF
+ML_FTN Next
+ML_FTP Prev
+ML_FTB Back
+
+# Main Page
+ML_F0HH Mod Configuration
+ML_F0E0 Enable Menu
+ML_F0EP Enable Plugins
+ML_F0EL Enable Logging
+ML_F0LF Log Immediate Flush
+ML_F0LS Log Maximum Size
+ML_F0MM Modifications
+ML_F0RR Refresh Modifications
+ML_F0RA Automatic Refresh
+
+# Modifications Page (Dynamic)
+ML_FMHH Modifications
 ML_FMY1 DYNAMIC
 ML_FMY2 DYNAMIC
 ML_FMY3 DYNAMIC
@@ -29,17 +35,21 @@ ML_FMY9 DYNAMIC
 ML_FMYA DYNAMIC
 ML_FMYB DYNAMIC
 ML_FMYC DYNAMIC
+
+# Selected Modification (Dynamic)
 ML_FYHH DYNAMIC
-ML_FYE0 Coc¦o¬®œe
-ML_FYPR Œpœopœ¦e¦
-ML_H0NM ­e¦ yc¦a®o¢e®®¨x ¯ošœ˜œka œ.
-ML_H0E0 ‹K‡./‹‘K‡. ª¦o ¢ œ™po¢o¯ ¯e®«.~n~pe—ye¦c¬ £epeŸa£yck.
-ML_H0EP ‹K‡./‹‘K‡. Ÿa™pyŸ¤œka £a™œ®o¢.~n~pe—ye¦c¬ £epeŸa£yck.
-ML_H0EL ‹K‡/‹‘K‡ ˜a o™a.~n~‹‘K‡. Œo¢¨¥ae¦ £poœŸ¢ošœ¦e©®oc¦©.
-ML_H0LF ‹K‡/‹‘K‡ Ÿa£œc© o™a ®a šœck.~n~‹‘K‡. Œo¢¨¥ae¦ £poœŸ¢ošœ¦e©®oc¦©.
-ML_H0LS –akcœ¯a©®¨ paŸ¯ep ˜aa o™a ®a šœcke.
-ML_H0RR Œo¢¦op®o £pocka®œpo¢a¦© œ £epeyc¦a®o¢œ¦© ˜a¨ (—yš©¦e oc¦opo›®¨).
-ML_H0RA ‹K‡./‹‘K‡. a¢¦oo—®apy›e®œe œŸ¯e®e®œ ¢ ˜aax.
-ML_HMHH ‹¢ešœ¦e k«¤e¢¨e co¢a š¬ £oœcka ¯ošo¢.~n~…c£o©Ÿy¦e ~<~~>~ š¬ £epek«¤e®œ¬ c¦pa®œ .
-ML_HYE0 ‹K‡./‹‘K‡. ¯oš ¢ œ™pe.~n~€yš©¦e oc¦opo›®¨. ƒ¬ ®eko¦op¨x ˜ao¢ ¯o›e¦ £o¦pe—o¢a¦©c¬ £epeŸa£yck.
-ML_HYPR …Ÿ¯e®¬e¦ £pœopœ¦e¦ ª¦o™o ¯oša £o o¦®o¥e®œ« k špy™œ¯.
+ML_FYE0 Enabled
+ML_FYPR Priority
+
+# Helper texts
+ML_H0NM No mods installed
+ML_H0E0 ON/OFF this in-game menu.~n~Needs restart.
+ML_H0EP ON/OFF the loader plugins.~n~Needs restart.
+ML_H0EL ON/OFF the log file.~n~OFF Increases performance.
+ML_H0LF ON/OFF flushing log to disk.~n~OFF Increases performance.
+ML_H0LS Maximum size of the log file on disk.
+ML_H0RR Rescan and reinstall mods (be careful)
+ML_H0RA ON/OFF the automatic detection of changes.
+ML_HMHH Type some keywords to find a mod.~n~Use ~<~~>~ to switch pages.
+ML_HYE0 ON/OFF the mod from the game.~n~Be careful. May need restart for some files.
+ML_HYPR Changes the priority of this mod over others.
