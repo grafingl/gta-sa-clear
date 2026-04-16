@@ -70,6 +70,30 @@ end
                     model.Load(171)
                     model.Load(172)
                     model.Load(11)
+                    if
+                        not model.Available(171)
+                    then
+                        repeat
+                        wait 0
+                        model.Load(171)
+                        until model.Available(171)
+                    end
+                    if
+                        not model.Available(172)
+                    then
+                        repeat
+                        wait 0
+                        model.Load(172)
+                        until model.Available(172)
+                    end
+                    if
+                        not model.Available(11)
+                    then
+                        repeat
+                        wait 0
+                        model.Load(11)
+                        until model.Available(11)
+                    end
                     038B: load_requested_models
 
                     009A: Ped_1 = create_actor_pedtype 21 model 171 at 1210.4847 0.3054 1000.9219
@@ -333,6 +357,22 @@ end
 
                     model.Load(172)
                     model.Load(11)
+                    if
+                        not model.Available(11)
+                    then
+                        repeat
+                        wait 0
+                        model.Load(11)
+                        until model.Available(11)
+                    end
+                    if
+                        not model.Available(172)
+                    then
+                        repeat
+                        wait 0
+                        model.Load(172)
+                        until model.Available(172)
+                    end
                     038B: load_requested_models
 
                     009A: Ped_1 = create_actor_pedtype 21 model 11 at 1208.8704 -32.0575 1000.9531
@@ -543,6 +583,30 @@ end
                 model.Load(171)
                 model.Load(172)
                 model.Load(260)
+                if
+                    not model.Available(171)
+                then
+                    repeat
+                    wait 0
+                    model.Load(171)
+                    until model.Available(171)
+                end
+                if
+                    not model.Available(172)
+                then
+                    repeat
+                    wait 0
+                    model.Load(172)
+                    until model.Available(172)
+                end
+                if
+                    not model.Available(260)
+                then
+                    repeat
+                    wait 0
+                    model.Load(260)
+                    until model.Available(260)
+                end
                 038B: load_requested_models
 
                 009A: Ped_1 = create_actor_pedtype 21 model 171 at 481.4362 -13.1732 1000.6797

@@ -58,6 +58,70 @@ end
                 model.Load(2630)
                 model.Load(3071)
                 model.Load(2913)
+                if
+                    not model.Available(96)
+                then
+                    repeat
+                    wait 0
+                    model.Load(96)
+                    until model.Available(96)
+                end
+                if
+                    not model.Available(184)
+                then
+                    repeat
+                    wait 0
+                    model.Load(184)
+                    until model.Available(184)
+                end
+                if
+                    not model.Available(2631)
+                then
+                    repeat
+                    wait 0
+                    model.Load(2631)
+                    until model.Available(2631)
+                end
+                if
+                    not model.Available(2627)
+                then
+                    repeat
+                    wait 0
+                    model.Load(2627)
+                    until model.Available(2627)
+                end
+                if
+                    not model.Available(2629)
+                then
+                    repeat
+                    wait 0
+                    model.Load(2629)
+                    until model.Available(2629)
+                end
+                if
+                    not model.Available(2630)
+                then
+                    repeat
+                    wait 0
+                    model.Load(2630)
+                    until model.Available(2630)
+                end
+                if
+                    not model.Available(3071)
+                then
+                    repeat
+                    wait 0
+                    model.Load(3071)
+                    until model.Available(3071)
+                end
+                if
+                    not model.Available(2913)
+                then
+                    repeat
+                    wait 0
+                    model.Load(2913)
+                    until model.Available(2913)
+                end
                 038B: load_requested_models
                 
                 if 2@ > 0

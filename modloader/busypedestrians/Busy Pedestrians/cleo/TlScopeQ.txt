@@ -40,6 +40,11 @@ else
     0A93: terminate_this_custom_script
 end
 
+repeat
+wait 0
+04ED: load_animation  "PedEventsMod"
+until 04EE:   animation "PedEventsMod" loaded
+
 0209: 1@ = random_int_in_ranges 1 5
 if 1@ == 1
 then ped_id = 184
@@ -57,10 +62,22 @@ end
 model.Load(ped_id)
 model.Load(1208)
 
-repeat
-wait 0
-04ED: load_animation  "PedEventsMod"
-until 04EE:   animation "PedEventsMod" loaded
+if
+    not model.Available(ped_id)
+then
+    repeat
+    wait 0
+    model.Load(ped_id)
+    until model.Available(ped_id)
+end
+if
+    not model.Available(1208)
+then
+    repeat
+    wait 0
+    model.Load(1208)
+    until model.Available(1208)
+end
 
 038B: load_requested_models
 coords_z -= 1.0

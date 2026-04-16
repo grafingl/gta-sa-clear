@@ -44,6 +44,22 @@ end
     
     model.Load(model_id)
     model.Load(1429)
+    if
+        not model.Available(1429)
+    then
+        repeat
+        wait 0
+        model.Load(1429)
+        until model.Available(1429)
+    end
+    if
+        not model.Available(model_id)
+    then
+        repeat
+        wait 0
+        model.Load(model_id)
+        until model.Available(model_id)
+    end
     038B: load_requested_models
     
     0E01: create_object_no_save 1429 at coords_x coords_y coords_z offset 0 ground 1 to boombox

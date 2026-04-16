@@ -67,7 +67,23 @@ end
                 end
 
                 model.Load(Ped_ID)
+                if
+                    not model.Available(Ped_ID)
+                then
+                    repeat
+                    wait 0
+                    model.Load(Ped_ID)
+                    until model.Available(Ped_ID)
+                end
                 model.Load(render_obj)
+                if
+                    not model.Available(render_obj)
+                then
+                    repeat
+                    wait 0
+                    model.Load(render_obj)
+                    until model.Available(render_obj)
+                end
                 038B: load_requested_models
 
                 if and

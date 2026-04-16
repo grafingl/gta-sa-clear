@@ -82,6 +82,30 @@ then
         model.Load(18@) // Работники в касках
         model.Load(19@) // Работники в касках
         model.Load(20@) // Работники в касках
+        if
+            not model.Available(18@)
+        then
+            repeat
+            wait 0
+            model.Load(18@)
+            until model.Available(18@)
+        end
+        if
+            not model.Available(19@)
+        then
+            repeat
+            wait 0
+            model.Load(19@)
+            until model.Available(19@)
+        end
+        if
+            not model.Available(20@)
+        then
+            repeat
+            wait 0
+            model.Load(20@)
+            until model.Available(20@)
+        end
         038B: load_requested_models
         00A5: Trash_car = create_car 408 at 1@ 2@ 3@
         0731: set_car Trash_car y_angle_to 4@

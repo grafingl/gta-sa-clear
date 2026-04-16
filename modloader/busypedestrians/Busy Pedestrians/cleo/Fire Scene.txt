@@ -52,6 +52,30 @@ end
         model.Load(544)
         model.Load(5@)
         model.Load(366)
+        if
+            not model.Available(544)
+        then
+            repeat
+            wait 0
+            model.Load(544)
+            until model.Available(544)
+        end
+        if
+            not model.Available(5@)
+        then
+            repeat
+            wait 0
+            model.Load(5@)
+            until model.Available(5@)
+        end
+        if
+            not model.Available(366)
+        then
+            repeat
+            wait 0
+            model.Load(366)
+            until model.Available(366)
+        end
         038B: load_requested_models
         00A5: firela = create_car 544 at Coords_x Coords_y Coords_z
         009A: fireman = create_actor_pedtype 4 model 5@ at 0.0 0.0 0.0

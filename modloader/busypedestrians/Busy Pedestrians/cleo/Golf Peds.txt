@@ -43,6 +43,38 @@ end
         model.Load(3065)
         model.Load(333)
         model.Load(1974)
+        if
+            not model.Available(0@)
+        then
+            repeat
+            wait 0
+            model.Load(0@)
+            until model.Available(0@)
+        end
+        if
+            not model.Available(3065)
+        then
+            repeat
+            wait 0
+            model.Load(3065)
+            until model.Available(3065)
+        end
+        if
+            not model.Available(333)
+        then
+            repeat
+            wait 0
+            model.Load(333)
+            until model.Available(333)
+        end
+        if
+            not model.Available(1974)
+        then
+            repeat
+            wait 0
+            model.Load(1974)
+            until model.Available(1974)
+        end
         038B: load_requested_models
         
         009A: Golf_man = create_actor_pedtype 21 model 0@ at coords_x coords_y coords_z

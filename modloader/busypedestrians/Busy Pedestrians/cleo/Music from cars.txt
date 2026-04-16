@@ -32,6 +32,13 @@ const
     Music = 10@
 end
 
+0AF0: 0@ = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Settings" key "Music from Cars"
+if
+    0@ == 0
+then
+    0A93: terminate_this_custom_script
+end
+
 0AF2: VolumeCar = read_float_from_ini_file "cleo\Busy Pedestrians.ini" section "Music from cars" key "Volume"
 0AF0: Pause_Day = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Music from cars" key "Pause Time Day"
 0AF0: Pause_Night = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Music from cars" key "Pause Time Night"

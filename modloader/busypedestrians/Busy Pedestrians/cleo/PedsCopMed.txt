@@ -224,9 +224,13 @@ if
     056D: actor 20@(Ped_Select,1i) defined
 then
     if
-        not 10@(Ped_Select,1i) == -1
+        locate_char_distance_to_char 20@(Ped_Select,1i) char $PLAYER_ACTOR radius 50.0
     then
-        delete_render_object 10@(Ped_Select,1i)
+        if
+            not 10@(Ped_Select,1i) <= -1
+        then
+            0E31: set_render_object_visible 10@(Ped_Select,1i) 0
+        end
     end
     if
         Ped_Select == 2

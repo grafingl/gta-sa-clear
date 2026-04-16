@@ -45,6 +45,14 @@ Ped_ID = 155
                 until 04EE:   animation "PedEventsMod" loaded
 
                 model.Load(Ped_ID)
+                if
+                    not model.Available(Ped_ID)
+                then
+                    repeat
+                    wait 0
+                    model.Load(Ped_ID)
+                    until model.Available(Ped_ID)
+                end
                 038B: load_requested_models
 
                 if 0EEA: locate_char_distance_to_coordinates $player_actor pos 372.4044 -70.5814 1001.5078 radius 30.0 // Burger

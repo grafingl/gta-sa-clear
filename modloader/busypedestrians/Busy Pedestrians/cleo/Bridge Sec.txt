@@ -24,6 +24,14 @@ end
             until 04EE:   animation "PedEventsMod" loaded
 
             model.Load(71)
+            if
+                not model.Available(71)
+            then
+                repeat
+                wait 0
+                model.Load(71)
+                until model.Available(71)
+            end
             038B: load_requested_models
             
 

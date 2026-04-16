@@ -50,6 +50,38 @@ end
     model.Load(19)
     model.Load(22)
     model.Load(2102)
+    if
+        not model.Available(21)
+    then
+        repeat
+        wait 0
+        model.Load(21)
+        until model.Available(21)
+    end
+    if
+        not model.Available(19)
+    then
+        repeat
+        wait 0
+        model.Load(19)
+        until model.Available(19)
+    end
+    if
+        not model.Available(22)
+    then
+        repeat
+        wait 0
+        model.Load(22)
+        until model.Available(22)
+    end
+    if
+        not model.Available(2102)
+    then
+        repeat
+        wait 0
+        model.Load(2102)
+        until model.Available(2102)
+    end
     038B: load_requested_models
 
     009A: refery = create_actor_pedtype 21 model 21 at coords_x coords_y coords_z

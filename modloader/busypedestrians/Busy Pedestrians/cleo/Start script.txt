@@ -93,6 +93,7 @@ wait pause
                     not 1@ == 8 // not weather rain
                     not 1@ == 16 // not weather rain 2
                     $ACTIVE_INTERIOR == 0
+                    $ONMISSION == 0
                 then
                     0A92: stream_custom_script "PedsWalk2.qa"
                     wait 2000
@@ -192,6 +193,7 @@ wait pause
                 if and
                     timera > 10000
                     $ACTIVE_INTERIOR == 0
+                    $ONMISSION == 0
                 then
                     timera = 0
                     0A92: stream_custom_script "PedsHomeless.qa"

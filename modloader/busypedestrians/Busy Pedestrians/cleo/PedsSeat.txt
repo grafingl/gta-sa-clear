@@ -588,18 +588,32 @@ if
     056D: actor 20@(Ped_Select,1i) defined
 then
     if
-        not 10@(Ped_Select,1i) == -1
+        not locate_char_distance_to_char 20@(Ped_Select,1i) char $PLAYER_ACTOR radius 50.0
     then
-        delete_render_object 10@(Ped_Select,1i)
+        if
+            0E0A: is_char_script_controlled 20@(Ped_Select,1i)
+        then
+            01C2: remove_references_to_actor 20@(Ped_Select,1i) // Like turning an actor into a random pedestrian
+        end
+    else
+        if
+            0E0A: is_char_script_controlled 20@(Ped_Select,1i)
+        then
+            if
+                not 10@(Ped_Select,1i) <= -1
+            then
+                0E31: set_render_object_visible 10@(Ped_Select,1i) 0
+            end
+            0EFF: get_char_simplest_active_task 20@(Ped_Select,1i) id_to 1@ pointer_to 2@
+            if and
+                1@ == 401 //named anim
+                not actor.Dead(20@(Ped_Select,1i))
+            then
+                0E97: clear_char_secondary_tasks 20@(Ped_Select,1i)
+            end
+            01C2: remove_references_to_actor 20@(Ped_Select,1i) // Like turning an actor into a random pedestrian
+        end
     end
-    0EFF: get_char_simplest_active_task 20@(Ped_Select,1i) id_to 1@ pointer_to 2@
-    if and
-        1@ == 401 //named anim
-        not actor.Dead(20@(Ped_Select,1i))
-    then
-        0E97: clear_char_secondary_tasks 20@(Ped_Select,1i)
-    end
-    01C2: remove_references_to_actor 20@(Ped_Select,1i) // Like turning an actor into a random pedestrian
 end
 20@(Ped_Select,1i) = -1
 10@(Ped_Select,1i) = -1

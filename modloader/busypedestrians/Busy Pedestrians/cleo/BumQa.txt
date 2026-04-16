@@ -74,6 +74,25 @@ then 1@ = 239
 end
 model.Load(1@)
 model.Load(928)
+
+if
+    not model.Available(1@)
+then
+    repeat
+    wait 0
+    model.Load(1@)
+    until model.Available(1@)
+end
+
+if
+    not model.Available(928)
+then
+    repeat
+    wait 0
+    model.Load(928)
+    until model.Available(928)
+end
+
 038B: load_requested_models
 009A: bum_man = create_actor_pedtype 21 model 1@ at coords_x coords_y coords_z
 0173: set_actor bum_man Z_angle_to angle_1

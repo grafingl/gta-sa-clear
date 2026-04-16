@@ -68,6 +68,30 @@ end
 model.Load(968)
 model.Load(1498)
 model.Load(model_1)
+if
+    not model.Available(968)
+then
+    repeat
+    wait 0
+    model.Load(968)
+    until model.Available(968)
+end
+if
+    not model.Available(1498)
+then
+    repeat
+    wait 0
+    model.Load(1498)
+    until model.Available(1498)
+end
+if
+    not model.Available(model_1)
+then
+    repeat
+    wait 0
+    model.Load(model_1)
+    until model.Available(model_1)
+end
 038B: load_requested_models
 
 if

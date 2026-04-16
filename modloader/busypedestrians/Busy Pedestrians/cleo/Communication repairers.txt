@@ -73,6 +73,14 @@ wait 50
             until 04EE:   animation "PedEventsMod" loaded
         
                 model.Load(Ped_ID)
+                if
+                    not model.Available(Ped_ID)
+                then
+                    repeat
+                    wait 0
+                    model.Load(Ped_ID)
+                    until model.Available(Ped_ID)
+                end
                 038B: load_requested_models
                 1@ -= 0.2
                 009A: RepairMan_Up = create_actor_pedtype 4 model Ped_ID at 1@ 2@ 3@

@@ -31,6 +31,11 @@ wait 100
         player.Defined(0)
     then
         if
+            not $ONMISSION == 0
+        then
+            continue
+        end
+        if
             check == true
         then
             if

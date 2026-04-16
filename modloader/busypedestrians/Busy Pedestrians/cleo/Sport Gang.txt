@@ -82,6 +82,38 @@ model.Load(2629)
 model.Load(2913)
 model.Load(3071)
 
+if
+    not model.Available(1@)
+then
+    repeat
+    wait 0
+    model.Load(1@)
+    until model.Available(1@)
+end
+if
+    not model.Available(2629)
+then
+    repeat
+    wait 0
+    model.Load(2629)
+    until model.Available(2629)
+end
+if
+    not model.Available(2913)
+then
+    repeat
+    wait 0
+    model.Load(2913)
+    until model.Available(2913)
+end
+if
+    not model.Available(3071)
+then
+    repeat
+    wait 0
+    model.Load(3071)
+    until model.Available(3071)
+end
 038B: load_requested_models
 coords_z -= 1.0
 0E01: create_object_no_save 2629 at coords_x coords_y coords_z offset 0 ground 0 to obj_1

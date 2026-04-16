@@ -34,6 +34,13 @@ else
     0A93: terminate_this_custom_script
 end
 
+0AF0: 0@ = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Settings" key "News Paper"
+if
+    0@ == 0
+then
+    0A93: terminate_this_custom_script
+end
+
 if
     0E2D: is_game_first_start
 then
@@ -369,6 +376,23 @@ wait timeq
                 until 04EE:   animation "PedEventsMod" loaded
                 
                 model.Load(250)
+                model.Load(367)
+                if
+                    not model.Available(250)
+                then
+                    repeat
+                    wait 0
+                    model.Load(250)
+                    until model.Available(250)
+                end
+                if
+                    not model.Available(367)
+                then
+                    repeat
+                    wait 0
+                    model.Load(367)
+                    until model.Available(367)
+                end
                 038B: load_requested_models
                 00A5: newsvan = create_car 582 at 1@ 2@ 3@
                 0129: newsvan_ped = create_actor_pedtype 21 model 250 in_car newsvan driverseat
@@ -381,8 +405,6 @@ wait timeq
                 0812: AS_actor newsvan_ped_2 perform_animation "camera_car" IFP "PedEventsMod" framedelta 2.0 loopA 2 lockX 0 lockY 0 lockF 0 time -1  // versionB
                 04EF: release_animation "PedEventsMod"
                 
-                model.Load(367)
-                038B: load_requested_models
                 0E2E: create_render_object_to_char_bone newsvan_ped_2 model 367 bone 24 offset 0 0 0 rotation 0 0 0 store_to 1@
                 
                 model.Destroy(367)
@@ -822,6 +844,22 @@ wait timeq
         then
             model.Load(161)
             model.Load(1550)
+            if
+                not model.Available(161)
+            then
+                repeat
+                wait 0
+                model.Load(161)
+                until model.Available(161)
+            end
+            if
+                not model.Available(1550)
+            then
+                repeat
+                wait 0
+                model.Load(1550)
+                until model.Available(1550)
+            end
             038B: load_requested_models
             
             repeat
@@ -1033,6 +1071,14 @@ wait timeq
                 001D:   TIMERA > 4@  // (int)
             then
                 model.Load(342)
+                if
+                    not model.Available(342)
+                then
+                    repeat
+                    wait 0
+                    model.Load(342)
+                    until model.Available(342)
+                end
                 038B: load_requested_models
                 0208: 4@ = random_float_in_ranges -2.0 2.0
                 0208: 5@ = random_float_in_ranges -2.0 2.0

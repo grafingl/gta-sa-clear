@@ -26,6 +26,14 @@ model.Load(574)
 until model.Available(574)
 
 model.Load(50)
+if
+    not model.Available(50)
+then
+    repeat
+    wait 0
+    model.Load(50)
+    until model.Available(50)
+end
 038B: load_requested_models
 00A5: sweeper_car = create_car 574 at 0@ 1@ 2@
 064B: sweeper_particle = create_particle "vent" at 0.0 0.0 0.0 type 1

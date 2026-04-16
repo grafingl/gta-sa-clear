@@ -24,6 +24,14 @@ if or
 then
 
     model.Load(5422)
+    if
+        not model.Available(5422)
+    then
+        repeat
+        wait 0
+        model.Load(5422)
+        until model.Available(5422)
+    end
     038B: load_requested_models
     0E01: create_object_no_save 5422 at 2333.7033 6.1 26.62 offset 0 ground 0 to 0@
     0177: set_object 0@ Z_angle_to 0.0
@@ -85,6 +93,14 @@ end
             end
 
             model.Load(131)
+            if
+                not model.Available(131)
+            then
+                repeat
+                wait 0
+                model.Load(131)
+                until model.Available(131)
+            end
             038B: load_requested_models
             009A: ped_2 = create_actor_pedtype 5 model 131 at 2329.1333 8.1251 26.5228
             0173: set_actor ped_2 Z_angle_to 180.1217

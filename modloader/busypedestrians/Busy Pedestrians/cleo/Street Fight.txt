@@ -63,6 +63,38 @@ end
         model.Load(21)
         model.Load(48)
         model.Load(60)
+        if
+            not model.Available(5@)
+        then
+            repeat
+            wait 0
+            model.Load(5@)
+            until model.Available(5@)
+        end
+        if
+            not model.Available(21)
+        then
+            repeat
+            wait 0
+            model.Load(21)
+            until model.Available(21)
+        end
+        if
+            not model.Available(48)
+        then
+            repeat
+            wait 0
+            model.Load(48)
+            until model.Available(48)
+        end
+        if
+            not model.Available(60)
+        then
+            repeat
+            wait 0
+            model.Load(60)
+            until model.Available(60)
+        end
         038B: load_requested_models
 
         009A: Fighter_1 = create_actor_pedtype 21 model 5@ at coords_x coords_y coords_z

@@ -49,6 +49,38 @@ end
             model.Load(260)
             model.Load(1649)
             model.Load(153)
+            if
+                not model.Available(27)
+            then
+                repeat
+                wait 0
+                model.Load(27)
+                until model.Available(27)
+            end
+            if
+                not model.Available(260)
+            then
+                repeat
+                wait 0
+                model.Load(260)
+                until model.Available(260)
+            end
+            if
+                not model.Available(1649)
+            then
+                repeat
+                wait 0
+                model.Load(1649)
+                until model.Available(1649)
+            end
+            if
+                not model.Available(153)
+            then
+                repeat
+                wait 0
+                model.Load(153)
+                until model.Available(153)
+            end
             038B: load_requested_models
 
 
@@ -200,6 +232,7 @@ end
                     if or
                         08B7:   test 2@ bit 10 // The object is broken
                         08B7:   test 2@ bit 6 // The object is expl
+                        08B7:   test 2@ bit 5 // The object is expl
                     then
                         event = 1
                         progress = 2

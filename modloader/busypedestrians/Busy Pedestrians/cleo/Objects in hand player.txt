@@ -80,6 +80,22 @@ until player.Defined(0)
 
 model.Load(2702)
 model.Load(2880)
+if
+    not model.Available(2702)
+then
+    repeat
+    wait 0
+    model.Load(2702)
+    until model.Available(2702)
+end
+if
+    not model.Available(2880)
+then
+    repeat
+    wait 0
+    model.Load(2880)
+    until model.Available(2880)
+end
 038B: load_requested_models
 0E2E: create_render_object_to_char_bone $player_actor model 2702 bone 24 offset 0.05 0.1 0.0 rotation 0 0 0 store_to Render_Model_Pizza
 0E37: set_render_object_scale Render_Model_Pizza 0.8 0.8 0.8

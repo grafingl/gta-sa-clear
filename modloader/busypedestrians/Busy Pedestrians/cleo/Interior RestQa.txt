@@ -32,23 +32,6 @@ const
     obj_7 = 12@
 end
 
-0AAA: 2@ = get_script_struct_named 'EHIFIXD'
-if
-    2@ == 0
-then
-    016A: fade 0 time 500
-    01B4: set_player $PLAYER_CHAR can_move 0
-    wait 1000
-    04BB: select_interior 4
-    00A1: put_actor $PLAYER_ACTOR at 456.9537 -88.3719 999.5547
-    0173: set_actor $PLAYER_ACTOR Z_angle_to 80.0
-    0860: link_actor $PLAYER_ACTOR to_interior 4
-    0E24: fix_char $PLAYER_ACTOR ground 1 brightness 0 and_fade_in 0
-    02EB: restore_camera_with_jumpcut
-    wait 2000
-    01B4: set_player $PLAYER_CHAR can_move 1
-    016A: fade 1 time 1000
-end
 
 0085: sweep = 0@ // (int)
 0085: sponge = 1@ // (int)
@@ -75,6 +58,102 @@ end
             model.Load(2355)
             model.Load(2220)
             model.Load(1546)
+            if
+                not model.Available(133)
+            then
+                repeat
+                wait 0
+                model.Load(133)
+                until model.Available(133)
+            end
+            if
+                not model.Available(31)
+            then
+                repeat
+                wait 0
+                model.Load(31)
+                until model.Available(31)
+            end
+            if
+                not model.Available(198)
+            then
+                repeat
+                wait 0
+                model.Load(198)
+                until model.Available(198)
+            end
+            if
+                not model.Available(2702)
+            then
+                repeat
+                wait 0
+                model.Load(2702)
+                until model.Available(2702)
+            end
+            if
+                not model.Available(2427)
+            then
+                repeat
+                wait 0
+                model.Load(2427)
+                until model.Available(2427)
+            end
+            if
+                not model.Available(2218)
+            then
+                repeat
+                wait 0
+                model.Load(2218)
+                until model.Available(2218)
+            end
+            if
+                not model.Available(2219)
+            then
+                repeat
+                wait 0
+                model.Load(2219)
+                until model.Available(2219)
+            end
+            if
+                not model.Available(2353)
+            then
+                repeat
+                wait 0
+                model.Load(2353)
+                until model.Available(2353)
+            end
+            if
+                not model.Available(2354)
+            then
+                repeat
+                wait 0
+                model.Load(2354)
+                until model.Available(2354)
+            end
+            if
+                not model.Available(2355)
+            then
+                repeat
+                wait 0
+                model.Load(2355)
+                until model.Available(2355)
+            end
+            if
+                not model.Available(2220)
+            then
+                repeat
+                wait 0
+                model.Load(2220)
+                until model.Available(2220)
+            end
+            if
+                not model.Available(1546)
+            then
+                repeat
+                wait 0
+                model.Load(1546)
+                until model.Available(1546)
+            end
             038B: load_requested_models
             event = false
             

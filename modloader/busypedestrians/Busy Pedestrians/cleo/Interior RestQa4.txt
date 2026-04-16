@@ -40,6 +40,38 @@ end
             model.Load(93)
             model.Load(2880)
             model.Load(1514)
+            if
+                not model.Available(233)
+            then
+                repeat
+                wait 0
+                model.Load(233)
+                until model.Available(233)
+            end
+            if
+                not model.Available(93)
+            then
+                repeat
+                wait 0
+                model.Load(93)
+                until model.Available(93)
+            end
+            if
+                not model.Available(2880)
+            then
+                repeat
+                wait 0
+                model.Load(2880)
+                until model.Available(2880)
+            end
+            if
+                not model.Available(1514)
+            then
+                repeat
+                wait 0
+                model.Load(1514)
+                until model.Available(1514)
+            end
             038B: load_requested_models
             event = false
 

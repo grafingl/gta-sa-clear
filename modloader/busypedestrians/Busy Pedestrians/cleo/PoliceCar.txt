@@ -372,22 +372,8 @@ jf @PoliceCar
 if
 12@ <> 0 // if "boot_dummy" find
 jf @PoliceCar
-8@ = -1.5
-
-// find position and goto point actor
-
-:Police_Empty
-wait 0
-if and
-056D:   actor 4@ defined
-056E:   car 0@ defined
-jf @PoliceCar
-8@ -= 0.5
-0407: store_coords_to 1@ 2@ 3@ from_car 0@ with_offset 0.0 -3.0 0.0
-0407: store_coords_to 21@ 22@ 23@ from_car 0@ with_offset 0.0 8@ 0.0
-if
-06BD:   no_obstacles_between 1@ 2@ 3@ and 21@ 22@ 23@ solid 0 car 1 actor 0 object 0 particle 0
-jf @Police_Empty
+0441: 1@ = car 0@ model
+07E4: get_model 1@ dimensions_cornerA_to 2@ 8@ 2@ dimensions_cornerB_to 2@ 2@ 2@ // B
 8@ -= 0.4
 0407: store_coords_to 21@ 22@ 23@ from_car 0@ with_offset 0.0 8@ 0.5
 0006: TIMERA = 0
@@ -462,11 +448,7 @@ jf @Police_Check
 
 :Police_Open
 0613: 1@ = actor 4@ animation "Boot_Open" time
-8@ = 6.2
-1@ += 0.15
-0063: 8@ -= 1@  // (float)
-12@ += 16
-0AA6: call_method 0x59AFA0 struct 12@ num_params 1 pop 0 8@ // Rotate Z
+08A6: set_car 0@ door 1 rotation_to 1@
 if
 0019:   TIMERA > 500
 jf @Police_Check

@@ -32,6 +32,14 @@ end
             until 04EE:   animation "MISC" loaded
 
             model.Load(147)
+            if
+                not model.Available(147)
+            then
+                repeat
+                wait 0
+                model.Load(147)
+                until model.Available(147)
+            end
             038B: load_requested_models
 
             // ped 1

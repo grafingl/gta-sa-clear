@@ -333,6 +333,14 @@ jump @Broom_Start
 
 :Broom_Start 
 Model.Load(6@)
+if
+    not model.Available(6@)
+then
+    repeat
+    wait 0
+    model.Load(6@)
+    until model.Available(6@)
+end
 038B: load_requested_models 
 
 repeat

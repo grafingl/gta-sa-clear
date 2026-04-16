@@ -57,6 +57,30 @@ end
     model.Load(260)
     model.Load(3000)
     model.Load(1427)
+    if
+        not model.Available(260)
+    then
+        repeat
+        wait 0
+        model.Load(260)
+        until model.Available(260)
+    end
+    if
+        not model.Available(3000)
+    then
+        repeat
+        wait 0
+        model.Load(3000)
+        until model.Available(3000)
+    end
+    if
+        not model.Available(1427)
+    then
+        repeat
+        wait 0
+        model.Load(1427)
+        until model.Available(1427)
+    end
     038B: load_requested_models
     009A: worker = create_actor_pedtype 4 model 260 at Coords_x Coords_y Coords_z
     0173: set_actor worker Z_angle_to angle_1

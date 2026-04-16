@@ -102,6 +102,30 @@ end
 model.Load(1@)
 model.Load(3000)
 model.Load(365)
+if
+    not model.Available(1@)
+then
+    repeat
+    wait 0
+    model.Load(1@)
+    until model.Available(1@)
+end
+if
+    not model.Available(3000)
+then
+    repeat
+    wait 0
+    model.Load(3000)
+    until model.Available(3000)
+end
+if
+    not model.Available(365)
+then
+    repeat
+    wait 0
+    model.Load(365)
+    until model.Available(365)
+end
 038B: load_requested_models
 009A: gang_man = create_actor_pedtype gang_check model 1@ at coords_x coords_y coords_z
 0173: set_actor gang_man Z_angle_to angle_1

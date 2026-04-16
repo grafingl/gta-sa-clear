@@ -56,6 +56,7 @@ const
     scr_club = 24@
     scr_barber = 23@
     scr_ammo = 22@
+    scr_sex = 21@
 end
 
 0AF0: Spanner = read_int_from_ini_file "cleo\Improved interiors.ini" section "Models" key "Spanner"
@@ -69,6 +70,7 @@ end
 0AF0: scr_club = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Improved interiors" key "Club"
 0AF0: scr_barber = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Improved interiors" key "Barber"
 0AF0: scr_ammo = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Improved interiors" key "AmmuNation"
+0AF0: scr_sex = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Improved interiors" key "Sex Shop"
 
 while true
 wait 0
@@ -93,6 +95,22 @@ wait 0
                 $ACTIVE_INTERIOR == 18
             then
                 0A92: stream_custom_script "Atrium.qa"
+                wait 1000
+                continue
+            end
+        end
+        
+        0AAA: 1@ = get_script_struct_named 'SexSell'
+        if and
+            1@ == 0
+            $ONMISSION == 0
+            scr_sex == 1
+        then
+            if and
+                locate_char_distance_to_coordinates $player_actor pos -104.3625 -17.7231 1000.7187 radius 50.0
+                $ACTIVE_INTERIOR == 3
+            then
+                0A92: stream_custom_script "Sex Seller.qa"
                 wait 1000
                 continue
             end
@@ -162,6 +180,26 @@ wait 0
                 $ACTIVE_INTERIOR == 6
             then
                 0A92: stream_custom_script "Interior RestQa4.qa" Broom
+                wait 1000
+                continue
+            end
+        end
+        
+        0AAA: 1@ = get_script_struct_named 'INTSXQ1'
+        0AAA: 3@ = get_script_struct_named 'SEXSEL2'
+        0AAA: 2@ = get_script_struct_named 'EHIFIXD'
+        if and
+            1@ == 0
+            3@ == 0
+            not 2@ == 0
+            $ONMISSION == 0
+        then
+            if and
+                locate_char_distance_to_coordinates $player_actor pos 745.3214 1442.0612 1102.7266 radius 50.0
+                $ACTIVE_INTERIOR == 6
+            then
+                0A92: stream_custom_script "Interior SexQa.qa"
+                0A92: stream_custom_script "Sex Seller 2.qa"
                 wait 1000
                 continue
             end

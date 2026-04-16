@@ -35,6 +35,7 @@ jf @ChatCar
     $ACTIVE_INTERIOR == 0
     TIMERA < 3000
     810F:   not player $PLAYER_CHAR wanted_level > 0
+    $ONMISSION == 0
 jf @ChatCar_Time
     30@ = 0
     while 0EA8: get_any_car_no_save_recursive 30@ progress_to 30@ car_to 0@
@@ -467,7 +468,7 @@ not actor.Dead(5@)
 00DB:   actor 5@ in_car 0@
 then
 05CD: AS_actor 5@ exit_car 0@
-0E2F: delete_render_object 31@
+0E31: set_render_object_visible 31@ 0
 end
 jump @ChatCar_Exit
 

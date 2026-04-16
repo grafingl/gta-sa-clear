@@ -67,6 +67,8 @@ end
         0177: set_object obj_1 Z_angle_to 1@
         timerb = 0
         
+        soundqa = -1
+        
         0209: 1@ = random_int_in_ranges 1 5
         if 1@ == 1
         then 0AC1: soundqa = load_audio_stream_with_3d_support "SoundsQa/BirdsFly1.mp3" // IF and SET
@@ -96,6 +98,7 @@ end
             then
             else
                 0AAE: remove_audio_stream soundqa
+                soundqa = -1
                 0108: destroy_object obj_1
                 wait 3000
                 break
@@ -113,6 +116,16 @@ end
             then
                 stopped = true
                 0209: rANDOM_TIME = random_int_in_ranges 500 1200
+                if
+                    0E4D: random_percent 30
+                then
+                    0176: 1@ = object obj_1 Z_angle
+                    if 0E4D: random_percent 50
+                    then 1@ += 45.0
+                    else 1@ -= 45.0
+                    end
+                    0177: set_object obj_1 Z_angle_to 1@
+                end
             else
                 0209: rANDOM_TIME = random_int_in_ranges 5000 8000
                 stopped = false
@@ -136,6 +149,7 @@ end
                 0AAD: set_audio_stream soundqa state 1
                 0400: store_coords_to 1@ 2@ 3@ from_object obj_1 with_offset 0.0 0.0 0.3
                 01BC: put_object obj_1 at 1@ 2@ 3@
+                timerb = 0
             end
         else
             if and
@@ -148,6 +162,7 @@ end
                 0AAD: set_audio_stream soundqa state 1
                 0400: store_coords_to 1@ 2@ 3@ from_object obj_1 with_offset 0.0 0.0 0.3
                 01BC: put_object obj_1 at 1@ 2@ 3@
+                timerb = 0
             end
         end
         
@@ -168,8 +183,16 @@ end
                 0176: 1@ = object obj_1 Z_angle
                 1@ += 30.0
                 0177: set_object obj_1 Z_angle_to 1@
+                if
+                    timerb > 1000
+                then
+                    gosub @Blood
+                    gosub @Exit
+                    break
+                end
             else
                 // Движение вперед
+                timerb = 0
 
                 0400: store_coords_to 1@ 2@ 3@ from_object obj_1 with_offset 0.0 0.0 0.5
                 02CE: 4@ = ground_z_at 1@ 2@ 3@
@@ -242,7 +265,7 @@ end
 
             // Анимация
             if
-                timera > 80
+                timera > 50
             then
                 if
                     progress == 0
@@ -340,6 +363,7 @@ end
                         01BC: put_object obj_1 at 1@ 2@ 4@
                         0ABC: set_audio_stream soundqa volume volume_ini
                         0AAD: set_audio_stream soundqa state 1
+                        timerb = 0
                         break
                     end
 
@@ -369,6 +393,7 @@ end
                         01BC: put_object obj_1 at 1@ 2@ 4@
                         0ABC: set_audio_stream soundqa volume volume_ini
                         0AAD: set_audio_stream soundqa state 1
+                        timerb = 0
                         break
                     end
 
@@ -380,6 +405,13 @@ end
             break
         end
         until not player.Defined(0)
+        if 03CA:   object obj_1 exists
+        then 01C4: remove_references_to_object obj_1 // This object will now disappear when the player looks away
+        end
+        if not soundqa == -1
+        then 0AAE: remove_audio_stream soundqa
+        end
+        soundqa = -1
 wait 2000
 0A93: terminate_this_custom_script
 
@@ -387,6 +419,7 @@ wait 2000
 0400: store_coords_to 1@ 2@ 3@ from_object obj_1 with_offset 0.0 0.0 0.0
 09B8: create_blood_gush_at 1@ 2@ 3@ with_offset 0.0 0.0 0.0 density 100 on_actor $player_actor
 0AAE: remove_audio_stream soundqa
+soundqa = -1
 0108: destroy_object obj_1
 return
 

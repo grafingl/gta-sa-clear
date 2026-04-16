@@ -82,6 +82,38 @@ end
             model.Load(97)
             model.Load(138)
             model.Load(251)
+            if
+                not model.Available(45)
+            then
+                repeat
+                wait 0
+                model.Load(45)
+                until model.Available(45)
+            end
+            if
+                not model.Available(97)
+            then
+                repeat
+                wait 0
+                model.Load(97)
+                until model.Available(97)
+            end
+            if
+                not model.Available(138)
+            then
+                repeat
+                wait 0
+                model.Load(138)
+                until model.Available(138)
+            end
+            if
+                not model.Available(251)
+            then
+                repeat
+                wait 0
+                model.Load(251)
+                until model.Available(251)
+            end
             038B: load_requested_models
             
 
@@ -295,6 +327,38 @@ end
             model.Load(97)
             model.Load(138)
             model.Load(251)
+            if
+                not model.Available(251)
+            then
+                repeat
+                wait 0
+                model.Load(251)
+                until model.Available(251)
+            end
+            if
+                not model.Available(138)
+            then
+                repeat
+                wait 0
+                model.Load(138)
+                until model.Available(138)
+            end
+            if
+                not model.Available(97)
+            then
+                repeat
+                wait 0
+                model.Load(97)
+                until model.Available(97)
+            end
+            if
+                not model.Available(45)
+            then
+                repeat
+                wait 0
+                model.Load(45)
+                until model.Available(45)
+            end
             038B: load_requested_models
 
 
@@ -467,6 +531,38 @@ end
             model.Load(97)
             model.Load(138)
             model.Load(251)
+            if
+                not model.Available(251)
+            then
+                repeat
+                wait 0
+                model.Load(251)
+                until model.Available(251)
+            end
+            if
+                not model.Available(138)
+            then
+                repeat
+                wait 0
+                model.Load(138)
+                until model.Available(138)
+            end
+            if
+                not model.Available(97)
+            then
+                repeat
+                wait 0
+                model.Load(97)
+                until model.Available(97)
+            end
+            if
+                not model.Available(45)
+            then
+                repeat
+                wait 0
+                model.Load(45)
+                until model.Available(45)
+            end
             038B: load_requested_models
 
 
@@ -669,6 +765,38 @@ end
             model.Load(97)
             model.Load(138)
             model.Load(251)
+            if
+                not model.Available(251)
+            then
+                repeat
+                wait 0
+                model.Load(251)
+                until model.Available(251)
+            end
+            if
+                not model.Available(138)
+            then
+                repeat
+                wait 0
+                model.Load(138)
+                until model.Available(138)
+            end
+            if
+                not model.Available(97)
+            then
+                repeat
+                wait 0
+                model.Load(97)
+                until model.Available(97)
+            end
+            if
+                not model.Available(45)
+            then
+                repeat
+                wait 0
+                model.Load(45)
+                until model.Available(45)
+            end
             038B: load_requested_models
 
 

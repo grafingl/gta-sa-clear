@@ -63,6 +63,12 @@ wait 250
         player.Defined(0)
     then
     
+        if
+            not $ONMISSION == 0
+        then
+            continue
+        end
+    
     if
         001D:   timera > Pause_time  // Пауза между следующим актером из ини
     then
@@ -464,7 +470,7 @@ wait 250
                                         Vend_Or_Cart == Cart
                                         Progress == 0
                                     then
-                                        0400: store_coords_to 1@ 2@ 3@ from_object Vend_Obj with_offset 1.0 0.0 0.5
+                                        0400: store_coords_to 1@ 2@ 3@ from_object Vend_Obj with_offset 1.1 0.0 0.5
                                         0176: 4@ = object Vend_Obj Z_angle
                                         4@ += 90.0
                                         0804: AS_actor Ped_Vend walk_to 1@ 2@ 3@ angle 4@ radius 0.0 animation "VEND_EAT1_P" IFP_file "VENDING" rate 2.0 LA 0 LX 0 LY 0 LF 0 LT 0

@@ -56,6 +56,14 @@ end
         end
 
         model.Load(2@)
+        if
+            not model.Available(2@)
+        then
+            repeat
+            wait 0
+            model.Load(2@)
+            until model.Available(2@)
+        end
         038B: load_requested_models
 
         009A: man_1 = create_actor_pedtype 21 model 2@ at coords_x coords_y coords_z

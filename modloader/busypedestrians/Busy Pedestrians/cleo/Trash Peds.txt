@@ -79,6 +79,14 @@ wait 200
                                 0792: disembark_instantly_actor trash_man
                                 0812: AS_actor trash_man perform_animation "stand_1" IFP "PedEventsMod" framedelta 1000.0 loopA 1 lockX 0 lockY 0 lockF 0 time -1  // versionB
                                 model.Load(1265)
+                                if
+                                    not model.Available(1265)
+                                then
+                                    repeat
+                                    wait 0
+                                    model.Load(1265)
+                                    until model.Available(1265)
+                                end
                                 038B: load_requested_models
                                 0E2E: create_render_object_to_char_bone trash_man model 1265 bone 24 offset 0.15 0.0 0.0 rotation 0 0 0 store_to redner_ped
                                 0E37: set_render_object_scale redner_ped 0.4 0.4 0.4
@@ -101,7 +109,6 @@ wait 200
                                         not locate_char_distance_to_coordinates trash_man pos coords_x coords_y coords_z radius 7.0
                                         not locate_char_distance_to_char $player_actor char trash_man radius 100.0
                                     then
-                                        0E2F: delete_render_object redner_ped
                                         break
                                     end
                                 
@@ -127,7 +134,7 @@ wait 200
                                         if
                                             1@ > 0.35
                                         then
-                                            0E2F: delete_render_object redner_ped
+                                            0E31: set_render_object_visible redner_ped 0
                                             progress = 2
                                         end
                                     end

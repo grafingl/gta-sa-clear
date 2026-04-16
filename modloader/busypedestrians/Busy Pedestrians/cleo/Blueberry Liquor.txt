@@ -31,6 +31,30 @@ then
     model.Load(5422)
     model.Load(71)
     model.Load(334)
+    if
+        not model.Available(5422)
+    then
+        repeat
+        wait 0
+        model.Load(5422)
+        until model.Available(5422)
+    end
+    if
+        not model.Available(71)
+    then
+        repeat
+        wait 0
+        model.Load(71)
+        until model.Available(71)
+    end
+    if
+        not model.Available(334)
+    then
+        repeat
+        wait 0
+        model.Load(334)
+        until model.Available(334)
+    end
     038B: load_requested_models
     0E01: create_object_no_save 5422 at 254.638 -61.7552 1.5703 offset 0 ground 0 to 0@
     0177: set_object 0@ Z_angle_to 90.0

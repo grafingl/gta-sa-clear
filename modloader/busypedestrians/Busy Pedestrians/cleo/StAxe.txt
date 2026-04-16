@@ -183,6 +183,38 @@ Model.Load(6@)
 model.Load(843)
 model.Load(342)
 model.Load(1463)
+if
+    not model.Available(6@)
+then
+    repeat
+    wait 0
+    model.Load(6@)
+    until model.Available(6@)
+end
+if
+    not model.Available(843)
+then
+    repeat
+    wait 0
+    model.Load(843)
+    until model.Available(843)
+end
+if
+    not model.Available(342)
+then
+    repeat
+    wait 0
+    model.Load(342)
+    until model.Available(342)
+end
+if
+    not model.Available(1463)
+then
+    repeat
+    wait 0
+    model.Load(1463)
+    until model.Available(1463)
+end
 038B: load_requested_models 
 
 repeat

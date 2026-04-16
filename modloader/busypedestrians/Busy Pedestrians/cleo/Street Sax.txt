@@ -335,6 +335,22 @@ then
 
     Model.Load(2@)
     Model.Load(1550)
+    if
+        not model.Available(2@)
+    then
+        repeat
+        wait 0
+        model.Load(2@)
+        until model.Available(2@)
+    end
+    if
+        not model.Available(1550)
+    then
+        repeat
+        wait 0
+        model.Load(1550)
+        until model.Available(1550)
+    end
     038B: load_requested_models
     Actor.Create(Musician, 21, 2@, 4@, 5@, 6@)
     0E24: fix_char Musician ground 1 brightness 1 and_fade_in 0

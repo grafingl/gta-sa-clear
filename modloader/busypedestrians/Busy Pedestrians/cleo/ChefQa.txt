@@ -50,6 +50,14 @@ Ped_ID = 155
             
             
                 model.Load(Ped_ID)
+                if
+                    not model.Available(Ped_ID)
+                then
+                    repeat
+                    wait 0
+                    model.Load(Ped_ID)
+                    until model.Available(Ped_ID)
+                end
                 038B: load_requested_models
 
                 077E: get_active_interior_to 1@

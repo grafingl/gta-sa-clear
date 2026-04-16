@@ -290,6 +290,14 @@ return
 
 :Ped_Eat_STandart
 model.Load(1@)
+if
+    not model.Available(1@)
+then
+    repeat
+    wait 0
+    model.Load(1@)
+    until model.Available(1@)
+end
 038B: load_requested_models
 0E2E: create_render_object_to_char_bone 0@ model 1@ bone 34 offset 4@ 5@ 6@ rotation 0 7@ 9@ store_to 10@
 set_render_object_scale 10@ 8@ 8@ 8@
@@ -483,36 +491,50 @@ if
     056D: actor 0@ defined
 then
     if
-        not 10@ == -1
+        not locate_char_distance_to_char 0@ char $PLAYER_ACTOR radius 50.0
     then
-        delete_render_object 10@
-    end
         if
-            Ped_Select == 3
+            0E0A: is_char_script_controlled 0@
+        then
+            01C2: remove_references_to_actor 0@ // Like turning an actor into a random pedestrian
+        end
+    else
+        if
+            Ped_Select == 1
+        then
+            0650: destroy_particle 21@
+            21@ = -1
+        end
+        if
+            0E0A: is_char_script_controlled 0@
         then
             if
-                not 11@ == -1
+                not 10@ <= -1
             then
-                delete_render_object 11@
+                0E31: set_render_object_visible 10@ 0
             end
-        end
-    if
-        not actor.Dead(0@)
-    then
-        if and
-            not Ped_Select == 4
-            Ped_Select >= 1
-        then
-            0E97: clear_char_secondary_tasks 0@
+                if
+                    Ped_Select == 3
+                then
+                    if
+                        not 11@ <= -1
+                    then
+                        0E31: set_render_object_visible 11@ 0
+                    end
+                end
+            if
+                not actor.Dead(0@)
+            then
+                if and
+                    not Ped_Select == 4
+                    Ped_Select >= 1
+                then
+                    0E97: clear_char_secondary_tasks 0@
+                end
+            end
+            01C2: remove_references_to_actor 0@ // Like turning an actor into a random pedestrian
         end
     end
-    if
-        Ped_Select == 1
-    then
-        0650: destroy_particle 21@
-        21@ = -1
-    end
-    01C2: remove_references_to_actor 0@ // Like turning an actor into a random pedestrian
 end
 0@ = -1
 10@ = -1

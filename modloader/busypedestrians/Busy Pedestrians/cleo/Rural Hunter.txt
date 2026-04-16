@@ -53,6 +53,30 @@ end
         model.Load(0@)
         model.Load(3065)
         model.Load(357)
+        if
+            not model.Available(0@)
+        then
+            repeat
+            wait 0
+            model.Load(0@)
+            until model.Available(0@)
+        end
+        if
+            not model.Available(3065)
+        then
+            repeat
+            wait 0
+            model.Load(3065)
+            until model.Available(3065)
+        end
+        if
+            not model.Available(357)
+        then
+            repeat
+            wait 0
+            model.Load(357)
+            until model.Available(357)
+        end
         038B: load_requested_models
 
         009A: hunt_man = create_actor_pedtype 21 model 0@ at coords_x coords_y coords_z

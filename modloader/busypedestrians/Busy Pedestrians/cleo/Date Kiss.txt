@@ -71,6 +71,30 @@ end
             model.Load(male)
             model.Load(female)
             model.Load(325)
+            if
+                not model.Available(male)
+            then
+                repeat
+                wait 0
+                model.Load(male)
+                until model.Available(male)
+            end
+            if
+                not model.Available(female)
+            then
+                repeat
+                wait 0
+                model.Load(female)
+                until model.Available(female)
+            end
+            if
+                not model.Available(325)
+            then
+                repeat
+                wait 0
+                model.Load(325)
+                until model.Available(325)
+            end
             038B: load_requested_models
 
 

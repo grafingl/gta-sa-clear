@@ -70,6 +70,11 @@ wait 200
     if
         player.Defined(0)
     then
+        if
+            not $ONMISSION == 0
+        then
+            continue
+        end
 
         find = 0
         while 0EA9: get_any_object_no_save_recursive find progress_to find object_to busstop

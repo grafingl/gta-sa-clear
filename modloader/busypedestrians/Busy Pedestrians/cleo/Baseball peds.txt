@@ -66,6 +66,38 @@ end
             model.Load(3065)
             model.Load(96)
             model.Load(336)
+            if
+                not model.Available(170)
+            then
+                repeat
+                wait 0
+                model.Load(170)
+                until model.Available(170)
+            end
+            if
+                not model.Available(3065)
+            then
+                repeat
+                wait 0
+                model.Load(3065)
+                until model.Available(3065)
+            end
+            if
+                not model.Available(96)
+            then
+                repeat
+                wait 0
+                model.Load(96)
+                until model.Available(96)
+            end
+            if
+                not model.Available(336)
+            then
+                repeat
+                wait 0
+                model.Load(336)
+                until model.Available(336)
+            end
             038B: load_requested_models
             009A: Baseballman = create_actor_pedtype 4 model 96 at 1@ 2@ 3@
             0173: set_actor Baseballman Z_angle_to 4@

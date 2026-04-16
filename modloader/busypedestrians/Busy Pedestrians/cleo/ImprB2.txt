@@ -48,6 +48,23 @@ end
                 end
                 model.Load(2@)
                 
+                if
+                    not model.Available(176)
+                then
+                    repeat
+                    wait 0
+                    model.Load(176)
+                    until model.Available(176)
+                end
+                if
+                    not model.Available(2@)
+                then
+                    repeat
+                    wait 0
+                    model.Load(2@)
+                    until model.Available(2@)
+                end
+                
                 038B: load_requested_models
                 009A: ped_1 = create_actor_pedtype 4 model 176 at 414.7504 -15.7727 1001.8047
                 0F02: create_render_object_to_char_bone_from_special ped_1 special_model 0@ bone 34 offset 0 0.08 0 rotation 0 180.0 180.0 store_to 1@

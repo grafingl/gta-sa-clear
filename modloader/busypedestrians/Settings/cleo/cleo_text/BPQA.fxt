@@ -27,3 +27,11 @@ STFGHQA Your choice
 STFGHQ2 ~k~~CONVERSATION_YES~ or ~k~~CONVERSATION_NO~ Change the bid~n~~k~~PED_SPRINT~ Select~n~~k~~VEHICLE_ENTER_EXIT~ Exit
 STFGHQ3 You don't have money!
 STFGHQ4 You've placed a bet!~n~Wait for the battle to end!
+
+SEXSLL0 Sex Shop
+SEXSLL1 Purple Dildo
+SEXSLL2 White Dildo
+SEXSLL3 Long White Dildo
+SEXSLL4 White Dildo 2
+
+FLWRQA1 ~k~~VEHICLE_ENTER_EXIT~ Buy Flowers: $50

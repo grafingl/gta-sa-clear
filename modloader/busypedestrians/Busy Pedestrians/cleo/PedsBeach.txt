@@ -302,6 +302,14 @@ return
 
 :Ped_drink_standart
 model.Load(1@)
+if
+    not model.Available(1@)
+then
+    repeat
+    wait 0
+    model.Load(1@)
+    until model.Available(1@)
+end
 038B: load_requested_models
 if
     08B7:   test Bit_sets bit Select_Hand
@@ -440,20 +448,34 @@ if
     056D: actor 20@(Ped_Select,1i) defined
 then
     if
-        not 10@(Ped_Select,1i) == -1
-    then
-        delete_render_object 10@(Ped_Select,1i)
-    end
-    if
-        not actor.Dead(20@(Ped_Select,1i))
+        not locate_char_distance_to_char 20@(Ped_Select,1i) char $PLAYER_ACTOR radius 50.0
     then
         if
-            Ped_Select == 4
+            0E0A: is_char_script_controlled 20@(Ped_Select,1i)
         then
-            0E97: clear_char_secondary_tasks 20@(Ped_Select,1i)
+            01C2: remove_references_to_actor 20@(Ped_Select,1i) // Like turning an actor into a random pedestrian
+        end
+    else
+        if
+            0E0A: is_char_script_controlled 20@(Ped_Select,1i)
+        then
+            if
+                not 10@(Ped_Select,1i) <= -1
+            then
+                0E31: set_render_object_visible 10@(Ped_Select,1i) 0
+            end
+            if
+                not actor.Dead(20@(Ped_Select,1i))
+            then
+                if
+                    Ped_Select == 4
+                then
+                    0E97: clear_char_secondary_tasks 20@(Ped_Select,1i)
+                end
+            end
+            01C2: remove_references_to_actor 20@(Ped_Select,1i) // Like turning an actor into a random pedestrian
         end
     end
-    01C2: remove_references_to_actor 20@(Ped_Select,1i) // Like turning an actor into a random pedestrian
 end
 10@(Ped_Select,1i) = -1
 20@(Ped_Select,1i) = -1

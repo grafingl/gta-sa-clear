@@ -142,7 +142,8 @@ wait pause
         player.Defined(0)
     then
 
-            if
+            if and
+                $ONMISSION == 0
                 $ACTIVE_INTERIOR == 0
             then
                 0AAA: 1@ = get_script_struct_named "HOTQA"
