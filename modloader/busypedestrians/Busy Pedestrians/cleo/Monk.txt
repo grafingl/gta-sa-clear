@@ -89,7 +89,7 @@ end
                 end
                 
                 if
-                    00E1:   player 0 pressed_key 8
+                    00E1:   player 0 pressed_key 15
                 then
             
                 if
@@ -132,7 +132,7 @@ end
                 repeat
                 wait 0
                 if
-                    00E1:   player 0 pressed_key 8
+                    00E1:   player 0 pressed_key 15
                 then
                     016A: fade 0 time 1000
                     wait 1000

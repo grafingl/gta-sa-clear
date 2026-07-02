@@ -110,16 +110,17 @@ wait 250
                 end
             end
             
-            0AAA: 1@ = get_script_struct_named 'COFMCH'
-            0AAA: 2@ = get_script_struct_named 'SNCKMCH'
+            
             if or
-                1@ > 0
-                2@ > 0
+                09CC:   object Vend_Obj model_is 11691
+                09CC:   object Vend_Obj model_is 11693
+                09CC:   object Vend_Obj model_is 1977
             then
+                0AAA: 1@ = get_script_struct_named 'COFMCH'
+                0AAA: 2@ = get_script_struct_named 'SNCKMCH'
                 if or
-                    09CC:   object Vend_Obj model_is 11691
-                    09CC:   object Vend_Obj model_is 11693
-                    09CC:   object Vend_Obj model_is 1977
+                    1@ > 0
+                    2@ > 0
                 then
                     Vend_Or_Cart = Vend
                 end

@@ -67,7 +67,17 @@ const
     VolumeActor = 27@
     VolumeCar = 26@
     Key_Skip = 25@
+    model_1 = 24@
+    model_2 = 23@
+    model_3 = 22@
+    model_4 = 21@
 end
+
+
+0AF0: model_1 = read_int_from_ini_file "cleo\GangsWithMusic.ini" section "Models" key "Blaster_1"
+0AF0: model_2 = read_int_from_ini_file "cleo\GangsWithMusic.ini" section "Models" key "Blaster_2"
+0AF0: model_3 = read_int_from_ini_file "cleo\GangsWithMusic.ini" section "Models" key "Blaster_3"
+0AF0: model_4 = read_int_from_ini_file "cleo\GangsWithMusic.ini" section "Models" key "Blaster_4"
 
 0AF0: Music = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Gangs With Music" key "Number of songs"
 Music += 1 // Чтобы в рандоме выдавало указаное в .ini количество песен
@@ -112,8 +122,18 @@ then
                     then
                         // Выбор модели магнитофона и рендер
                         0209: 2@ = random_int_in_ranges 1 5
-                        0AD3: 5@v = string_format "Blaster_%d" 2@
-                        0AF0: 1@ = read_int_from_ini_file "cleo\GangsWithMusic.ini" section "Models" key 5@v  // Модель магнитофона
+                        if 2@ == 1
+                        then 0085: 1@ = model_1 // (int)
+                        end
+                        if 2@ == 2
+                        then 0085: 1@ = model_2 // (int)
+                        end
+                        if 2@ == 3
+                        then 0085: 1@ = model_3 // (int)
+                        end
+                        if 2@ == 4
+                        then 0085: 1@ = model_4 // (int)
+                        end
                         0F02: create_render_object_to_char_bone_from_special BandActor special_model 1@ bone 34 offset 0 0 0 rotation 0 0 0 store_to RenderObject
                         // Распределение музыки
                         0209: 1@ = random_int_in_ranges 1 Music

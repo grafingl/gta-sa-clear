@@ -57,6 +57,8 @@ const
     scr_barber = 23@
     scr_ammo = 22@
     scr_sex = 21@
+    time = 20@
+    time_inside = 1500
 end
 
 0AF0: Spanner = read_int_from_ini_file "cleo\Improved interiors.ini" section "Models" key "Spanner"
@@ -72,8 +74,10 @@ end
 0AF0: scr_ammo = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Improved interiors" key "AmmuNation"
 0AF0: scr_sex = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Improved interiors" key "Sex Shop"
 
+time = 0
+
 while true
-wait 0
+wait time
     if
         player.Defined(0)
     then
@@ -82,7 +86,35 @@ wait 0
         if
             $ACTIVE_INTERIOR == 0
         then
+            time = 0
             continue
+        end
+        
+        // shopping basket
+        if
+            $ONMISSION == 0
+        then
+            077E: get_active_interior_to 1@
+            if or
+                1@ == 6
+                1@ == 4
+                1@ == 18
+            then
+
+                if or
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -27.8786 -81.1702 1003.5469 radius 30.0
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -28.2176 -51.7941 1003.5469 radius 30.0
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -30.9906 -14.84 1003.5573 radius 30.0
+                then
+                    0AAA: 1@ = get_script_struct_named "BASKSH"
+                    if
+                        1@ == 0
+                    then
+                        0A92: stream_custom_script "Shopping Basket.qa"
+                        wait 2000
+                    end
+                end
+            end
         end
         
         0AAA: 1@ = get_script_struct_named 'ATRIUMQ'
@@ -96,6 +128,7 @@ wait 0
             then
                 0A92: stream_custom_script "Atrium.qa"
                 wait 1000
+                time = time_inside
                 continue
             end
         end
@@ -112,6 +145,7 @@ wait 0
             then
                 0A92: stream_custom_script "Sex Seller.qa"
                 wait 1000
+                time = time_inside
                 continue
             end
         end
@@ -130,6 +164,7 @@ wait 0
             then
                 0A92: stream_custom_script "Interior RestQa.qa" Broom Sponge
                 wait 1000
+                time = time_inside
                 continue
             end
         end
@@ -147,6 +182,7 @@ wait 0
             then
                 0A92: stream_custom_script "Interior RestQa2.qa" Broom
                 wait 1000
+                time = time_inside
                 continue
             end
         end
@@ -164,6 +200,7 @@ wait 0
             then
                 0A92: stream_custom_script "Interior RestQa3.qa" 
                 wait 1000
+                time = time_inside
                 continue
             end
         end
@@ -181,6 +218,7 @@ wait 0
             then
                 0A92: stream_custom_script "Interior RestQa4.qa" Broom
                 wait 1000
+                time = time_inside
                 continue
             end
         end
@@ -201,6 +239,7 @@ wait 0
                 0A92: stream_custom_script "Interior SexQa.qa"
                 0A92: stream_custom_script "Sex Seller 2.qa"
                 wait 1000
+                time = time_inside
                 continue
             end
         end
@@ -218,6 +257,7 @@ wait 0
             then
                 0A92: stream_custom_script "Interior Police.qa"
                 wait 1000
+                time = time_inside
                 continue
             end
         end
@@ -240,6 +280,7 @@ wait 0
                 then
                     0A92: stream_custom_script "Improved GYM.qa"
                     wait 1000
+                    time = time_inside
                     continue
                 end
             end
@@ -262,6 +303,7 @@ wait 0
                 then
                     0A92: stream_custom_script "Improved Garages.qa"
                     wait 1000
+                    time = time_inside
                     continue
                 end
             end
@@ -289,6 +331,7 @@ wait 0
                         0A92: stream_custom_script "CleanerQ.qa" Broom
                     end
                     wait 1000
+                    time = time_inside
                     continue
                 end
             end
@@ -308,6 +351,7 @@ wait 0
                 then
                     0A92: stream_custom_script "AmmoQa.qa"
                     wait 1000
+                    time = time_inside
                     continue
                 end
             end
@@ -325,16 +369,14 @@ wait 0
                 2@ > 0
             then
                 0AAA: 1@ = get_script_struct_named 'GFDATE'
-                0E40: get_current_hour 2@
                 if and
                     1@ == 0
                     $ONMISSION == 0
                     not $ACTIVE_INTERIOR == 0
-                    2@ >= 7
-                    2@ < 18
                 then
                     0A92: stream_custom_script "Improved Club.qa" Spanner Sponge Broom
                     wait 1000
+                    time = time_inside
                     continue
                 end
             end
@@ -366,6 +408,7 @@ wait 0
                     0A92: stream_custom_script "ImprB2.qa"
                 end
                 wait 2000
+                time = time_inside
                 continue
             end
         end

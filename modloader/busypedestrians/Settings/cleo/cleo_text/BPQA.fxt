@@ -1,7 +1,7 @@
-donat1 ~k~~GROUP_CONTROL_FWD~ Donate: $50
+donat1 ~k~~VEHICLE_ENTER_EXIT~ Donate: $50
 donat2 ~r~You don't have $50
-monk1 ~k~~GROUP_CONTROL_FWD~ Meditate
-monk2 ~k~~GROUP_CONTROL_FWD~ Exit
+monk1 ~k~~VEHICLE_ENTER_EXIT~ Meditate
+monk2 ~k~~VEHICLE_ENTER_EXIT~ Exit
 boomb ~k~~GROUP_CONTROL_FWD~ The next song
 
 PPRqa ~k~~VEHICLE_ENTER_EXIT~ Buy the Newspaper: ~1~$
@@ -20,7 +20,7 @@ Pprqa10 Criminals hit JACKPOT as caligula Casino ROBBED of MILLIONS!
 Pprqa11 Military Scrambles as "BLACK PROJECT" STOLEN from Area 69! Costs taxpayers MILLIONS!
 Pprqa12 Gang Violence Plague the streets! mothers blame VIOLENT VIDEO GAMES!
 
-dice1 ~k~~GROUP_CONTROL_FWD~ Play: $50
+dice1 ~k~~VEHICLE_ENTER_EXIT~ Play: $50
 dice2 ~r~You don't have $50
 
 STFGHQA Your choice

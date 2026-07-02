@@ -335,8 +335,9 @@ end
                             if and
                                 progress == 0
                                 010A:   player $PLAYER_CHAR money > 49
-                                00E1:   player 0 pressed_key 8
+                                00E1:   player 0 pressed_key 15
                             then
+                                07CC: set_player $PLAYER_CHAR can_enter_exit_vehicles 0
                                 04C4: store_coords_to 2@ 3@ 4@ from_actor midle_man with_offset 0.0 0.0 0.0
                                 04C4: store_coords_to 5@ 6@ 7@ from_actor $PLAYER_ACTOR with_offset 0.0 0.0 0.0
                                 0E27: get_angle_from_two_coords 5@ 6@ and 2@ 3@ to 4@
@@ -391,7 +392,10 @@ end
                             if 1@ == 1
                             then progress = 103 // גûידנûר
                             end
+                            07CC: set_player $PLAYER_CHAR can_enter_exit_vehicles 1
                         end
+                    else
+                        07CC: set_player $PLAYER_CHAR can_enter_exit_vehicles 1
                     end
                 end
 
@@ -640,6 +644,11 @@ end
             then
                 0215: destroy_pickup money_pickup
             end
+        end
+        if
+            progress > 100
+        then
+            07CC: set_player $PLAYER_CHAR can_enter_exit_vehicles 1
         end
         if 056D:   actor left_man defined
         then 01C2: remove_references_to_actor left_man // Like turning an actor into a random pedestrian

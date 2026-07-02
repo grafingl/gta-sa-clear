@@ -24,10 +24,29 @@ then
     0A93: terminate_this_custom_script
 end
 
+const
+    drink1 = 21@
+    drink2 = 22@
+    drink3 = 23@
+    read1 = 24@
+    read2 = 25@
+    read3 = 26@
+end
+
+0AF0: read1 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "book"
+0AF0: read2 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "book2"
+0AF0: read3 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "paper"
+
+
+0AF0: drink1 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "Drink1"
+0AF0: drink2 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "Drink2"
+0AF0: drink3 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "Drink3"
+
+
 wait 5000
 
 :ChatCar
-wait 200
+wait 500
 if
    Player.Defined($PLAYER_CHAR) 
 jf @ChatCar
@@ -268,31 +287,21 @@ then
 060B: set_actor 5@ decision_maker_to 1@
 0E24: fix_char 5@ ground 0 brightness 1 and_fade_in 0
 
-0209: 3@ = random_int_in_ranges 1 6
+0209: 3@ = random_int_in_ranges 1 4
 if
 3@ == 1
 then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "Drink1"
+0085: 1@ = drink1 // (int)
 end
 if
 3@ == 2
 then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "Drink2"
+0085: 1@ = drink2 // (int)
 end
 if
 3@ == 3
 then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "Drink3"
-end
-if
-3@ == 4
-then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "Drink4"
-end
-if
-3@ == 5
-then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "Drink5"
+0085: 1@ = drink3 // (int)
 end
 0F02:  5@ special_model 1@ bone 24 offset 0.04 0.05 0.0 rotation 0 0 0 scale 31@ // bone 34 left hand, 24 right hand, 9 had, 3 tors, 4 upper tors
 0E30: set_render_object_auto_hide 31@ dead 1 weapon 1 car 0
@@ -374,43 +383,21 @@ then
 0E24: fix_char 5@ ground 0 brightness 1 and_fade_in 0
 
 2@ = 180.0
-0209: 3@ = random_int_in_ranges 1 8
+0209: 3@ = random_int_in_ranges 1 4
 if
 3@ == 1
 then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "book"
+0085: 1@ = read1 // (int)
 end
 if
 3@ == 2
 then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "book2"
+0085: 1@ = read2 // (int)
 end
 if
 3@ == 3
 then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "book3"
-end
-if
-3@ == 4
-then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "book4"
-end
-if
-3@ == 5
-then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "paper"
-2@ = 0.0
-end
-if
-3@ == 6
-then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "paper2"
-2@ = 0.0
-end
-if
-3@ == 7
-then
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "paper3"
+0085: 1@ = read3 // (int)
 2@ = 0.0
 end
 0F02:  5@ special_model 1@ bone 34 offset 0.25 0.03 0 rotation 0 180.0 2@ scale 31@ // bone 34 left hand, 24 right hand, 9 had, 3 tors, 4 upper tors
@@ -471,6 +458,5 @@ then
 0E31: set_render_object_visible 31@ 0
 end
 jump @ChatCar_Exit
-
 
 // By ArtemQa146

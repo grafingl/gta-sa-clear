@@ -101,7 +101,7 @@ ped_33 = -1
 ped_44 = -1
 
 while true
-wait 200
+wait 500
     if
         player.Defined(0)
     then

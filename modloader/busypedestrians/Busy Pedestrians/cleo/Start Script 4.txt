@@ -55,7 +55,7 @@ const
     render_brush = 26@
     chance_brush = 25@
     scr_flwrs = 24@
-    pause = 200
+    pause = 300
 end
 
 0AF0: render_broom = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "BroomQ2"
@@ -77,13 +77,17 @@ wait pause
     if
         player.Defined(0)
     then
+    
+        if
+            not $ACTIVE_INTERIOR == 0
+        then
+            continue
+        end
 
             // fast food clean
-            0AAA: 1@ = get_script_struct_named "CLNQST"
             if and
                 $ACTIVE_INTERIOR == 0
                 $ONMISSION == 0
-                1@ == 0
             then
                 0E40: get_current_hour 1@
                 0D59: get_current_weather_to 2@
@@ -200,20 +204,23 @@ wait pause
                         not 3@ == 0.0
                         not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
                     then
-                        0A92: stream_custom_script "Fast Food Cleaner.qa" 1@ 2@ 3@ 4@ 5@ render_broom chance_cleaner
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "CLNQST"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Fast Food Cleaner.qa" 1@ 2@ 3@ 4@ 5@ render_broom chance_cleaner
+                            wait 2000
+                        end
                     end
                 end
             end
             
             wait pause
 
-            // fast food clean
-            0AAA: 1@ = get_script_struct_named "RLBRUSH"
+            // Roll Brush
             if and
                 $ACTIVE_INTERIOR == 0
                 $ONMISSION == 0
-                1@ == 0
             then
                 0E40: get_current_hour 1@
                 0D59: get_current_weather_to 2@
@@ -291,8 +298,13 @@ wait pause
                         not 3@ == 0.0
                         not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
                     then
-                        0A92: stream_custom_script "Roll Brush.qa" 1@ 2@ 3@ 4@ render_brush chance_brush
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "RLBRUSH"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Roll Brush.qa" 1@ 2@ 3@ 4@ render_brush chance_brush
+                            wait 2000
+                        end
                     end
                 end
             end
@@ -300,11 +312,9 @@ wait pause
             wait pause
             
             // flowers seller
-            0AAA: 1@ = get_script_struct_named "FLOWRQA"
             if and
                 $ACTIVE_INTERIOR == 0
                 $ONMISSION == 0
-                1@ == 0
                 scr_flwrs == 1
             then
                 0E40: get_current_hour 1@
@@ -315,8 +325,6 @@ wait pause
                     1@ = 0.0
                     2@ = 0.0
                     3@ = 0.0
-
-                    // SF
 
                     if
                         0EEA: locate_char_distance_to_coordinates $player_actor pos -2520.3911 -1.0973 25.6172 radius 100.0
@@ -332,9 +340,196 @@ wait pause
                         not 1@ == 0.0
                         not 2@ == 0.0
                         not 3@ == 0.0
-                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
+                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
                     then
-                        0A92: stream_custom_script "Flowers Seller.qa" 1@ 2@ 3@ 4@
+                        0AAA: 0@ = get_script_struct_named "FLOWRQA"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Flowers Seller.qa" 1@ 2@ 3@ 4@
+                            wait 2000
+                        end
+                    end
+                end
+            end
+            
+            wait pause
+
+            // close shops
+            if
+                $ONMISSION == 0
+            then
+                0E40: get_current_hour 1@
+                if
+                    1@ >= 22
+                then
+                    1@ = 0.0
+                    2@ = 0.0
+                    3@ = 0.0
+                    
+                    // 1
+
+                    if
+                        0EEA: locate_char_distance_to_coordinates $player_actor pos 1044.1975 -1294.5576 13.5469 radius 100.0
+                    then
+                        1@ = 1044.1975
+                        2@ = -1294.5576
+                        3@ = 13.5469
+                        4@ = 90.0
+                    end
+                    
+                    if
+                        0EEA: locate_char_distance_to_coordinates $player_actor pos 1074.3619 -1271.1986 13.5469 radius 100.0
+                    then
+                        1@ = 1074.3619 
+                        2@ = -1271.1986
+                        3@ = 13.5469
+                        4@ = 358.9057
+                    end
+                    
+                    if
+                        0EEA: locate_char_distance_to_coordinates $player_actor pos 969.4393 -1293.9442 13.5469 radius 100.0
+                    then
+                        1@ = 969.4393
+                        2@ = -1293.9442
+                        3@ = 13.5469
+                        4@ = 91.4731
+                    end
+
+
+                    if and
+                        not 1@ == 0.0
+                        not 2@ == 0.0
+                        not 3@ == 0.0
+                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 30.0
+                    then
+                        0AAA: 0@ = get_script_struct_named "CLOSESH"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Close Shops.qa" 1@ 2@ 3@ 4@
+                            
+                            // 2
+
+                            1@ = 0.0
+                            2@ = 0.0
+                            3@ = 0.0
+
+                            if
+                                0EEA: locate_char_distance_to_coordinates $player_actor pos 1044.1971 -1282.6979 13.5469 radius 100.0
+                            then
+                                1@ = 1044.1971
+                                2@ = -1282.6979
+                                3@ = 13.5469
+                                4@ = 86.6398
+                            end
+
+                            if
+                                0EEA: locate_char_distance_to_coordinates $player_actor pos 1072.3044 -1247.5339 15.4662 radius 100.0
+                            then
+                                1@ = 1072.3044
+                                2@ = -1247.5339
+                                3@ = 15.4662
+                                4@ = 269.918
+                            end
+
+                            if
+                                0EEA: locate_char_distance_to_coordinates $player_actor pos 984.0293 -1295.824 13.5469 radius 100.0
+                            then
+                                1@ = 984.0293
+                                2@ = -1295.824
+                                3@ = 13.5469
+                                4@ = 1.5457
+                            end
+
+
+                            if and
+                                not 1@ == 0.0
+                                not 2@ == 0.0
+                                not 3@ == 0.0
+                                not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 30.0
+                            then
+                                0A92: stream_custom_script "Close Shops.qa" 1@ 2@ 3@ 4@
+                                wait 2000
+                            end
+                            
+                        end
+                    end
+                    
+                    
+                    
+                end
+            end
+            
+            wait pause
+
+            // blueberry liquor
+            if and
+                $ACTIVE_INTERIOR == 0
+                $ONMISSION == 0
+            then
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 252.4777 -54.8283 1.5783 radius 100.0
+                then
+                    0AAA: 0@ = get_script_struct_named "LIQUORQ"
+                    if
+                        0@ == 0
+                    then
+                        0A92: stream_custom_script "Blueberry Liquor.qa"
+                        wait 2000
+                    end
+                end
+            end
+
+            // blueberry liquor
+            if and
+                $ACTIVE_INTERIOR == 0
+                $ONMISSION == 0
+            then
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2333.4033 6.275 26.4926 radius 100.0
+                then
+                    0AAA: 0@ = get_script_struct_named "PCREEKQ"
+                    if
+                        0@ == 0
+                    then
+                        0A92: stream_custom_script "Palomino Creek Qa.qa"
+                        wait 2000
+                    end
+                end
+            end
+
+            // bridge 1
+            if and
+                $ONMISSION == 0
+                $SYNDICATE_TOTAL_PASSED_MISSIONS >= 10
+            then
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -2677.0002 1272.7784 55.4297 radius 100.0
+                then
+                    0AAA: 0@ = get_script_struct_named "PAYSEC"
+                    if
+                        0@ == 0
+                    then
+                        0A92: stream_custom_script "Bridge Sec.qa"
+                        wait 2000
+                    end
+                end
+            end
+
+            // bridge 2
+            if and
+                $ONMISSION == 0
+                $SYNDICATE_TOTAL_PASSED_MISSIONS >= 10
+            then
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -2677.0002 1272.7784 55.4297 radius 50.0
+                then
+                    0AAA: 0@ = get_script_struct_named "PAYANQ"
+                    if
+                        0@ == 0
+                    then
+                        0A92: stream_custom_script "PayQa.qa"
                         wait 2000
                     end
                 end

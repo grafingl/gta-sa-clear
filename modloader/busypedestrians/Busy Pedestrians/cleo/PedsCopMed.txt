@@ -22,10 +22,27 @@ const
     Peds_Find = 25@
     Ped_Select = 24@
     Bit_sets = 31@
+
+    cop1 = 8@
+    cop2 = 9@
+    cop3 = 26@
+    med1 = 27@
+    med2 = 28@
+    med3 = 29@
+    med4 = 30@
 end
 
+0AF0: cop1 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "cop1"
+0AF0: cop2 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "cop2"
+0AF0: cop3 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "cop3"
+
+0AF0: med1 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "med1"
+0AF0: med2 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "med2"
+0AF0: med3 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "med3"
+0AF0: med4 = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "med4"
+
 while true
-wait 50
+wait 100
 if
     Player.Defined($PLAYER_CHAR)
 then
@@ -75,8 +92,26 @@ gosub @Realese_animation
                 then
                     0085: 20@(Ped_Select,1i) = 0@ // (int)
                     0209: 2@ = random_int_in_ranges 1 5
-                    0AD3: 5@v = string_format "med%d" 2@
-                    0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key 5@v
+                    if
+                        2@ == 1
+                    then
+                        0085: 1@ = med1 // (int)
+                    end
+                    if
+                        2@ == 2
+                    then
+                        0085: 1@ = med2 // (int)
+                    end
+                    if
+                        2@ == 3
+                    then
+                        0085: 1@ = med3 // (int)
+                    end
+                    if
+                        2@ == 4
+                    then
+                        0085: 1@ = med4 // (int)
+                    end
                     gosub @Peds_Med
                     0@ = -1
                     break
@@ -99,8 +134,22 @@ gosub @Realese_animation
                 08C3: clear Bit_sets bit 1
                 0085: 20@(Ped_Select,1i) = 0@ // (int)
                 0209: 2@ = random_int_in_ranges 1 4
-                0AD3: 5@v = string_format "cop%d" 2@
-                0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key 5@v
+                if
+                    2@ == 1
+                then
+                    0085: 1@ = cop1 // (int)
+                end
+                if
+                    2@ == 2
+                then
+                    0085: 1@ = cop2 // (int)
+                end
+                if
+                    2@ == 3
+                then
+                    0085: 1@ = cop3 // (int)
+                end
+
                 if 2@ == 1
                 then
                     06D2: 15@v = "cops2"
@@ -127,7 +176,7 @@ end
 :Peds_Cop
 0F02:  20@(Ped_Select,1i) special_model 1@ bone 24 offset 0 0 0 rotation 0 0 0 scale 10@(Ped_Select,1i) // bone 34 left hand, 24 right hand, 9 had, 3 tors
 0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
-wait 1500
+wait 1000
 0006: TIMERA = 0
 return
 
@@ -135,7 +184,7 @@ return
 :Peds_Med
 0F02:  20@(Ped_Select,1i) special_model 1@ bone 24 offset 0 0 0 rotation 0 0 0 scale 10@(Ped_Select,1i) // bone 34 left hand, 24 right hand, 9 had, 3 tors
 0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
-wait 1500
+wait 1000
 return
 
 

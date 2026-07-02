@@ -17,6 +17,7 @@ script_name "WkPeds"
 // 25@ ped - 15@ render
 // 26@ ped - 16@ render
 
+
 const
     Peds_Find = 19@
     Ped_Skin = 1@
@@ -24,19 +25,19 @@ const
     Bit_sets = 31@
     Select_Hand = 1
     Number_Peds = 6
-    Pause_For_Find = 18@
-    Pause_Time = 300
-    Minus_Pause = 200
-    Pause = 2000
+    iBuffer = 18@
+    Pause = 1000
 end
-Pause_For_Find = Pause_Time
+
+0085: iBuffer = 0@ // (int)
+0@ = -1
 
 while true
 wait 50
 if
     Player.Defined($PLAYER_CHAR)
 then
-Pause_For_Find += 5
+
 gosub @Ped_20
 gosub @Realese_animation
     if
@@ -200,7 +201,6 @@ then
                                     end
                         
                                     if and
-                                        Pause_For_Find >= Pause_Time
                                         Ped_Select == 3 // Женщина с пакетом в руках
                                         2@ >= 6
                                         2@ < 20
@@ -220,7 +220,6 @@ then
                         
                         
                                     if and
-                                        Pause_For_Find >= Pause_Time
                                         Ped_Select == 4 // Пьющий
                                         0E4D: random_percent 65
                                     then
@@ -245,7 +244,6 @@ then
                                     end
                         
                                     if and
-                                        Pause_For_Find >= Pause_Time
                                         Ped_Select == 5 // Читающий
                                         2@ >= 9
                                         2@ < 17
@@ -260,7 +258,6 @@ then
                                     end
                         
                                     if and
-                                        Pause_For_Find >= Pause_Time
                                         Ped_Select == 6 // Телефон
                                         2@ >= 9
                                         2@ < 17
@@ -269,15 +266,8 @@ then
                                         0085: 20@(Ped_Select,1i) = 0@ // (int)
                                         0E0B: mark_char_as_needed 20@(Ped_Select,1i)
                                         30@ = 0
-                                        0209: 2@ = random_int_in_ranges 1 3
-                                        if 2@ == 1
-                                        then 0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "phone"
-                                        gosub @Ped_Phone
-                                        end
-                                        if 2@ == 2
-                                        then 1@ = 330
+                                        1@ = 330
                                         gosub @Ped_Phone_Standart
-                                        end
                                         wait Pause
                                         break
                                     end
@@ -300,7 +290,10 @@ end
 // Выбор модели, анимации и тд
 
 :Water
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "water"
+2@ = 57
+2@ *= 4
+read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+2@ = 1
 4@ = 0.09
 5@ = 0.025
 6@ = -0.02
@@ -310,8 +303,8 @@ return
 
 :Man_Case
 0209: 2@ = random_int_in_ranges 2 14
-0AD3: 5@v = string_format "case%d" 2@
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key 5@v
+2@ *= 4
+read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 return
 
 :Man_Case_Standart
@@ -325,17 +318,19 @@ return
 
 :Woman_Shop
 0209: 2@ = random_int_in_ranges 1 14
-0AD3: 5@v = string_format "shop%d" 2@
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key 5@v
+2@ += 20
+2@ *= 4
+read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 return
 
 :Woman_Case
 0209: 2@ = random_int_in_ranges 1 6
-0AD3: 5@v = string_format "wcase%d" 2@
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key 5@v
 if 2@ == 4
 then 3@ = 24
 end
+2@ += 34
+2@ *= 4
+read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 return
 
 
@@ -344,8 +339,10 @@ return
 if
     not 2@ == 4
 then
-    0AD3: 5@v = string_format "tors%d" 2@
-    0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key 5@v
+    2@ += 14
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+    2@ = 1
 else
     1@ = 2663
 end
@@ -363,8 +360,10 @@ return
 if
     2@ < 6
 then
-    0AD3: 5@v = string_format "drink%d" 2@
-    0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key 5@v
+    2@ += 39
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+    2@ = 1
 end
 4@ = 0.09
 5@ = 0.025
@@ -407,42 +406,90 @@ return
 :Read
 0209: 2@ = random_int_in_ranges 1 8
 if 2@ == 1
-then 0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "paper"
-05AA: 27@s = "walk2"
-end
-if 2@ == 2
-then 0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "paper2"
-05AA: 27@s = "walk2"
-end
-if 2@ == 3
-then 0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "paper3"
-05AA: 27@s = "walk2"
-end
-if 2@ == 4
-then 0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "book"
-05AA: 27@s = "walk3"
-end
-if 2@ == 5
-then 0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "book2"
-05AA: 27@s = "walk3"
-end
-if 2@ == 6
-then 0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "book3"
-05AA: 27@s = "walk3"
-end
-if 2@ == 7
-then 0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "book4"
-05AA: 27@s = "walk3" 
-end
-if
-    2@ <= 3
 then
+    2@ = 50
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+    2@ = 1
+    05AA: 27@s = "walk2"
     4@ = 0.25
     5@ = 0.02
     6@ = 0
     7@ = 0.0
     9@ = -2.0
-else
+end
+if 2@ == 2
+then
+    2@ = 51
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+    2@ = 1
+    05AA: 27@s = "walk2"
+    4@ = 0.25
+    5@ = 0.02
+    6@ = 0
+    7@ = 0.0
+    9@ = -2.0
+end
+if 2@ == 3
+then
+    2@ = 52
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+    2@ = 1
+    05AA: 27@s = "walk2"
+    4@ = 0.25
+    5@ = 0.02
+    6@ = 0
+    7@ = 0.0
+    9@ = -2.0
+end
+if 2@ == 4
+then
+    2@ = 53
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+    2@ = 5
+    05AA: 27@s = "walk3"
+    4@ = 0.15
+    5@ = 0.1
+    6@ = 0
+    7@ = 180.0
+    9@ = 180.0
+end
+if 2@ == 5
+then
+    2@ = 54
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+    2@ = 5
+    05AA: 27@s = "walk3"
+    4@ = 0.15
+    5@ = 0.1
+    6@ = 0
+    7@ = 180.0
+    9@ = 180.0
+end
+if 2@ == 6
+then
+    2@ = 55
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+    2@ = 5
+    05AA: 27@s = "walk3"
+    4@ = 0.15
+    5@ = 0.1
+    6@ = 0
+    7@ = 180.0
+    9@ = 180.0
+end
+if 2@ == 7
+then
+    2@ = 56
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+    2@ = 5
+    05AA: 27@s = "walk3"
     4@ = 0.15
     5@ = 0.1
     6@ = 0
@@ -455,13 +502,6 @@ return
 // Создания рендера
 
 
-:Ped_Phone
-0F02:  20@(Ped_Select,1i) special_model 1@ bone 24 offset 0 0 0 rotation 0 0 0 scale 10@(Ped_Select,1i) // bone 34 left hand, 24 right hand, 9 had, 3 tors
-0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
-0A1A: actor 20@(Ped_Select,1i) perform_walk_animation "PHONE_IN" IFP "Ped" framedelta 4.0 loopA 0 lockX 0 lockY 0 lockF 1 -1 ms // versionC
-wait 1000
-return
-
 :Ped_Phone_Standart
 model.Load(1@)
 if
@@ -473,11 +513,15 @@ then
     until model.Available(1@)
 end
 038B: load_requested_models
-0E2E: create_render_object_to_char_bone 20@(Ped_Select,1i) model 1@ bone 24 offset 0 0 0 rotation 0 0 0 store_to 10@(Ped_Select,1i)
-0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
-0A1A: actor 20@(Ped_Select,1i) perform_walk_animation "PHONE_IN" IFP "Ped" framedelta 4.0 loopA 0 lockX 0 lockY 0 lockF 1 -1 ms // versionC
+
+if
+    056D:   actor 20@(Ped_Select,1i) defined
+then
+    0E2E: create_render_object_to_char_bone 20@(Ped_Select,1i) model 1@ bone 24 offset 0 0 0 rotation 0 0 0 store_to 10@(Ped_Select,1i)
+    0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
+    0A1A: actor 20@(Ped_Select,1i) perform_walk_animation "PHONE_IN" IFP "Ped" framedelta 4.0 loopA 0 lockX 0 lockY 0 lockF 1 -1 ms // versionC
+end
 model.Destroy(1@)
-wait 1000
 return
 
 :Ped_Read
@@ -489,7 +533,6 @@ end
 0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
 0E37: set_render_object_scale 10@(Ped_Select,1i) 0.85 0.85 0.85
 0A1A: actor 20@(Ped_Select,1i) perform_walk_animation 27@s IFP "PedEventsMod" framedelta 4.0 loopA 1 lockX 0 lockY 0 lockF 0 -1 ms // versionC
-wait 1000
 return
 
 :Ped_drink
@@ -504,7 +547,6 @@ end
 0F02:  20@(Ped_Select,1i) special_model 1@ bone 2@ offset 4@ 5@ 6@ rotation 0 7@ 0 scale 10@(Ped_Select,1i) // bone 34 left hand, 24 right hand, 9 had, 3 tors
 set_render_object_scale 10@(Ped_Select,1i) 8@ 8@ 8@
 0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
-wait 1000
 0006: TIMERA = 0
 return
 
@@ -527,12 +569,15 @@ then
 else
     2@ = 34
 end
-0E2E: create_render_object_to_char_bone 20@(Ped_Select,1i) model 1@ bone 2@ offset 4@ 5@ 6@ rotation 0 7@ 0 store_to 10@(Ped_Select,1i)
-set_render_object_scale 10@(Ped_Select,1i) 8@ 8@ 8@
-0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
+if
+    056D:   actor 20@(Ped_Select,1i) defined
+then
+    0E2E: create_render_object_to_char_bone 20@(Ped_Select,1i) model 1@ bone 2@ offset 4@ 5@ 6@ rotation 0 7@ 0 store_to 10@(Ped_Select,1i)
+    set_render_object_scale 10@(Ped_Select,1i) 8@ 8@ 8@
+    0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
+    0006: TIMERA = 0
+end
 model.Destroy(1@)
-wait 1000
-0006: TIMERA = 0
 return
 
 
@@ -541,25 +586,40 @@ return
 set_render_object_scale 10@(Ped_Select,1i) 8@ 8@ 8@
 0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
 0A1A: actor 20@(Ped_Select,1i) perform_walk_animation "walk1" IFP "PedEventsMod" framedelta 4.0 loopA 1 lockX 0 lockY 0 lockF 0 -1 ms // versionC
-wait 1000
 return
 
 :Ped_Tors_standart
 model.Load(1@)
+if
+    not model.Available(1@)
+then
+    repeat
+    wait 0
+    model.Load(1@)
+    until model.Available(1@)
+end
 038B: load_requested_models
-0E2E: create_render_object_to_char_bone 20@(Ped_Select,1i) model 1@ bone 24 offset 4@ 5@ 6@ rotation 0 7@ 9@ store_to 10@(Ped_Select,1i)
-set_render_object_scale 10@(Ped_Select,1i) 8@ 8@ 8@
-0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
-0A1A: actor 20@(Ped_Select,1i) perform_walk_animation "walk1" IFP "PedEventsMod" framedelta 4.0 loopA 1 lockX 0 lockY 0 lockF 0 -1 ms // versionC
+if
+    056D:   actor 20@(Ped_Select,1i) defined
+then
+    0E2E: create_render_object_to_char_bone 20@(Ped_Select,1i) model 1@ bone 24 offset 4@ 5@ 6@ rotation 0 7@ 9@ store_to 10@(Ped_Select,1i)
+    set_render_object_scale 10@(Ped_Select,1i) 8@ 8@ 8@
+    0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
+    0A1A: actor 20@(Ped_Select,1i) perform_walk_animation "walk1" IFP "PedEventsMod" framedelta 4.0 loopA 1 lockX 0 lockY 0 lockF 0 -1 ms // versionC
+end
 model.Destroy(1@)
-wait 1000
 return
 
 
 :Ped_case
-0F02:  20@(Ped_Select,1i) special_model 1@ bone 3@ offset 0 0 0 rotation 0 0 0 scale 10@(Ped_Select,1i) // bone 34 left hand, 24 right hand, 9 had, 3 tors
-0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
-wait 1000
+if
+    1@ > 0
+then
+    0F02:  20@(Ped_Select,1i) special_model 1@ bone 3@ offset 0 0 0 rotation 0 0 0 scale 10@(Ped_Select,1i) // bone 34 left hand, 24 right hand, 9 had, 3 tors
+    0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
+else
+    10@(Ped_Select,1i) = -1
+end
 return
 
 :Ped_case_standart
@@ -573,11 +633,14 @@ then
     until model.Available(1@)
 end
 038B: load_requested_models
-0E2E: create_render_object_to_char_bone 20@(Ped_Select,1i) model 1@ bone 3@ offset 4@ 5@ 6@ rotation 0 7@ 0 store_to 10@(Ped_Select,1i)
-set_render_object_scale 10@(Ped_Select,1i) 8@ 8@ 8@
-0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
+if
+    056D:   actor 20@(Ped_Select,1i) defined
+then
+    0E2E: create_render_object_to_char_bone 20@(Ped_Select,1i) model 1@ bone 3@ offset 4@ 5@ 6@ rotation 0 7@ 0 store_to 10@(Ped_Select,1i)
+    set_render_object_scale 10@(Ped_Select,1i) 8@ 8@ 8@
+    0E30: set_render_object_auto_hide 10@(Ped_Select,1i) dead 1 weapon 1 car 1
+end
 model.Destroy(1@)
-wait 1000
 return
 
 
@@ -821,10 +884,6 @@ then
 end
 20@(Ped_Select,1i) = -1
 10@(Ped_Select,1i) = -1
-if Ped_Select >= 3
-then Pause_For_Find = 0 // Если пропали те, кто выполнял анимации, то большую паузу
-else Pause_For_Find = Minus_Pause // Если пропали те, кто с предметами в руках то небольшую
-end
 return
 
 // Загрузка анимации

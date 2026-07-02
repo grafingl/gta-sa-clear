@@ -131,13 +131,15 @@ wait 0
                                                     not is_char_script_controlled 0@
                                                 then
 
-                                                    if
+                                                    if and
+                                                        not Actor.Animation(0@) == "UMBRELLA_PARTIAL"
                                                         856D: not actor 26@ defined
                                                     then
                                                         0085: 26@ = 0@ // (int)
                                                         0E0B: mark_char_as_needed 26@
                                                         gosub @Peds_animation
-                                                        continue
+                                                        wait 500
+                                                        break
                                                     end
 
                                                 for 1@ = 0 to 5 step 1
@@ -159,6 +161,7 @@ wait 0
                                                             else
                                                                 gosub @Ped_Render_Create_Right
                                                             end
+                                                            wait 500
                                                             break
                                                         end
                                                     end
@@ -282,11 +285,16 @@ if
     056D: actor 20@(1@,1i) defined
 then
     if
-        not locate_char_distance_to_char 20@(1@,1i) char $PLAYER_ACTOR radius 50.0
+        not locate_char_distance_to_char 20@(1@,1i) char $PLAYER_ACTOR radius 60.0
     then
         if
             0E0A: is_char_script_controlled 20@(1@,1i)
         then
+            if
+                not 10@(1@,1i) <= -1
+            then
+                0E31: set_render_object_visible 10@(1@,1i) 0
+            end
             01C2: remove_references_to_actor 20@(1@,1i) // Like turning an actor into a random pedestrian
         end
     else

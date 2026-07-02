@@ -20,17 +20,19 @@ const
     Number_Peds = 4
     Progress = 30@
     Drink_or_eat = 27@
-    Pause_For_Find = 26@
+    iBuffer = 26@
     Pause_Time = 400
-    Pause = 2000
+    Pause = 1000
 end
+
+0085: iBuffer = 0@ // (int)
+0@ = -1
 
 while true
 wait 50
 if
     Player.Defined($PLAYER_CHAR)
 then
-Pause_For_Find += 5
 gosub @Ped_20
 gosub @Realese_animation
     if
@@ -45,8 +47,7 @@ if and
     not 1@ == 8 // not weather rain
     not 1@ == 16 // not weather rain 2
 then
-    if and
-        Pause_For_Find >= Pause_Time
+    if
         856D: not actor 0@ defined
     then
     Peds_Find = 0
@@ -165,10 +166,14 @@ end
 :Camera
 0209: 2@ = random_int_in_ranges 1 3
 if 2@ == 1
-then 0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "camera"
-end
-if 2@ == 2
-then 0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "camera2"
+then
+    2@ = 98
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+else
+    2@ = 99
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 4@ = 0.0
 5@ = 0.0
@@ -177,7 +182,9 @@ end
 return
 
 :Smoke
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "cigar"
+2@ = 58
+2@ *= 4
+read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 4@ = 0.04
 5@ = 0.1
 6@ = 0.05
@@ -189,23 +196,56 @@ return
 if
     2@ <= 10
 then
-    0AD3: 5@v = string_format "eat%d" 2@
-    0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key 5@v
-end
-if and
-    not 2@ == 1
-    2@ < 6
-then
     4@ = 0.09
     5@ = 0.05
     6@ = 0.01
     7@ = 90.0
     8@ = 0.6
     9@ = 180.0
+    if 2@ == 1
+    then
+        2@ = 14
+        4@ = 0.07
+        5@ = 0.025
+        6@ = -0.025
+        7@ = 0
+        8@ = 0.9
+        9@ = 90.0
+    end
+    if 2@ == 2
+    then 2@ = 18
+    end
+    if 2@ == 3
+    then 2@ = 19
+    end
+    if 2@ == 4
+    then 2@ = 20
+    end
+    if 2@ == 5
+    then 2@ = 34
+    end
+    if 2@ == 6
+    then 2@ = 45
+    end
+    if 2@ == 7
+    then 2@ = 46
+    end
+    if 2@ == 8
+    then 2@ = 47
+    end
+    if 2@ == 9
+    then 2@ = 48
+    end
+    if 2@ == 10
+    then 2@ = 49
+    end
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
+    2@ = 1
 end
-if or
-    2@ == 1
+if and
     2@ >= 6
+    2@ < 11
 then
     4@ = 0.07
     5@ = 0.025
@@ -241,8 +281,9 @@ return
 
 :drink
 0209: 2@ = random_int_in_ranges 1 6
-0AD3: 15@v = string_format "drink%d" 2@
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key 15@v
+2@ += 39
+2@ *= 4
+read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 15@ = 0.09
 16@ = 0.025
 17@ = -0.02
@@ -265,7 +306,6 @@ set_render_object_scale 10@ 8@ 8@ 8@
 0669: 21@ = create_attached_particle "EXHALE" on_actor 0@ with_offset 0.0 0.0 0.0 flag 1
 0883: attach_particle 21@ to_actor 0@ mode 26
 064C: make_particle 21@ visible
-wait 1000
 0006: TIMERA = 0
 0006: TIMERB = 0
 return
@@ -274,7 +314,6 @@ return
 0F02:  0@ special_model 1@ bone 24 offset 4@ 5@ 6@ rotation 0 0 0 scale 10@ // bone 34 left hand, 24 right hand, 9 had, 3 tors
 set_render_object_scale 10@ 8@ 8@ 8@
 0E30: set_render_object_auto_hide 10@ dead 1 weapon 1 car 1
-wait 1000
 0006: TIMERA = 0
 0006: TIMERB = 0
 return
@@ -283,7 +322,6 @@ return
 0F02:  0@ special_model 1@ bone 34 offset 4@ 5@ 6@ rotation 0 7@ 9@ scale 10@ // bone 34 left hand, 24 right hand, 9 had, 3 tors
 set_render_object_scale 10@ 8@ 8@ 8@
 0E30: set_render_object_auto_hide 10@ dead 1 weapon 1 car 1
-wait 1000
 0006: TIMERA = 0
 0006: TIMERB = 0
 return
@@ -299,18 +337,25 @@ then
     until model.Available(1@)
 end
 038B: load_requested_models
-0E2E: create_render_object_to_char_bone 0@ model 1@ bone 34 offset 4@ 5@ 6@ rotation 0 7@ 9@ store_to 10@
-set_render_object_scale 10@ 8@ 8@ 8@
-0E30: set_render_object_auto_hide 10@ dead 1 weapon 1 car 1
+if
+    056D:   actor 0@ defined
+then
+    0E2E: create_render_object_to_char_bone 0@ model 1@ bone 34 offset 4@ 5@ 6@ rotation 0 7@ 9@ store_to 10@
+    set_render_object_scale 10@ 8@ 8@ 8@
+    0E30: set_render_object_auto_hide 10@ dead 1 weapon 1 car 1
+    0006: TIMERA = 0
+end
 model.Destroy(1@)
-wait 1000
-0006: TIMERA = 0
 return
 
 :Ped_Drink
-0F02:  0@ special_model 1@ bone 24 offset 15@ 16@ 17@ rotation 0 0 0 scale 11@ // bone 34 left hand, 24 right hand, 9 had, 3 tors
-set_render_object_scale 11@ 18@ 18@ 18@
-0E30: set_render_object_auto_hide 11@ dead 1 weapon 1 car 1
+if
+    056D:   actor 0@ defined
+then
+    0F02:  0@ special_model 1@ bone 24 offset 15@ 16@ 17@ rotation 0 0 0 scale 11@ // bone 34 left hand, 24 right hand, 9 had, 3 tors
+    set_render_object_scale 11@ 18@ 18@ 18@
+    0E30: set_render_object_auto_hide 11@ dead 1 weapon 1 car 1
+end
 return
 
 // Проверка всех актеров
@@ -539,7 +584,7 @@ end
 0@ = -1
 10@ = -1
 11@ = -1
-Pause_For_Find = 0
+wait Pause
 return
 
 // Загрузка анимации

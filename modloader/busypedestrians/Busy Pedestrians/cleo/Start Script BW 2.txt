@@ -48,7 +48,7 @@ const
     scr_roadw = 29@
     scr_swpcar = 28@
     swpcar_particle = 27@
-    pause = 200
+    pause = 1000
 end
 
 0AF0: scr_roadw = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Settings" key "Road Workers"
@@ -68,9 +68,13 @@ wait pause
     if
         player.Defined(0)
     then
+    
+        if
+            not $ACTIVE_INTERIOR == 0
+        then
+            continue
+        end
 
-            wait pause
-            
             0AAA: 1@ = get_script_struct_named "RDWRQA"
             0842: 2@ = player $PLAYER_CHAR town_number
             if and
@@ -168,11 +172,9 @@ wait pause
             
             wait pause
             
-            0AAA: 1@ = get_script_struct_named "SWPCAR"
             0842: 2@ = player $PLAYER_CHAR town_number
             if and
                 scr_swpcar == 1
-                1@ == 0
                 $ONMISSION == 0
                 $ACTIVE_INTERIOR == 0
                 not 2@ == 0
@@ -192,8 +194,13 @@ wait pause
                         not  locate_char_distance_to_coordinates $PLAYER_ACTOR pos 1@ 2@ 3@ radius 30.0
                         locate_char_distance_to_coordinates $PLAYER_ACTOR pos 1@ 2@ 3@ radius 50.0
                     then
-                        0A92: stream_custom_script "Sweeper Car.qa" 1@ 2@ 3@ swpcar_particle
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "SWPCAR"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Sweeper Car.qa" 1@ 2@ 3@ swpcar_particle
+                            wait 2000
+                        end
                     end
                 end
             end

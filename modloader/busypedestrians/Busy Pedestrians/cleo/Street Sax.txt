@@ -547,8 +547,9 @@ then
                 if and
                     not Event > 0
                     010A:   player $PLAYER_CHAR money > 49
-                    00E1:   player 0 pressed_key 8
+                    00E1:   player 0 pressed_key 15
                 then
+                    07CC: set_player $PLAYER_CHAR can_enter_exit_vehicles 0
                     0400: store_coords_to 2@ 3@ 4@ from_object MONEY_BAG with_offset 0.0 0.0 0.0
                     04C4: store_coords_to 5@ 6@ 7@ from_actor $PLAYER_ACTOR with_offset 0.0 0.0 0.0
                     0E27: get_angle_from_two_coords 5@ 6@ and 2@ 3@ to 4@
@@ -688,6 +689,7 @@ if
 then
     06AB: set_actor $PLAYER_ACTOR all_weapons_hidden 0
     0992: set_player $PLAYER_CHAR weapons_scrollable 1
+    07CC: set_player $PLAYER_CHAR can_enter_exit_vehicles 1
     if not Money_render == -1
     then 0E2F: delete_render_object Money_render
     end
@@ -926,6 +928,7 @@ then
     Money_render = -1
     06AB: set_actor $PLAYER_ACTOR all_weapons_hidden 0
     0992: set_player $PLAYER_CHAR weapons_scrollable 1
+    07CC: set_player $PLAYER_CHAR can_enter_exit_vehicles 1
     0109: player $PLAYER_CHAR money += -50
     if
         Thank_you == -1

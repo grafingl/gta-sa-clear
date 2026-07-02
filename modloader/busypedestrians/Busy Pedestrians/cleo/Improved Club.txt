@@ -527,7 +527,7 @@ end
             if
                 1@ > 0
             then
-            
+
                 repeat
                 wait 0
                 0AAA: 1@ = get_script_struct_named "STRIPW"
@@ -535,7 +535,7 @@ end
                 
             end
         end
-        
+
         
         // dance
         0AAA: 1@ = get_script_struct_named "BAR"
@@ -548,13 +548,13 @@ end
             not 3@ == 0
         then
             if and
-                0EEA: locate_char_distance_to_coordinates $player_actor pos 491.2089 -13.6579 1000.6797 radius 50.0
+                0EEA: locate_char_distance_to_coordinates $player_actor pos 493.391 -22.7228 1000.6797 radius 25.0
                 30@ == false
             then 
                 $9472 = 1
                 016A: fade 0 time 0
 
-                wait 300
+                wait 1000
                 31@ = 0
                 while 0EA7: get_any_char_no_save_recursive 31@ progress_to 31@ char_to 0@
                     if

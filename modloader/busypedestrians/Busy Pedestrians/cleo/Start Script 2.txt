@@ -102,7 +102,7 @@ const
     render_map = 11@
     chance_tourist = 10@
     chance_monk = 9@
-    pause = 200
+    pause = 400
 end
 
 0AF0: scr_fire = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Settings" key "Fire Scene"
@@ -141,18 +141,20 @@ wait pause
     if
         player.Defined(0)
     then
+    
+        if
+            not $ACTIVE_INTERIOR == 0
+        then
+            continue
+        end
 
             if and
                 $ONMISSION == 0
                 $ACTIVE_INTERIOR == 0
             then
-                0AAA: 1@ = get_script_struct_named "HOTQA"
-                0AAA: 3@ = get_script_struct_named "ANMQA"
                 0E40: get_current_hour 2@
                 if and
                     timera > 20000
-                    1@ == 0
-                    3@ == 0
                     2@ >= 9
                     2@ <= 18
                 then
@@ -165,13 +167,23 @@ wait pause
                         1@ == 13
                         1@ == 17
                     then
-                        0A92: stream_custom_script "Hot reaction.qa"
-                        wait 2000
-                        timera = 0
+                        0AAA: 1@ = get_script_struct_named "HOTQA"
+                        if
+                            1@ == 0
+                        then
+                            0A92: stream_custom_script "Hot reaction.qa"
+                            wait 2000
+                            timera = 0
+                        end
                     else
-                        0A92: stream_custom_script "Random Animation.qa"
-                        wait 2000
-                        timera = 0
+                        0AAA: 1@ = get_script_struct_named "ANMQA"
+                        if
+                            1@ == 0
+                        then
+                            0A92: stream_custom_script "Random Animation.qa"
+                            wait 2000
+                            timera = 0
+                        end
                     end
                 end
             end
@@ -183,50 +195,52 @@ wait pause
                 0EEA: locate_char_distance_to_coordinates $player_actor pos -2307.1387 206.304 35.3056 radius 100.0
                 0EEA: locate_char_distance_to_coordinates $player_actor pos 1383.2197 2184.4348 11.0234 radius 100.0
             then
-                0AAA: 1@ = get_script_struct_named "BballQA"
                 0E40: get_current_hour 2@
                 if and
-                    not locate_char_distance_to_coordinates $player_actor pos -2307.1387 206.304 35.3056 radius 50.0
-                    not locate_char_distance_to_coordinates $player_actor pos 1383.2197 2184.4348 11.0234 radius 50.0
+                    not locate_char_distance_to_coordinates $player_actor pos -2307.1387 206.304 35.3056 radius 40.0
+                    not locate_char_distance_to_coordinates $player_actor pos 1383.2197 2184.4348 11.0234 radius 40.0
                     $ACTIVE_INTERIOR == 0
                     2@ >= 9
                     2@ <= 18
                     $ONMISSION == 0
-                    1@ == 0
                 then
-                    0A92: stream_custom_script "Baseball peds.qa" chance_baseball
-                    wait 2000
+                    0AAA: 1@ = get_script_struct_named "BballQA"
+                    if
+                        1@ == 0
+                    then
+                        0A92: stream_custom_script "Baseball peds.qa" chance_baseball
+                        wait 2000
+                    end
                 end
             end
-            
-            wait pause
             
             // car shop
             if and
                 scr_shop == 1
                 0EEA: locate_char_distance_to_coordinates $player_actor pos -1648.5743 1207.5776 7.2 radius 100.0
             then
-                0AAA: 1@ = get_script_struct_named "CRSHQA"
                 0E40: get_current_hour 2@
                 if and
                     $ACTIVE_INTERIOR == 0
                     2@ >= 9
                     2@ <= 18
                     $ONMISSION == 0
-                    1@ == 0
                 then
-                    0A92: stream_custom_script "Car shop.qa"
-                    wait 2000
+                    0AAA: 1@ = get_script_struct_named "CRSHQA"
+                    if
+                        1@ == 0
+                    then
+                        0A92: stream_custom_script "Car shop.qa"
+                        wait 2000
+                    end
                 end
             end
             
             wait pause
             
             // FireSC
-            0AAA: 1@ = get_script_struct_named "FireQA"
-            if and
+            if
                 scr_fire == 1
-                1@ == 0
             then
                 if and
                     $ACTIVE_INTERIOR == 0
@@ -311,19 +325,22 @@ wait pause
                             not 1@ == 0.0
                             not 2@ == 0.0
                             not 3@ == 0.0
-                            not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 70.0
+                            not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
                         then
-                            0A92: stream_custom_script "Fire Scene.qa" 1@ 2@ 3@ 4@
-                            wait 2000
-                            timerb = 0
+                            0AAA: 0@ = get_script_struct_named "FireQA"
+                            if
+                                0@ == 0
+                            then
+                                0A92: stream_custom_script "Fire Scene.qa" 1@ 2@ 3@ 4@
+                                wait 2000
+                                timerb = 0
+                            end
                         end
                     end
                 end
             else
                 timerb = 0
             end
-            
-            wait pause
 
             // Fight
             if or
@@ -331,12 +348,10 @@ wait pause
                 0EEA: locate_char_distance_to_coordinates $player_actor pos -2529.9075 222.9464 11.0938 radius 100.0 // SF
                 0EEA: locate_char_distance_to_coordinates $player_actor pos 1102.1049 -1203.999 17.8047 radius 100.0 // LS
             then
-                0AAA: 1@ = get_script_struct_named "StrtFH"
                 0E40: get_current_hour 2@
                 if and
                     $ACTIVE_INTERIOR == 0
                     $ONMISSION == 0
-                    1@ == 0
                     2@ >= 12
                     2@ < 19
                     887A:   not gang_war_in_progress
@@ -371,8 +386,13 @@ wait pause
                         not 2@ == 0.0
                         not 3@ == 0.0
                     then
-                        0A92: stream_custom_script "Street Fight.qa" 1@ 2@ 3@ chance_fight
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "StrtFH"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Street Fight.qa" 1@ 2@ 3@ chance_fight
+                            wait 2000
+                        end
                     end
                 end
             end
@@ -380,12 +400,10 @@ wait pause
             wait pause
             
             // RapBattle
-                0AAA: 1@ = get_script_struct_named "RPBTL"
                 0E40: get_current_hour 2@
                 if and
                     $ACTIVE_INTERIOR == 0
                     $ONMISSION == 0
-                    1@ == 0
                     2@ >= 12
                     2@ < 23
                     887A:   not gang_war_in_progress
@@ -479,22 +497,25 @@ wait pause
                         not 1@ == 0.0
                         not 2@ == 0.0
                         not 3@ == 0.0
-                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
+                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
                     then
-                        0A92: stream_custom_script "Rap Battle.qa" 1@ 2@ 3@ 4@ chance_rap
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "RPBTL"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Rap Battle.qa" 1@ 2@ 3@ 4@ chance_rap
+                            wait 2000
+                        end
                     end
                 end
             
             wait pause
             
             // Golf
-                0AAA: 1@ = get_script_struct_named "GLFQA"
                 0E40: get_current_hour 2@
                 if and
                     $ACTIVE_INTERIOR == 0
                     $ONMISSION == 0
-                    1@ == 0
                     2@ >= 10
                     2@ < 18
                 then
@@ -596,227 +617,233 @@ wait pause
                         not 1@ == 0.0
                         not 2@ == 0.0
                         not 3@ == 0.0
-                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
+                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
                     then
-                        0A92: stream_custom_script "Golf Peds.qa" 1@ 2@ 3@ 4@
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "GLFQA"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Golf Peds.qa" 1@ 2@ 3@ 4@
+                            wait 2000
+                        end
                     end
                 end
                 
             wait pause
 
             // Bum
-            0AAA: 1@ = get_script_struct_named "BUMQA"
-            if
-                1@ == 0
+            
+            0E40: get_current_hour 2@
+            if and
+                $ACTIVE_INTERIOR == 0
+                $ONMISSION == 0
+                2@ >= 9
+                2@ < 18
+                887A:   not gang_war_in_progress
             then
-                0E40: get_current_hour 2@
-                if and
-                    $ACTIVE_INTERIOR == 0
-                    $ONMISSION == 0
-                    2@ >= 9
-                    2@ < 18
-                    887A:   not gang_war_in_progress
+                1@ = 0.0
+                2@ = 0.0
+                3@ = 0.0
+
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -2032.3612 -58.9917 35.3224 radius 80.0 // SF
                 then
-                    1@ = 0.0
-                    2@ = 0.0
-                    3@ = 0.0
+                    1@ = -2032.3612
+                    2@ = -58.9917
+                    3@ = 35.3224
+                    4@ = 267.9798
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -2216.345 448.5254 35.2429 radius 80.0 // SF
+                then
+                    1@ = -2216.345
+                    2@ = 448.5254
+                    3@ = 35.2429
+                    4@ = 67.973
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -1903.3071 1191.6415 45.4454 radius 80.0 // SF
+                then
+                    1@ = -1903.3071
+                    2@ = 1191.6415
+                    3@ = 45.4454
+                    4@ = 224.6377
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -2406.1245 719.4592 35.1719 radius 80.0 // SF
+                then
+                    1@ = -2406.1245
+                    2@ = 719.4592
+                    3@ = 35.1719
+                    4@ = 174.4234
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -1543.7351 695.316 7.1875 radius 80.0 // SF
+                then
+                    1@ = -1543.7351
+                    2@ = 695.316
+                    3@ = 7.1875
+                    4@ = 183.7392
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -2186.7329 -2407.0276 30.625 radius 80.0 // SF Country
+                then
+                    1@ = -2186.7329
+                    2@ = -2407.0276
+                    3@ = 30.625
+                    4@ = 56.8564
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 143.7168 -158.6587 1.5847 radius 80.0 // LS Country
+                then
+                    1@ = 143.7168 
+                    2@ = -158.6587
+                    3@ = 1.5847
+                    4@ = 90.2431
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 1292.2303 388.1553 19.5614 radius 80.0 // LS Country
+                then
+                    1@ = 1292.2303
+                    2@ = 388.1553
+                    3@ = 19.5614
+                    4@ = 196.139
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 1971.6299 -2028.985 13.5469 radius 80.0 // LS
+                then
+                    1@ = 1971.6299
+                    2@ = -2028.985
+                    3@ = 13.5469
+                    4@ = 91.9665
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2113.0051 -1627.5165 13.5386 radius 80.0 // LS
+                then
+                    1@ = 2113.0051
+                    2@ = -1627.5165
+                    3@ = 13.5386
+                    4@ = 345.3856
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2652.573 -1619.2847 10.8833 radius 80.0 // LS
+                then
+                    1@ = 2652.573 
+                    2@ = -1619.2847
+                    3@ = 10.8833
+                    4@ = 79.3024
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2520.8865 -1388.5905 28.5313 radius 80.0 // LS
+                then
+                    1@ = 2520.8865
+                    2@ = -1388.5905
+                    3@ = 28.5313
+                    4@ = 94.3515
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 1970.7013 -1175.2072 20.0308 radius 80.0 // LS
+                then
+                    1@ = 1970.7013
+                    2@ = -1175.2072
+                    3@ = 20.0308
+                    4@ = 178.3256
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 841.7798 -1344.184 7.1719 radius 80.0 // LS
+                then
+                    1@ = 841.7798
+                    2@ = -1344.184
+                    3@ = 7.1719
+                    4@ = 102.1732
+                end
 
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -2032.3612 -58.9917 35.3224 radius 80.0 // SF
-                    then
-                        1@ = -2032.3612
-                        2@ = -58.9917
-                        3@ = 35.3224
-                        4@ = 267.9798
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -2216.345 448.5254 35.2429 radius 80.0 // SF
-                    then
-                        1@ = -2216.345
-                        2@ = 448.5254
-                        3@ = 35.2429
-                        4@ = 67.973
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -1903.3071 1191.6415 45.4454 radius 80.0 // SF
-                    then
-                        1@ = -1903.3071
-                        2@ = 1191.6415
-                        3@ = 45.4454
-                        4@ = 224.6377
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -2406.1245 719.4592 35.1719 radius 80.0 // SF
-                    then
-                        1@ = -2406.1245
-                        2@ = 719.4592
-                        3@ = 35.1719
-                        4@ = 174.4234
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -1543.7351 695.316 7.1875 radius 80.0 // SF
-                    then
-                        1@ = -1543.7351
-                        2@ = 695.316
-                        3@ = 7.1875
-                        4@ = 183.7392
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -2186.7329 -2407.0276 30.625 radius 80.0 // SF Country
-                    then
-                        1@ = -2186.7329
-                        2@ = -2407.0276
-                        3@ = 30.625
-                        4@ = 56.8564
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 143.7168 -158.6587 1.5847 radius 80.0 // LS Country
-                    then
-                        1@ = 143.7168 
-                        2@ = -158.6587
-                        3@ = 1.5847
-                        4@ = 90.2431
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 1292.2303 388.1553 19.5614 radius 80.0 // LS Country
-                    then
-                        1@ = 1292.2303
-                        2@ = 388.1553
-                        3@ = 19.5614
-                        4@ = 196.139
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 1971.6299 -2028.985 13.5469 radius 80.0 // LS
-                    then
-                        1@ = 1971.6299
-                        2@ = -2028.985
-                        3@ = 13.5469
-                        4@ = 91.9665
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 2113.0051 -1627.5165 13.5386 radius 80.0 // LS
-                    then
-                        1@ = 2113.0051
-                        2@ = -1627.5165
-                        3@ = 13.5386
-                        4@ = 345.3856
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 2652.573 -1619.2847 10.8833 radius 80.0 // LS
-                    then
-                        1@ = 2652.573 
-                        2@ = -1619.2847
-                        3@ = 10.8833
-                        4@ = 79.3024
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 2520.8865 -1388.5905 28.5313 radius 80.0 // LS
-                    then
-                        1@ = 2520.8865
-                        2@ = -1388.5905
-                        3@ = 28.5313
-                        4@ = 94.3515
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 1970.7013 -1175.2072 20.0308 radius 80.0 // LS
-                    then
-                        1@ = 1970.7013
-                        2@ = -1175.2072
-                        3@ = 20.0308
-                        4@ = 178.3256
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 841.7798 -1344.184 7.1719 radius 80.0 // LS
-                    then
-                        1@ = 841.7798
-                        2@ = -1344.184
-                        3@ = 7.1719
-                        4@ = 102.1732
-                    end
-
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 938.6911 -1834.3002 12.6018 radius 80.0 // LS
-                    then
-                        1@ = 938.6911
-                        2@ = -1834.3002
-                        3@ = 12.6018
-                        4@ = 350.7939
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 2713.7866 -1151.2162 69.5781 radius 80.0 // LS
-                    then
-                        1@ = 2713.7866 
-                        2@ = -1151.2162
-                        3@ = 69.5781
-                        4@ = 270.325
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 1671.1831 -1746.1335 13.5472 radius 80.0 // LS
-                    then
-                        1@ = 1671.1831 
-                        2@ = -1746.1335
-                        3@ = 13.5472
-                        4@ = 268.665
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 1780.6523 -1189.923 23.8857 radius 80.0 // LS
-                    then
-                        1@ =1780.6523
-                        2@ = -1189.923
-                        3@ = 23.8857
-                        4@ =357.4842
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -163.4735 1188.8268 19.7422 radius 80.0 // LV Country
-                    then
-                        1@ = -163.4735
-                        2@ = 1188.8268
-                        3@ = 19.7422
-                        4@ = 1.2743
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 1684.9882 2182.5857 10.8203 radius 80.0 // LV
-                    then
-                        1@ = 1684.9882 
-                        2@ = 2182.5857
-                        3@ = 10.8203
-                        4@ = 180.0858
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 2586.8711 2296.5435 10.8203 radius 80.0 // LV
-                    then
-                        1@ = 2597.8711
-                        2@ = 2301.5435
-                        3@ = 10.8203
-                        4@ = 186.1007
-                    end
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 938.6911 -1834.3002 12.6018 radius 80.0 // LS
+                then
+                    1@ = 938.6911
+                    2@ = -1834.3002
+                    3@ = 12.6018
+                    4@ = 350.7939
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2713.7866 -1151.2162 69.5781 radius 80.0 // LS
+                then
+                    1@ = 2713.7866 
+                    2@ = -1151.2162
+                    3@ = 69.5781
+                    4@ = 270.325
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 1671.1831 -1746.1335 13.5472 radius 80.0 // LS
+                then
+                    1@ = 1671.1831 
+                    2@ = -1746.1335
+                    3@ = 13.5472
+                    4@ = 268.665
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 1780.6523 -1189.923 23.8857 radius 80.0 // LS
+                then
+                    1@ =1780.6523
+                    2@ = -1189.923
+                    3@ = 23.8857
+                    4@ =357.4842
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -163.4735 1188.8268 19.7422 radius 80.0 // LV Country
+                then
+                    1@ = -163.4735
+                    2@ = 1188.8268
+                    3@ = 19.7422
+                    4@ = 1.2743
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 1684.9882 2182.5857 10.8203 radius 80.0 // LV
+                then
+                    1@ = 1684.9882 
+                    2@ = 2182.5857
+                    3@ = 10.8203
+                    4@ = 180.0858
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2586.8711 2296.5435 10.8203 radius 80.0 // LV
+                then
+                    1@ = 2597.8711
+                    2@ = 2301.5435
+                    3@ = 10.8203
+                    4@ = 186.1007
+                end
 
 
-                    if and
-                        not 1@ == 0.0
-                        not 2@ == 0.0
-                        not 3@ == 0.0
-                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
+                if and
+                    not 1@ == 0.0
+                    not 2@ == 0.0
+                    not 3@ == 0.0
+                    not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
+                then
+                    0AAA: 0@ = get_script_struct_named "BUMQA"
+                    if
+                        0@ == 0
                     then
                         0A92: stream_custom_script "BUMQA.qa" 1@ 2@ 3@ 4@ chance_bum
                         wait 2000
@@ -828,108 +855,110 @@ wait pause
             
             
             // Graffity
-            0AAA: 1@ = get_script_struct_named "GRFGQA"
-            if
-                1@ == 0
+
+            0E40: get_current_hour 2@
+            if and
+                $ACTIVE_INTERIOR == 0
+                $ONMISSION == 0
+                2@ >= 12
+                2@ < 20
+                887A:   not gang_war_in_progress
             then
-                0E40: get_current_hour 2@
-                if and
-                    $ACTIVE_INTERIOR == 0
-                    $ONMISSION == 0
-                    2@ >= 12
-                    2@ < 20
-                    887A:   not gang_war_in_progress
+                1@ = 0.0
+                2@ = 0.0
+                3@ = 0.0
+
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 1994.274 -1923.8625 13.5468 radius 100.0 // LS
                 then
-                    1@ = 0.0
-                    2@ = 0.0
-                    3@ = 0.0
+                    1@ = 1994.4503
+                    2@ = -1923.34
+                    3@ = 13.5468
+                    4@ = 0.4723
+                end
 
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 1994.274 -1923.8625 13.5468 radius 100.0 // LS
-                    then
-                        1@ = 1994.4503
-                        2@ = -1923.34
-                        3@ = 13.5468
-                        4@ = 0.4723
-                    end
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2013.4692 -2123.6572 13.5469 radius 100.0 // LS
+                then
+                    1@ = 2013.4692
+                    2@ = -2123.6572
+                    3@ = 13.5469
+                    4@ = 265.5291
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2045.4768 -1703.5907 13.5547 radius 100.0 // LS
+                then
+                    1@ = 2045.4768
+                    2@ = -1703.5907
+                    3@ = 13.5547
+                    4@ = 266.4324
+                end
 
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 2013.4692 -2123.6572 13.5469 radius 100.0 // LS
-                    then
-                        1@ = 2013.4692
-                        2@ = -2123.6572
-                        3@ = 13.5469
-                        4@ = 265.5291
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 2045.4768 -1703.5907 13.5547 radius 100.0 // LS
-                    then
-                        1@ = 2045.4768
-                        2@ = -1703.5907
-                        3@ = 13.5547
-                        4@ = 266.4324
-                    end
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 1980.8013 -1167.9213 20.4495 radius 100.0 // LS
+                then
+                    1@ = 1980.8013
+                    2@ = -1167.9213
+                    3@ = 20.4495
+                    4@ = 90.0
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2561.9968 -1286.7627 46.1328 radius 100.0 // LS
+                then
+                    1@ = 2562.1
+                    2@ = -1286.7627
+                    3@ = 46.1328
+                    4@ = 90.0
+                end
 
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 1980.8013 -1167.9213 20.4495 radius 100.0 // LS
-                    then
-                        1@ = 1980.8013
-                        2@ = -1167.9213
-                        3@ = 20.4495
-                        4@ = 90.0
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 2561.9968 -1286.7627 46.1328 radius 100.0 // LS
-                    then
-                        1@ = 2562.1
-                        2@ = -1286.7627
-                        3@ = 46.1328
-                        4@ = 90.0
-                    end
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2686.6 -1101.3744 69.3505 radius 100.0 // LS
+                then
+                    1@ = 2686.55
+                    2@ = -1101.3744
+                    3@ = 69.3505
+                    4@ = 270.9773
+                end
 
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 2686.6 -1101.3744 69.3505 radius 100.0 // LS
-                    then
-                        1@ = 2686.55
-                        2@ = -1101.3744
-                        3@ = 69.3505
-                        4@ = 270.9773
-                    end
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2755.6104 -2003.8591 13.5547 radius 100.0 // LS
+                then
+                    1@ = 2755.6104 
+                    2@ = -2003.8591
+                    3@ = 13.5547
+                    4@ = 180.8792
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 2579.9348 -1449.5624 24.0064 radius 100.0 // LS
+                then
+                    1@ = 2579.9348
+                    2@ = -1449.5624
+                    3@ = 24.0064
+                    4@ = 269.3756
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos 505.6121 -1762.5573 5.5615 radius 100.0 // LS
+                then
+                    1@ = 505.6121 
+                    2@ = -1762.6573
+                    3@ = 5.5615
+                    4@ = 0.0
+                end
 
+                if and
+                    not 1@ == 0.0
+                    not 2@ == 0.0
+                    not 3@ == 0.0
+                    not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
+                then
+                
+                    0AAA: 0@ = get_script_struct_named "GRFGQA"
                     if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 2755.6104 -2003.8591 13.5547 radius 100.0 // LS
-                    then
-                        1@ = 2755.6104 
-                        2@ = -2003.8591
-                        3@ = 13.5547
-                        4@ = 180.8792
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 2579.9348 -1449.5624 24.0064 radius 100.0 // LS
-                    then
-                        1@ = 2579.9348
-                        2@ = -1449.5624
-                        3@ = 24.0064
-                        4@ = 269.3756
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos 505.6121 -1762.5573 5.5615 radius 100.0 // LS
-                    then
-                        1@ = 505.6121 
-                        2@ = -1762.6573
-                        3@ = 5.5615
-                        4@ = 0.0
-                    end
-
-                    if and
-                        not 1@ == 0.0
-                        not 2@ == 0.0
-                        not 3@ == 0.0
-                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
+                        0@ == 0
                     then
                         08F1: get_zone_at 1@ 2@ 3@ nameB_to 7@s // 8-byte string
                         076D: get_zone 7@s gang 0 density_to 6@
@@ -959,89 +988,87 @@ wait pause
             wait pause
             
             // Para Jumper
-            0AAA: 1@ = get_script_struct_named "PEDPARQ"
-            if
-                1@ == 0
+            0E40: get_current_hour 2@
+            0D59: get_current_weather_to 1@
+            if and
+                $ACTIVE_INTERIOR == 0
+                $ONMISSION == 0
+                2@ >= 10
+                2@ < 14
+                not 1@ == 8
+                not 1@ == 16
             then
-                0E40: get_current_hour 2@
-                0D59: get_current_weather_to 1@
-                if and
-                    $ACTIVE_INTERIOR == 0
-                    $ONMISSION == 0
-                    2@ >= 10
-                    2@ < 14
-                    not 1@ == 8
-                    not 1@ == 16
+                1@ = 0.0
+                2@ = 0.0
+                3@ = 0.0
+
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -1083.4521 -991.4529 129.2183 radius 300.0
                 then
-                    1@ = 0.0
-                    2@ = 0.0
-                    3@ = 0.0
+                    1@ = -1144.8926
+                    2@ = -985.8846
+                    3@ = 129.2183
+                    0208: 4@ = random_float_in_ranges 0.0 360.0
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -261.062 -1358.5576 8.9296 radius 300.0
+                then
+                    1@ = -261.062
+                    2@ = -1358.5576
+                    3@ = 8.9296
+                    0208: 4@ = random_float_in_ranges 0.0 360.0
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -137.8166 57.0996 3.1172 radius 300.0
+                then
+                    1@ = -137.8166
+                    2@ = 57.0996
+                    3@ = 3.1172
+                    0208: 4@ = random_float_in_ranges 0.0 360.0
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -2900.6035 464.9078 4.9141 radius 300.0
+                then
+                    1@ = -2900.6035
+                    2@ = 464.9078
+                    3@ = 4.9141
+                    0208: 4@ = random_float_in_ranges 0.0 360.0
+                end
+                
+                if
+                    0EEA: locate_char_distance_to_coordinates $player_actor pos -2259.9863 2316.0886 4.8125 radius 300.0
+                then
+                    1@ = -2259.9863
+                    2@ = 2316.0886
+                    3@ = 4.8125
+                    0208: 4@ = random_float_in_ranges 0.0 360.0
+                end
 
-                    
+                if and
+                    not 1@ == 0.0
+                    not 2@ == 0.0
+                    not 3@ == 0.0
+                    not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 20.0
+                then
+                    0AAA: 0@ = get_script_struct_named "PEDPARQ"
                     if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -1083.4521 -991.4529 129.2183 radius 300.0
-                    then
-                        1@ = -1144.8926
-                        2@ = -985.8846
-                        3@ = 129.2183
-                        0208: 4@ = random_float_in_ranges 0.0 360.0
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -261.062 -1358.5576 8.9296 radius 300.0
-                    then
-                        1@ = -261.062
-                        2@ = -1358.5576
-                        3@ = 8.9296
-                        0208: 4@ = random_float_in_ranges 0.0 360.0
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -137.8166 57.0996 3.1172 radius 300.0
-                    then
-                        1@ = -137.8166
-                        2@ = 57.0996
-                        3@ = 3.1172
-                        0208: 4@ = random_float_in_ranges 0.0 360.0
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -2900.6035 464.9078 4.9141 radius 300.0
-                    then
-                        1@ = -2900.6035
-                        2@ = 464.9078
-                        3@ = 4.9141
-                        0208: 4@ = random_float_in_ranges 0.0 360.0
-                    end
-                    
-                    if
-                        0EEA: locate_char_distance_to_coordinates $player_actor pos -2259.9863 2316.0886 4.8125 radius 300.0
-                    then
-                        1@ = -2259.9863
-                        2@ = 2316.0886
-                        3@ = 4.8125
-                        0208: 4@ = random_float_in_ranges 0.0 360.0
-                    end
-
-                    if and
-                        not 1@ == 0.0
-                        not 2@ == 0.0
-                        not 3@ == 0.0
-                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 20.0
+                        0@ == 0
                     then
                         0A92: stream_custom_script "Para Jumper.qa" 1@ 2@ 3@ 4@ render_para1 render_para2 chance_pedpara
                         wait 2000
                     end
                 end
             end
+
             
             wait pause
             
             // In out Peds
-            0AAA: 1@ = get_script_struct_named "INOUTQA"
-            if
-                1@ == 0
-            then
+
                 if and
                     $ACTIVE_INTERIOR == 0
                     $ONMISSION == 0
@@ -1585,24 +1612,26 @@ wait pause
                         not 1@ == 0.0
                         not 2@ == 0.0
                         not 3@ == 0.0
-                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
+                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
                     then
-                        3@ -= 1.0
-                        0A92: stream_custom_script "In Out Peds.qa" 1@ 2@ 3@ 4@ 5@ chance_door
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "INOUTQA"
+                        if
+                            0@ == 0
+                        then
+                            3@ -= 1.0
+                            0A92: stream_custom_script "In Out Peds.qa" 1@ 2@ 3@ 4@ 5@ chance_door
+                            wait 2000
+                        end
                     end
                 end
-            end
             
             wait pause
             
             
             // Sport
-            0AAA: 1@ = get_script_struct_named "SPRPQA"
             if and
                 $ACTIVE_INTERIOR == 0
                 $ONMISSION == 0
-                1@ == 0
             then
                 1@ = 0.0
                 2@ = 0.0
@@ -1632,21 +1661,22 @@ wait pause
                     not 1@ == 0.0
                     not 2@ == 0.0
                     not 3@ == 0.0
-                    not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
+                    not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
                 then
-                    0A92: stream_custom_script "Sport Peds.qa" 1@ 2@ 3@ 4@ render_sport render_sport_2 5@
-                    wait 2000
+                    0AAA: 0@ = get_script_struct_named "SPRPQA"
+                    if
+                        0@ == 0
+                    then
+                        0A92: stream_custom_script "Sport Peds.qa" 1@ 2@ 3@ 4@ render_sport render_sport_2 5@
+                        wait 2000
+                    end
                 end
             end
             
-            wait pause
-            
             // Cops Car Stop
-            0AAA: 1@ = get_script_struct_named "PLCRQA"
             if and
                 $ACTIVE_INTERIOR == 0
                 $ONMISSION == 0
-                1@ == 0
                 810F:   not player $PLAYER_CHAR wanted_level > 0
             then
                 1@ = 0.0
@@ -1794,38 +1824,42 @@ wait pause
                     not 3@ == 0.0
                     not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
                 then
-                    0A92: stream_custom_script "Cops Car Stop.qa" 1@ 2@ 3@ 4@ chance_car_search
-                    wait 2000
+                    0AAA: 0@ = get_script_struct_named "PLCRQA"
+                    if
+                        0@ == 0
+                    then
+                        0A92: stream_custom_script "Cops Car Stop.qa" 1@ 2@ 3@ 4@ chance_car_search
+                        wait 2000
+                    end
                 end
             end
             
-            wait pause
-            
             // trash peds
-            0AAA: 1@ = get_script_struct_named "TRSHPQA"
             if and
                 $ACTIVE_INTERIOR == 0
                 $ONMISSION == 0
-                1@ == 0
             then
                 0E40: get_current_hour 1@
                 if and
                     1@ >= 7
-                    1@ <= 18
+                    1@ <= 14
                 then
-                    0A92: stream_custom_script "Trash Peds.qa" chanse_time_trash
-                    wait 2000
+                    0AAA: 0@ = get_script_struct_named "TRSHPQA"
+                    if
+                        0@ == 0
+                    then
+                        0A92: stream_custom_script "Trash Peds.qa" chanse_time_trash
+                        wait 2000
+                    end
                 end
             end
             
             wait pause
             
             // Hunter
-            0AAA: 1@ = get_script_struct_named "HUNTQA"
             if and
                 $ACTIVE_INTERIOR == 0
                 $ONMISSION == 0
-                1@ == 0
             then
                 
                 0E40: get_current_hour 1@
@@ -1898,10 +1932,15 @@ wait pause
                         not 1@ == 0.0
                         not 2@ == 0.0
                         not 3@ == 0.0
-                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
+                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
                     then
-                        0A92: stream_custom_script "Rural Hunter.qa" 1@ 2@ 3@ render_bird chance_hunt
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "HUNTQA"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Rural Hunter.qa" 1@ 2@ 3@ render_bird chance_hunt
+                            wait 2000
+                        end
                     end
                 end
             end
@@ -1909,11 +1948,9 @@ wait pause
             wait pause
             
             // crime scene
-            0AAA: 1@ = get_script_struct_named "CRIMQA"
             if and
                 $ACTIVE_INTERIOR == 0
                 $ONMISSION == 0
-                1@ == 0
                 810F:   not player $PLAYER_CHAR wanted_level > 0
             then
 
@@ -2022,10 +2059,15 @@ wait pause
                         not 1@ == 0.0
                         not 2@ == 0.0
                         not 3@ == 0.0
-                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
+                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
                     then
-                        0A92: stream_custom_script "Police Crime Scene.qa" 1@ 2@ 3@ 4@ render_flash chance_crime
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "CRIMQA"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Police Crime Scene.qa" 1@ 2@ 3@ 4@ render_flash chance_crime
+                            wait 2000
+                        end
                     end
                 end
             end
@@ -2033,11 +2075,9 @@ wait pause
             wait pause
             
             // tourist
-            0AAA: 1@ = get_script_struct_named "TOURQA"
             if and
                 $ACTIVE_INTERIOR == 0
                 $ONMISSION == 0
-                1@ == 0
             then
 
                     1@ = 0.0
@@ -2130,21 +2170,24 @@ wait pause
                         not 1@ == 0.0
                         not 2@ == 0.0
                         not 3@ == 0.0
-                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
+                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
                     then
-                        0A92: stream_custom_script "Tourists.qa" 1@ 2@ 3@ 4@ render_map chance_tourist
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "TOURQA"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Tourists.qa" 1@ 2@ 3@ 4@ render_map chance_tourist
+                            wait 2000
+                        end
                     end
             end
             
             wait pause
             
             // monk
-            0AAA: 1@ = get_script_struct_named "MONKQA"
             if and
                 $ACTIVE_INTERIOR == 0
                 $ONMISSION == 0
-                1@ == 0
             then
                 0E40: get_current_hour 1@
                 if and
@@ -2186,10 +2229,15 @@ wait pause
                         not 1@ == 0.0
                         not 2@ == 0.0
                         not 3@ == 0.0
-                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
+                        not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 40.0
                     then
-                        0A92: stream_custom_script "Monk.qa" 1@ 2@ 3@ 4@ chance_monk
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "MONKQA"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Monk.qa" 1@ 2@ 3@ 4@ chance_monk
+                            wait 2000
+                        end
                     end
                 end
             end

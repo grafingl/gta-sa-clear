@@ -19,17 +19,19 @@ const
     Select_Hand = 1
     Number_Peds = 4
     Progress = 30@
-    Pause_For_Find = 26@
+    iBuffer = 26@
     Pause_Time = 400
     Pause = 1000
 end
+
+0085: iBuffer = 0@ // (int)
+0@ = -1
 
 while true
 wait 100
 if
     Player.Defined($PLAYER_CHAR)
 then
-Pause_For_Find += 5
 gosub @Ped_20
 gosub @Realese_animation
     if
@@ -39,8 +41,7 @@ gosub @Realese_animation
         continue
     end
 
-    if and
-        Pause_For_Find >= Pause_Time
+    if
         856D: not actor 0@ defined
     then
     Peds_Find = 0
@@ -137,7 +138,9 @@ end
 return
 
 :Smoke
-0AF0: 1@ = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "cigar"
+2@ = 58
+2@ *= 4
+read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 4@ = 0.04
 5@ = 0.1
 6@ = 0.05
@@ -162,7 +165,7 @@ if or
 then 0605: actor 0@ perform_animation 15@v IFP "PedEventsMod" framedelta 2.0 loop 0 lockX 0 lockY 0 lockF 0 time -1
 else 0A1A: actor 0@ perform_walk_animation 15@v IFP "PedEventsMod" framedelta 2.0 loopA 0 lockX 0 lockY 0 lockF 0 -1 ms // versionC
 end
-wait 1000
+wait 500
 0006: TIMERB = 0
 return
 
@@ -180,7 +183,7 @@ set_render_object_scale 10@ 8@ 8@ 8@
 0669: 21@ = create_attached_particle "EXHALE" on_actor 0@ with_offset 0.0 0.0 0.0 flag 1
 0883: attach_particle 21@ to_actor 0@ mode 26
 064C: make_particle 21@ visible
-wait 1000
+wait 500
 0006: TIMERA = 0
 0006: TIMERB = 0
 return
@@ -204,12 +207,16 @@ then
 else
     2@ = 34
 end
-0E2E: create_render_object_to_char_bone 0@ model 1@ bone 2@ offset 4@ 5@ 6@ rotation 0 7@ 0 store_to 10@
-set_render_object_scale 10@ 8@ 8@ 8@
-0E30: set_render_object_auto_hide 10@ dead 1 weapon 1 car 1
+
+if
+    056D:   actor 0@ defined
+then
+    0E2E: create_render_object_to_char_bone 0@ model 1@ bone 2@ offset 4@ 5@ 6@ rotation 0 7@ 0 store_to 10@
+    set_render_object_scale 10@ 8@ 8@ 8@
+    0E30: set_render_object_auto_hide 10@ dead 1 weapon 1 car 1
+    0006: TIMERA = 0
+end
 model.Destroy(1@)
-wait 1000
-0006: TIMERA = 0
 return
 
 // Проверка всех актеров
@@ -373,7 +380,6 @@ then
 end
 0@ = -1
 10@ = -1
-Pause_For_Find = 0
 return
 
 // Загрузка анимации

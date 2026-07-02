@@ -51,7 +51,7 @@ end
             end
             if 1@ == 1
             then
-                0376: ped_1 = create_random_actor_at 1717.683 -1651.0118 20.23
+                0376: ped_1 = create_random_actor_at 1716.0629 -1648.8398 20.2263
                 0173: set_actor ped_1 Z_angle_to 217.9606
             end
             if 1@ == 2

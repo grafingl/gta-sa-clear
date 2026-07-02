@@ -116,12 +116,17 @@ wait 50
         // В помещении, пицца и тд --------------------------------------------------------
         
         Vend_Or_Cart = 0
-        0AAA: 1@ = get_script_struct_named 'JFUD'
+        
         if
-            1@ > 0 // Если игровой скрипт запущен
+            not $ACTIVE_INTERIOR == 0
         then
-            Vend_Or_Cart = Food_Eating
-            gosub @Player_Actor // Главному герою даем рендеры если он ест
+            0AAA: 1@ = get_script_struct_named 'JFUD'
+            if
+                1@ > 0 // Если игровой скрипт запущен
+            then
+                Vend_Or_Cart = Food_Eating
+                gosub @Player_Actor // Главному герою даем рендеры если он ест
+            end
         end
         
         

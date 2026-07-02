@@ -101,7 +101,7 @@ const
     
     street_stand = 9@
     street_brush = 8@
-    pause = 200
+    pause = 1000
 end
 
 0AF0: Postbag = read_int_from_ini_file "cleo\Busy Workers.ini" section "Models" key "Postbag"
@@ -148,7 +148,8 @@ wait pause
         player.Defined(0)
     then
         06AC: 1@ = actor $PLAYER_ACTOR movement_speed
-        if
+        if or
+            not $ACTIVE_INTERIOR == 0
             1@ > 50.0
         then
             continue
@@ -156,74 +157,84 @@ wait pause
 
             wait pause
 
-            0AAA: 1@ = get_script_struct_named "PostMan"
-            if and
+            if
                 SCr_postman == 1
-                1@ == 0
             then
                 gosub @Zone
                 if
                     Zone_Check == true
                 then
-                    0A92: stream_custom_script "PostMan.qa" Postbag Postmail Postpaper Ped_ID Ped_ID_Bike
-                    wait 2000
+                    0AAA: 1@ = get_script_struct_named "PostMan"
+                    if
+                        1@ == 0
+                    then
+                        0A92: stream_custom_script "PostMan.qa" Postbag Postmail Postpaper Ped_ID Ped_ID_Bike
+                        wait 2000
+                    end
                 end
             end
             
             wait pause
             
-            0AAA: 1@ = get_script_struct_named "GrbgMns"
-            if and
+            if
                 Scr_Gargabe == 1
-                1@ == 0
             then
                 gosub @Zone_g
                 if
                     Zone_Check == true
                 then
-                    0A92: stream_custom_script "Garbage Mans.qa" Project_Props Ped_Id_g1 Ped_Id_g2 Ped_Id_g3 StopSign
-                    wait 2000
+                    0AAA: 1@ = get_script_struct_named "GrbgMns"
+                    if
+                        1@ == 0
+                    then
+                        0A92: stream_custom_script "Garbage Mans.qa" Project_Props Ped_Id_g1 Ped_Id_g2 Ped_Id_g3 StopSign
+                        wait 2000
+                    end
                 end
             end
             
             wait pause
             
-            0AAA: 1@ = get_script_struct_named "Comrprs"
-            if and
+            if
                 Scr_CommRepair == 1
-                1@ == 0
             then
                 gosub @Time_Weather
                 if
                     Zone_Check == true
                 then
-                    0A92: stream_custom_script "Communication repairers.qa" Spanner Screw ToolBox Rope Ped_ID_c
-                    wait 2000
+                    0AAA: 1@ = get_script_struct_named "Comrprs"
+                    if
+                        1@ == 0
+                    then
+                        0A92: stream_custom_script "Communication repairers.qa" Spanner Screw ToolBox Rope Ped_ID_c
+                        wait 2000
+                    end
                 end
             end
             
             wait pause
             
-            0AAA: 1@ = get_script_struct_named "WindWsh"
-            if and
+            if
                 Scr_WindWash == 1
-                1@ == 0
             then
                 gosub @Time_Weather_w
                 if
                     Zone_Check == true
                 then
-                    0A92: stream_custom_script "WindWash.qa" wndwash sponge2
-                    wait 2000
+                    0AAA: 1@ = get_script_struct_named "WindWsh"
+                    if
+                        1@ == 0
+                    then
+                        0A92: stream_custom_script "WindWash.qa" wndwash sponge2
+                        wait 2000
+                    end
                 end
             end
             
             wait pause
             
-            0AAA: 1@ = get_script_struct_named "StArtQ"
-            if and
+            if
                 Scr_streetart == 1
-                1@ == 0
             then
                 0D59: get_current_weather_to 2@
                 0E40: get_current_hour 3@
@@ -276,18 +287,19 @@ wait pause
                         not 3@ == 0.0
                         not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
                     then
-                        0A92: stream_custom_script "Street Artist.qa" 1@ 2@ 3@ 4@ 5@ street_brush street_stand
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "StArtQ"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "Street Artist.qa" 1@ 2@ 3@ 4@ 5@ street_brush street_stand
+                            wait 2000
+                        end
                     end
                 end
             end
             
             wait pause
             
-            0AAA: 1@ = get_script_struct_named "whrprsq"
-            if
-                1@ == 0
-            then
                 0D59: get_current_weather_to 2@
                 0E40: get_current_hour 3@
                 if and
@@ -381,11 +393,15 @@ wait pause
                         not 3@ == 0.0
                         not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 50.0
                     then
-                        0A92: stream_custom_script "RepairsQa.qa" 1@ 2@ 3@ 4@ Screw ToolBox2 Ped_ID_r
-                        wait 2000
+                        0AAA: 0@ = get_script_struct_named "whrprsq"
+                        if
+                            0@ == 0
+                        then
+                            0A92: stream_custom_script "RepairsQa.qa" 1@ 2@ 3@ 4@ Screw ToolBox2 Ped_ID_r
+                            wait 2000
+                        end
                     end
                 end
-            end
 
     end
 end
@@ -430,83 +446,7 @@ if and
     not 2@ == 0 // Не в сельской местности. Для того, чтобы попросту не проверять все зоны
     887A:   not gang_war_in_progress
 then
-    // SF
-    if or
-        0583:   player $PLAYER_CHAR in_zone 'CALT'
-        0583:   player $PLAYER_CHAR in_zone 'CHINA'
-        0583:   player $PLAYER_CHAR in_zone 'THEA1'
-        0583:   player $PLAYER_CHAR in_zone 'OCEAF2'
-        0583:   player $PLAYER_CHAR in_zone 'CITYS'
-        0583:   player $PLAYER_CHAR in_zone 'CIVI'
-        0583:   player $PLAYER_CHAR in_zone 'PARA'
-    then
-        Zone_Check = true
-    end
-    // SF
-    if or
-        0583:   player $PLAYER_CHAR in_zone 'JUNIHI'
-        0583:   player $PLAYER_CHAR in_zone 'GARC'
-    then
-        Zone_Check = true
-    end
-
-    // LS
-    if or
-        0583:   player $PLAYER_CHAR in_zone 'ELS2'
-        0583:   player $PLAYER_CHAR in_zone 'ELS1B'
-        0583:   player $PLAYER_CHAR in_zone 'ELS1A'
-        0583:   player $PLAYER_CHAR in_zone 'ELS4'
-        0583:   player $PLAYER_CHAR in_zone 'JEF2'
-        0583:   player $PLAYER_CHAR in_zone 'JEF3B'
-        0583:   player $PLAYER_CHAR in_zone 'LIND3'
-    then
-        Zone_Check = true
-    end
-    // LS
-    if or
-        0583:   player $PLAYER_CHAR in_zone 'LIND2A'
-        0583:   player $PLAYER_CHAR in_zone 'LIND1A'
-        0583:   player $PLAYER_CHAR in_zone 'VIN2'
-        0583:   player $PLAYER_CHAR in_zone 'SUN1'
-        0583:   player $PLAYER_CHAR in_zone 'SUN2'
-        0583:   player $PLAYER_CHAR in_zone 'SUN4'
-        0583:   player $PLAYER_CHAR in_zone 'SUN3A'
-    then
-        Zone_Check = true
-    end
-    // LS
-    if or
-        0583:   player $PLAYER_CHAR in_zone 'PLS'
-        0583:   player $PLAYER_CHAR in_zone 'IWD4'
-        0583:   player $PLAYER_CHAR in_zone 'LFL1b'
-        0583:   player $PLAYER_CHAR in_zone 'GLN1'
-        0583:   player $PLAYER_CHAR in_zone 'GAN1'
-        0583:   player $PLAYER_CHAR in_zone 'GAN2'
-    then
-        Zone_Check = true
-    end
-
-    // LV
-    if or
-        0583:   player $PLAYER_CHAR in_zone 'PRP1'
-        0583:   player $PLAYER_CHAR in_zone 'PRP3'
-        0583:   player $PLAYER_CHAR in_zone 'PRP4'
-        0583:   player $PLAYER_CHAR in_zone 'SPIN'
-        0583:   player $PLAYER_CHAR in_zone 'WWE'
-        0583:   player $PLAYER_CHAR in_zone 'WWE1'
-        0583:   player $PLAYER_CHAR in_zone 'REDW1'
-    then
-        Zone_Check = true
-    end
-    // LV
-    if or
-        0583:   player $PLAYER_CHAR in_zone 'REDW2'
-        0583:   player $PLAYER_CHAR in_zone 'REDW3'
-        0583:   player $PLAYER_CHAR in_zone 'RSW1'
-        0583:   player $PLAYER_CHAR in_zone 'RSW2'
-    then
-        Zone_Check = true
-    end
+    Zone_Check = true
 end
 return
 

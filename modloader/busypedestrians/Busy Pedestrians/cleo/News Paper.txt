@@ -105,6 +105,7 @@ const
     timeq = 9@
     process = 8@
     ped_seller = 10@
+    iBuffer = 7@
     Busted_city = 1
     Busted_rural = 2
     wasted_police = 3
@@ -117,6 +118,18 @@ const
     calligula = 10
     black_project = 11
     drive_by = 12
+end
+
+get_label_pointer iBuffer = label @Buffer
+
+// 85-97 beaach
+
+for 2@ = 1 to 16 step 1
+    0AD3: 10@v = string_format "Paper1_%d" 2@
+    1@ = 0
+    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key 10@v
+    3@ = 2@ * 4
+    write_struct_offset iBuffer offset 3@ size 4 value 1@
 end
 
 0AF0: money_paper = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "News Paper" key "Price"
@@ -1213,81 +1226,105 @@ return
 if
     situation == 0
 then
-    0209: 1@ = random_int_in_ranges 1 5
-    0AD3: 2@v = string_format  "Paper1_%d" 1@
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key 2@v
+    0209: 2@ = random_int_in_ranges 1 5
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == Busted_city
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_5"
+    2@ = 5
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == Busted_rural
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_6"
+    2@ = 6
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == wasted_police
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_7"
+    2@ = 7
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == away_cops
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_8"
+    2@ = 8
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == gang_war_1
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_9"
+    2@ = 9
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == green_sabre
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_10"
+    2@ = 10
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == of_pullaski
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_11"
+    2@ = 11
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == of_tenp
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_12"
+    2@ = 12
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == riot
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_13"
+    2@ = 13
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == calligula
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_14"
+    2@ = 14
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == black_project
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_15"
+    2@ = 15
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 
 if
     situation == drive_by
 then
-    0AF0: 1@ = read_int_from_ini_file "cleo\News Paper.ini" section "Models" key "Paper1_16"
+    2@ = 16
+    2@ *= 4
+    read_struct_offset 1@ iBuffer offset 2@ size 4   // Read ID of Model 2
 end
 return
 
@@ -1331,3 +1368,9 @@ end
 newsobject = -1
 ped_seller = -1
 return
+
+
+:Buffer
+hex
+    00(80)    // 400 bytes - can store 100 int values
+end
