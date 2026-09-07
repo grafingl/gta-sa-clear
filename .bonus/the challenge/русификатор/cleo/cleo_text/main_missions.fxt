@@ -1,0 +1,28 @@
+# Created with FXT_Editor (Rus) by yelmi
+# -------------- © 2009 --------------- 
+
+MAINM01 e£ep© ¯o›®o ŸakaŸa¦© £œ  y, ecžœ ®y›®o ¢occ¦a®o¢œ¦© Ÿšopo¢©e.
+MAINM02 ­a›¯œ œ yšep›œ¢a ~k~~PED_ANSWER_PHONE~ œ ~k~~CONVERSATION_NO~ oš®o¢pe¯e®®o, ¤¦o—¨ ŸakaŸa¦© £œ  y. Pa—o¦ae¦ ¦ož©ko ¢ ™opošckœx pao®ax.
+MAINM03 ‹ o¦kp¨¦¨x ¯ycop®¨x —akax ¯o™y¦ —¨¦© ~g~£ožeŸ®¨e £peš¯e¦¨~s~. ‹c¦a®© £epeš —ako¯ œ yšep›œ¢a ~k~~CONVERSATION_YES~, ¤¦o—¨ e™o o—¨cka¦©.
+MAINM04 e£ep© ¯o›®o £poša¢a¦© ~g~¯e¦a¦ež©®¨e £peš¯e¦¨~s~ œ ~g~¦¬›ežoe opy›œe~s~ “¯¯e¦y.
+MAINM05 ­a›¯œ ~k~~PED_ANSWER_PHONE~ £epeš ap¯eckœ¯ ¬¡œko¯, ¤¦o—¨ cša¦© ¢ce c¢oœ ~g~¯e¦a¦ež©®¨e £peš¯e¦¨~s~ œ ~g~¦¬›ežoe opy›œe~s~.
+MAINM06 e£ep© ¯o›®o ¢¨Ÿ¢a¦© ~b~žœ¤®¨ a¢¦o¯o—œž©~s~ ¢ ž«—oe ¢pe¯¬ œ ¢ ž«—o¯ ¯ec¦e.
+MAINM07 ­a›¯œ œ yšep›œ¢a ~k~~PED_ANSWER_PHONE~ œ ~k~~GROUP_CONTROL_FWD~, ¤¦o—¨ ¢¨Ÿ¢a¦© ~b~žœ¤®¨ a¢¦o¯o—œž©~s~ Ÿa ~g~100$~s~.
+MAINM08 e£ep© ¯o›®o ¢¨Ÿ¢a¦© ~b~¯o¦o œkž~s~ ¢ ž«—oe ¢pe¯¬ œ ¢ ž«—o¯ ¯ec¦e.
+MAINM09 ­a›¯œ œ yšep›œ¢a ~k~~PED_ANSWER_PHONE~ œ ~k~~GROUP_CONTROL_BWD~, ¤¦o—¨ ¢¨Ÿ¢a¦© ~b~¯o¦o œkž~s~ Ÿa ~g~250$~s~.
+MAINM10 e£ep© ¯o›®o ¢¨Ÿ¢a¦© ~b~—po®œpo¢a®®¨ a¢¦o¯o—œž©~s~ ¢ ž«—oe ¢pe¯¬ œ ¢ ž«—o¯ ¯ec¦e.
+MAINM11 ­a›¯œ œ yšep›œ¢a ~k~~PED_ANSWER_PHONE~ œ ~k~~CONVERSATION_YES~, ¤¦o—¨ ¢¨Ÿ¢a¦© ~b~—po®œpo¢a®®¨ a¢¦o¯o—œž©~s~ Ÿa ~g~2000$~s~.
+MAINM12 e£ep© ¯o›®o ¢¨Ÿ¢a¦© ~b~—a®šy ‚poy¢~s~ ¢ ž«—oe ¢pe¯¬ œ ¢ ž«—o¯ ¯ec¦e.
+MAINM13 ­a›¯œ œ yšep›œ¢a ~k~~PED_ANSWER_PHONE~ œ ~k~~CONVERSATION_YES~, ¤¦o—¨ ¢¨Ÿ¢a¦© ~b~—po®œpo¢a®®¨ a¢¦o¯o—œž©~s~ Ÿa ~g~20000$~s~.
+MAINM14 ­a—epœ 2000 o¤ko¢ œžœ —ož©¥e, ¤¦o—¨ cpaŸy ¢¨œ™pa¦©.
+MAINM15 e£ep© ¯o›®o £oky£a¦© ¦eppœ¦opœœ —a®š ¤epeŸ —a®šœ¦ckœe £ak¦¨. ƒž¬ ª¦o™o £o¦pe—ye¦c¬ ¯®o™o še®e™.
+MAINM16 €a®šœ¦ckœe £ak¦¨ ¯o›®o ®a¦œ ¢ ~y~‡oc-Ca®¦oce~s~. ­a kap¦e £o¬¢ž¬e¦c¬ ~p~poŸo¢¨ ¯apkep~s~, ko™ša ¦¨ ®a¥ež ošœ® œŸ ®œx.
+MAINM17 ‚o¦o¢©c¬ k ~r~ka¯œkašŸe~s~.
+MAINM18 ­eko¦op¨e ¢pa™œ ¯o™y¦ œ¯e¦© c£e œaž©®oe c®ap¬›e®œe, šeža«¡ee œx cœž©®ee o—¨¤®o™o.
+MAINM19 Ykpašœ ¢ep¦ože¦ c ~y~¢oe®®o™o ¦o£žœ¢®o™o ckžaša~s~, ¢opo¦a o¦kpo«¦c¬ šž¬ ¢oe®®o™o ¦pa®c£op¦a. ‹yŸœ £oš™o¦o¢œž šž¬ ¦e—¬ ~g~c®ap¬›e®œe~s~.
+MAINM20 ~z~¨ ¢eše¥©, Cœ-ƒ›e, paŸ y› ¦¨ "–œc¦ep ‹ošœ¦ež©" œ ¢ce ¦akoe.
+MAINM21 ~z~Œoššep›œ¢a ¦e¯£, y—ž«šok!
+MAINM22 …Ÿ—a¢©c¬ o¦ ¢®œ¯a®œ¬ £ožœ œœ.
+MAINM23 ¦o—¨ y¤ac¦¢o¢a¦© ¢ co—¨¦œœ žoypašepo¢, ®y›®o 500$.
+MAINM24 ~z~ˆa¯ož¤œ.
+MAINM25 “¦a ¯a¥œ®a c¦pa®®o £ax®e¦...

@@ -17,6 +17,7 @@ const
     Spanner = 25@
     Sponge = 24@
     Broom = 23@
+    dj_panel = 21@
 end
 
 0085: Spanner = 0@ // (int)
@@ -554,7 +555,7 @@ end
                 $9472 = 1
                 016A: fade 0 time 0
 
-                wait 1000
+                wait 500
                 31@ = 0
                 while 0EA7: get_any_char_no_save_recursive 31@ progress_to 31@ char_to 0@
                     if
@@ -583,6 +584,8 @@ end
                 model.Load(171)
                 model.Load(172)
                 model.Load(260)
+                model.Load(19)
+                model.Load(14820)
                 if
                     not model.Available(171)
                 then
@@ -590,6 +593,14 @@ end
                     wait 0
                     model.Load(171)
                     until model.Available(171)
+                end
+                if
+                    not model.Available(19)
+                then
+                    repeat
+                    wait 0
+                    model.Load(19)
+                    until model.Available(19)
                 end
                 if
                     not model.Available(172)
@@ -607,6 +618,14 @@ end
                     model.Load(260)
                     until model.Available(260)
                 end
+                if
+                    not model.Available(14820)
+                then
+                    repeat
+                    wait 0
+                    model.Load(14820)
+                    until model.Available(14820)
+                end
                 038B: load_requested_models
 
                 009A: Ped_1 = create_actor_pedtype 21 model 171 at 481.4362 -13.1732 1000.6797
@@ -621,7 +640,7 @@ end
                 0E24: fix_char Ped_3 ground 1 brightness 0 and_fade_in 0
                 0173: set_actor Ped_3 Z_angle_to 270.0
 
-                009A: Ped_4 = create_actor_pedtype 21 model 171 at 475.5606 -14.4744 1003.6953
+                009A: Ped_4 = create_actor_pedtype 21 model 19 at 475.8606 -14.9744 1003.6953
                 0E24: fix_char Ped_4 ground 1 brightness 0 and_fade_in 0
                 0173: set_actor Ped_4 Z_angle_to 282.5364
 
@@ -634,9 +653,19 @@ end
                 0F02: create_render_object_to_char_bone_from_special Ped_2 special_model Spanner bone 24 offset 0 0 0 rotation 0 0 0 store_to 1@
                 0F02: create_render_object_to_char_bone_from_special Ped_3 special_model Sponge bone 24 offset 0 0 0 rotation 0 0 0 store_to 1@
 
+
+                0E01: create_object_no_save 14820 at 476.549 -14.9356 1003.58 offset 0 ground 0 to dj_panel
+                0177: set_object dj_panel Z_angle_to 270.0
+                07F7: set_object dj_panel destructible 0
+                0382: set_object dj_panel collision_detection 0
+                0566: link_object dj_panel to_interior Interior_active
+
+
+                model.Destroy(14820)
                 model.Destroy(171)
                 model.Destroy(172)
                 model.Destroy(260)
+                model.Destroy(19)
 
                 0605: actor Ped_1 perform_animation "SWEEP" IFP "PedEventsMod" framedelta 2.0 loop 0 lockX 0 lockY 0 lockF 0 time -1
                 0605: actor Ped_2 perform_animation "REPAIR" IFP "PedEventsMod" framedelta 2.0 loop 0 lockX 0 lockY 0 lockF 0 time -1
@@ -818,6 +847,10 @@ end
                 end
                 if 056D:   actor Ped_4 defined
                 then 009B: destroy_actor Ped_4
+                end
+                
+                if 03CA:   object dj_panel exists
+                then 0108: destroy_object dj_panel
                 end
                 
             end

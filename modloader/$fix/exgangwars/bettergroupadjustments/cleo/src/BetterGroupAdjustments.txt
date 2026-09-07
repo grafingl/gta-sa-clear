@@ -1,0 +1,686 @@
+{$CLEO .cs}
+{$USE CLEO+}
+
+SCRIPT_NAME 'A_BGADJ'
+
+IF IS_ON_SAMP
+THEN TERMINATE_THIS_CUSTOM_SCRIPT
+END
+
+WHILE NOT IS_PLAYER_PLAYING 0
+    WAIT 0
+END
+WAIT 1000
+
+//***********************************************************************************//
+///////////////////////////////////////////////////////////////////////////////////////
+// Better Group Adjustments
+// Author: AlvarynGTA
+///////////////////////////////////////////////////////////////////////////////////////
+// INI settings
+INT ctrlMode, btnSelectMember
+INT btnGiveWeapon, btnRemoveMember
+FLOAT distGiveWeap, weaponGiveMode
+
+// Variables
+INT playerStatePtr, stateOffset, stateValue
+INT playerID, playerChar, playerGroup, player2Char
+INT memberSlot, charMember, nearActionMember = -1
+INT playerWeapon, memberWeapon
+INT cheatFlag = 0, memberControlHelpActive = 0
+INT groupList, listIndex, memberList
+INT tempInt, tempFlag
+INT upgradeScriptExists = 0
+
+// Constants
+CONST
+    CWorld__PlayerInFocus = 0xB7CD74
+    
+    PLAYER_STATE_SIZE = 0x14
+
+    PLAYER_DPAD_UP = 0x00
+    PLAYER_DPAD_DOWN = 0x04
+    PLAYER_GIVE_FLAG = 0x08
+    PLAYER_REMOVE_FLAG = 0x0C
+    PLAYER_NEAR_MEMBER = 0x10
+END
+//***********************************************************************************//
+
+playerStatePtr = GET_LABEL_POINTER @PLAYER_STATE_BUFFER
+
+GOSUB @read_INI
+GOSUB @INIT_PLAYER_STATE_BUFFER
+
+playerID = 0
+playerChar = GET_PLAYER_CHAR playerID
+playerGroup = GET_PLAYER_GROUP playerID
+
+groupList = CREATE_LIST 0
+TIMERA = 0
+
+//-----------------------------------------------------------------------------//
+:MAIN_LOOP
+//-----------------------------------------------------------------------------//
+WAIT 0
+
+playerID = READ_MEMORY CWorld__PlayerInFocus 1 FALSE
+IF NOT IS_PLAYER_PLAYING playerID
+THEN
+    GOSUB @RESET_PLAYER_GROUP_ON_DEATH
+    GOTO @MAIN_LOOP
+END
+
+IF TIMERA > 500
+THEN 
+    TIMERA = 0
+    GOSUB @CHECK_GROUP_MEMBER_LIST
+END
+
+player2Char = GET_PLAYER_CHAR 1
+memberControlHelpActive = 0
+
+FOR playerID = 0 TO 1
+    playerChar = GET_PLAYER_CHAR playerID
+
+    IF OR
+        playerChar < 0
+        NOT DOES_CHAR_EXIST playerChar
+    THEN CONTINUE
+    END
+    
+    GOSUB @CHECK_CONTROL_UP_DOWN
+    
+    SWITCH ctrlMode
+    CASE 0
+        GOSUB @CONTROL_MODE_AIM
+    CASE 1
+        GOSUB @CONTROL_MODE_BTN_NEAR_MEMBER
+    CASE 2
+        GOSUB @CONTROL_MODE_BTN_NEAR_MEMBER
+        GOSUB @CONTROL_MODE_AIM
+    END
+END
+
+IF memberControlHelpActive == 0
+THEN
+    IF OR
+        IS_THIS_HELP_MESSAGE_BEING_DISPLAYED 'BGACTL1'
+        IS_THIS_HELP_MESSAGE_BEING_DISPLAYED 'BGACTL2'
+    THEN CLEAR_HELP
+    END
+END
+
+GOSUB @CHECK_GOD_CHEAT_UPDATE
+
+GOTO @MAIN_LOOP
+
+//_______________________________________________________________
+:CHECK_GROUP_MEMBER_LIST
+//_______________________________________________________________
+FOR memberSlot = 0 TO 6
+    charMember = GET_GROUP_MEMBER playerGroup memberSlot
+
+    IF AND
+        charMember <> -1
+        charMember <> player2Char
+        DOES_CHAR_EXIST charMember
+        NOT IS_CHAR_DEAD charMember
+    THEN
+        tempFlag = 0
+
+        FOR listIndex = 0 TO 6
+            memberList = GET_LIST_VALUE_BY_INDEX groupList listIndex
+            IF memberList == charMember
+            THEN tempFlag = 1
+            END
+        END
+
+        IF tempFlag == 0
+        THEN
+            LIST_ADD groupList charMember
+            GOSUB @RUN_UPGRADE
+        END
+    END
+END
+
+FOR listIndex = 6 DOWNTO 0
+    memberList = GET_LIST_VALUE_BY_INDEX groupList listIndex
+
+    IF AND
+        memberList > 0
+        memberList <> player2Char
+        NOT IS_GROUP_MEMBER memberList playerGroup
+    THEN
+        IF DOES_CHAR_EXIST memberList
+        THEN
+            charMember = memberList
+            GOSUB @RESTORE_MEMBER_ON_EXIT
+        END
+        
+        LIST_REMOVE_VALUE groupList memberList
+    END
+END
+
+RETURN
+
+//_______________________________________________________________
+:CHECK_CONTROL_UP_DOWN
+//_______________________________________________________________
+GOSUB @GET_PLAYER_STATE_OFFSET
+stateOffset += PLAYER_DPAD_UP
+stateValue = READ_STRUCT_OFFSET playerStatePtr stateOffset 4
+
+IF IS_BUTTON_PRESSED playerID Button.DpadUp
+THEN WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 1
+ELSE
+    IF stateValue == 1
+    THEN
+        WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 0
+        REGROUP_MEMBERS_FOR_PLAYER_GROUP(playerGroup)
+    END
+END
+
+GOSUB @GET_PLAYER_STATE_OFFSET
+stateOffset += PLAYER_DPAD_DOWN
+stateValue = READ_STRUCT_OFFSET playerStatePtr stateOffset 4
+
+IF IS_BUTTON_PRESSED playerID Button.DpadDown
+THEN WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 1
+ELSE
+    IF stateValue == 1
+    THEN
+        WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 0
+        SET_GROUP_DEFAULT_TASK_ALLOCATOR playerGroup 2
+    END
+END
+
+RETURN
+
+//_______________________________________________________________
+:CHECK_GOD_CHEAT_UPDATE
+//_______________________________________________________________
+IF IS_CHEAT_ACTIVE 61
+THEN
+    IF cheatFlag == 0
+    THEN
+        cheatFlag = 1
+        GOSUB @REAPPLY_UPGRADE_TO_LISTED_MEMBERS_FOR_CHEAT
+    END
+ELSE
+    IF cheatFlag == 1
+    THEN
+        cheatFlag = 0
+        GOSUB @REAPPLY_UPGRADE_TO_LISTED_MEMBERS_FOR_CHEAT
+    END
+END
+
+RETURN
+
+//_______________________________________________________________
+:CONTROL_MODE_AIM
+//_______________________________________________________________
+IF NOT IS_BUTTON_PRESSED playerID Button.RightShoulder1
+THEN RETURN
+END
+
+charMember = GET_CHAR_PLAYER_IS_TARGETING playerID
+
+IF OR
+    charMember == -1
+    NOT IS_GROUP_MEMBER charMember playerGroup
+THEN RETURN
+END
+
+GOSUB @GET_PLAYER_STATE_OFFSET
+stateOffset += PLAYER_GIVE_FLAG
+stateValue = READ_STRUCT_OFFSET playerStatePtr stateOffset 4
+
+IF IS_BUTTON_PRESSED playerID btnGiveWeapon
+THEN
+    IF stateValue == 0
+    THEN
+        WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 1
+
+        IF LOCATE_CHAR_ANY_MEANS_CHAR_3D playerChar charMember distGiveWeap distGiveWeap distGiveWeap 1
+        THEN GOSUB @GIVE_WEAPON_TO_MEMBER
+        END
+    END
+ELSE WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 0
+END
+
+GOSUB @GET_PLAYER_STATE_OFFSET
+stateOffset += PLAYER_REMOVE_FLAG
+stateValue = READ_STRUCT_OFFSET playerStatePtr stateOffset 4
+
+IF IS_BUTTON_PRESSED playerID btnRemoveMember
+THEN
+    IF stateValue == 0
+    THEN
+        WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 1
+        GOSUB @REMOVE_MEMBER_FROM_GROUP
+    END
+ELSE WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 0
+END
+
+RETURN
+
+//_______________________________________________________________
+:CONTROL_MODE_BTN_NEAR_MEMBER
+//_______________________________________________________________
+GOSUB @GET_PLAYER_STATE_OFFSET
+stateOffset += PLAYER_NEAR_MEMBER
+nearActionMember = READ_STRUCT_OFFSET playerStatePtr stateOffset 4
+
+IF AND
+    IS_BUTTON_PRESSED playerID btnSelectMember
+    IS_CHAR_ON_FOOT playerChar
+    nearActionMember == -1
+THEN
+    playerWeapon = GET_CURRENT_CHAR_WEAPON playerChar
+
+    IF AND
+        NOT IS_WEAPON_FIRE_TYPE playerWeapon 4
+        NOT IS_WEAPON_FIRE_TYPE playerWeapon 5
+    THEN
+        charMember = GET_NEAREST_FRONT_MEMBER(playerChar, playerGroup)
+
+        IF charMember <> -1
+        THEN
+            nearActionMember = charMember
+            WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 nearActionMember
+        END
+    END
+END
+
+tempFlag = IS_MEMBER_CONTROL_CONTEXT_VALID(playerID, playerChar, nearActionMember, btnSelectMember)
+
+IF tempFlag == 0
+THEN
+    GOSUB @CLEAR_MEMBER_CONTROL_CONTEXT
+    RETURN
+END
+
+memberControlHelpActive = 1
+
+tempInt = GET_PED_TYPE nearActionMember
+
+IF tempInt < 23
+THEN PRINT_HELP_FOREVER 'BGACTL2'
+ELSE PRINT_HELP_FOREVER 'BGACTL1'
+END
+
+GOSUB @GET_PLAYER_STATE_OFFSET
+stateOffset += PLAYER_GIVE_FLAG
+stateValue = READ_STRUCT_OFFSET playerStatePtr stateOffset 4
+
+IF IS_BUTTON_PRESSED playerID btnGiveWeapon
+THEN
+    IF stateValue == 0
+    THEN
+        WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 1
+
+        charMember = nearActionMember
+        GOSUB @GIVE_WEAPON_TO_MEMBER
+    END
+ELSE WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 0
+END
+
+GOSUB @GET_PLAYER_STATE_OFFSET
+stateOffset += PLAYER_REMOVE_FLAG
+stateValue = READ_STRUCT_OFFSET playerStatePtr stateOffset 4
+
+IF AND
+    tempInt < 23
+    IS_BUTTON_PRESSED playerID btnRemoveMember
+THEN
+    IF stateValue == 0
+    THEN
+        WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 1
+
+        charMember = nearActionMember
+        GOSUB @REMOVE_MEMBER_FROM_GROUP
+        GOSUB @CLEAR_MEMBER_CONTROL_CONTEXT
+    END
+ELSE WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 0
+END
+
+RETURN
+
+//_______________________________________________________________
+:CLEAR_MEMBER_CONTROL_CONTEXT
+//_______________________________________________________________
+GOSUB @GET_PLAYER_STATE_OFFSET
+stateOffset += PLAYER_NEAR_MEMBER
+WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 -1
+
+RETURN
+
+//_______________________________________________________________
+:GET_PLAYER_STATE_OFFSET
+//_______________________________________________________________
+stateOffset = playerID
+stateOffset *= PLAYER_STATE_SIZE
+
+RETURN
+
+//_______________________________________________________________
+:INIT_PLAYER_STATE_BUFFER
+//_______________________________________________________________
+FOR playerID = 0 TO 1
+    GOSUB @GET_PLAYER_STATE_OFFSET
+
+    WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 0
+    stateOffset += 4
+    WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 0
+    stateOffset += 4
+    WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 0
+    stateOffset += 4
+    WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 0
+    stateOffset += 4
+    WRITE_STRUCT_OFFSET playerStatePtr stateOffset 4 -1
+END
+
+playerID = 0
+
+RETURN
+
+//_______________________________________________________________
+:GIVE_WEAPON_TO_MEMBER
+//_______________________________________________________________
+playerWeapon = GET_CURRENT_CHAR_WEAPON playerChar
+memberWeapon = GET_CURRENT_CHAR_WEAPON charMember
+
+IF playerWeapon == memberWeapon
+THEN RETURN
+END
+
+IF memberWeapon > 0
+THEN REMOVE_WEAPON_FROM_CHAR charMember memberWeapon
+END
+
+GIVE_WEAPON_TO_CHAR charMember playerWeapon 99999
+
+IF weaponGiveMode == 1
+THEN REMOVE_WEAPON_FROM_CHAR playerChar playerWeapon
+END
+
+RETURN
+
+//_______________________________________________________________
+:REMOVE_MEMBER_FROM_GROUP
+//_______________________________________________________________
+tempInt = GET_PED_TYPE charMember
+
+IF tempInt >= 23
+THEN RETURN
+END
+
+REMOVE_CHAR_FROM_GROUP charMember
+
+RETURN
+
+//_______________________________________________________________
+:RUN_UPGRADE
+//_______________________________________________________________
+IF upgradeScriptExists == 1
+THEN STREAM_CUSTOM_SCRIPT "BGA_UpgradeMember.s" charMember 0 playerGroup
+END
+
+RETURN
+
+//_______________________________________________________________
+:RESTORE_MEMBER_ON_EXIT
+//_______________________________________________________________
+SET_CHAR_WEAPON_SKILL charMember 1
+SET_CHAR_ACCURACY charMember 75
+SET_CHAR_SHOOT_RATE charMember 50
+
+SET_CHAR_PROOFS charMember 0 0 0 0 0
+SET_CHAR_SUFFERS_CRITICAL_HITS charMember TRUE
+
+RETURN
+
+//_______________________________________________________________
+:RESET_PLAYER_GROUP_ON_DEATH
+//_______________________________________________________________
+FOR memberSlot = 0 TO 6
+    charMember = GET_GROUP_MEMBER playerGroup memberSlot
+
+    IF AND
+        charMember <> -1
+        DOES_CHAR_EXIST charMember
+    THEN REMOVE_CHAR_FROM_GROUP charMember
+    END
+END
+
+RETURN
+
+//_______________________________________________________________
+:REAPPLY_UPGRADE_TO_LISTED_MEMBERS_FOR_CHEAT
+//_______________________________________________________________
+FOR memberSlot = 0 TO 6
+    charMember = GET_GROUP_MEMBER playerGroup memberSlot
+
+    IF AND
+        charMember <> -1
+        charMember <> player2Char
+        DOES_CHAR_EXIST charMember
+        NOT IS_CHAR_DEAD charMember
+    THEN GOSUB @RUN_UPGRADE
+    END
+END
+
+RETURN
+
+//=========================================================================//
+FUNCTION REGROUP_MEMBERS_FOR_PLAYER_GROUP(playerGroup:INT)
+    INT memberSlot = 0, charMember = -1, player2Char, playerChar
+    FLOAT px, py, pz, x, y, z, dist = 0.0
+    
+    player2Char = GET_PLAYER_CHAR 1
+    playerChar = GET_PLAYER_CHAR 0
+    px, py, pz = GET_CHAR_COORDINATES playerChar
+    SET_GROUP_DEFAULT_TASK_ALLOCATOR playerGroup 0
+    
+    FOR memberSlot = 0 TO 6
+        charMember = GET_GROUP_MEMBER playerGroup memberSlot
+
+        IF AND
+            charMember <> -1
+            charMember <> player2Char
+            DOES_CHAR_EXIST charMember
+            NOT IS_CHAR_DEAD charMember
+        THEN
+            x, y, z = GET_CHAR_COORDINATES charMember
+            dist = GET_DISTANCE_BETWEEN_COORDS_3D x y z px py pz
+
+            IF dist > 16.0
+            THEN TASK_GO_STRAIGHT_TO_COORD charMember px py pz MoveState.Sprint -1
+            END
+        END
+    END
+END
+
+//=========================================================================//
+FUNCTION GET_NEAREST_FRONT_MEMBER(charPlayer:INT, playerGroup:INT): INT
+    FLOAT px, py, pz
+    FLOAT x, y, z
+    FLOAT currentDistance = 0.0, nearestDistance = 9999.0
+    INT memberSlot = 0, charMember = -1, targetMember = -1, player2Char
+    
+    player2Char = GET_PLAYER_CHAR 1
+    px, py, pz = GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS charPlayer 0.0 0.5 0.0
+    
+    FOR memberSlot = 0 TO 6
+        charMember = GET_GROUP_MEMBER playerGroup memberSlot
+
+        IF AND
+            charMember <> -1
+            charMember <> player2Char
+        THEN
+            IF AND
+                DOES_CHAR_EXIST charMember
+                NOT IS_CHAR_DEAD charMember
+                LOCATE_CHAR_ON_FOOT_3D charMember px py pz 0.5 0.5 1.5 0
+            THEN
+                x, y, z = GET_CHAR_COORDINATES charMember
+                currentDistance = GET_DISTANCE_BETWEEN_COORDS_3D x y z px py pz
+
+                IF currentDistance < nearestDistance
+                THEN
+                    nearestDistance = currentDistance
+                    targetMember = charMember
+                END
+            END
+        END
+    END
+
+    CLEO_RETURN 1 targetMember
+END
+
+//=========================================================================//
+FUNCTION IS_MEMBER_CONTROL_CONTEXT_VALID(playerID:INT, playerChar:INT, nearActionMember:INT, btnSelectMember:INT): INT
+    INT playerWeapon
+    FLOAT x, y, z
+
+    IF nearActionMember == -1
+    THEN CLEO_RETURN 1 0
+    END
+
+    IF OR
+        NOT DOES_CHAR_EXIST nearActionMember
+        IS_CHAR_DEAD nearActionMember
+        NOT IS_CHAR_ON_FOOT nearActionMember
+        NOT IS_CHAR_ON_FOOT playerChar
+        NOT IS_BUTTON_PRESSED playerID btnSelectMember
+    THEN CLEO_RETURN 1 0
+    END
+
+    playerWeapon = GET_CURRENT_CHAR_WEAPON playerChar
+    x, y, z = GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS playerChar 0.0 0.5 0.0
+
+    IF OR
+        NOT LOCATE_CHAR_ON_FOOT_3D nearActionMember x y z 0.5 0.5 1.5 0
+        IS_WEAPON_FIRE_TYPE playerWeapon 4
+        IS_WEAPON_FIRE_TYPE playerWeapon 5
+    THEN CLEO_RETURN 1 0
+    END
+
+    CLEO_RETURN 1 1
+END
+
+//=========================================================================//
+:read_INI
+//=========================================================================//
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Settings" "ENABLE_MOD" stateValue
+THEN stateValue = 0
+END
+
+IF stateValue <> 1
+THEN TERMINATE_THIS_CUSTOM_SCRIPT
+END
+
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Settings" "CONTROL_MODE" ctrlMode
+THEN ctrlMode = 0
+END
+
+IF OR
+    ctrlMode > 2
+    ctrlMode < 0
+THEN ctrlMode = 0
+END
+
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Settings" "BTN_SELECT_MEMBER" btnSelectMember
+THEN btnSelectMember = 4
+END
+
+IF OR
+    btnSelectMember > 19
+    btnSelectMember < 0
+THEN btnSelectMember = 4
+END
+
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Settings" "BTN_GIVE_WEAPON" btnGiveWeapon
+THEN btnGiveWeapon = 11
+END
+
+IF OR
+    btnGiveWeapon > 19
+    btnGiveWeapon < 0
+THEN btnGiveWeapon = 11
+END
+
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Settings" "BTN_REMOVE_MEMBER" btnRemoveMember
+THEN btnRemoveMember = 10
+END
+
+IF OR
+    btnRemoveMember > 19
+    btnRemoveMember < 0
+THEN btnRemoveMember = 10
+END
+
+IF NOT READ_FLOAT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Settings" "WEAPON_GIVE_RADIUS" distGiveWeap
+THEN distGiveWeap = 5.0
+END
+
+IF distGiveWeap > 50.0
+THEN distGiveWeap = 50.0
+ELSE
+    IF distGiveWeap < 1.0
+    THEN distGiveWeap = 1.0
+    END
+END
+
+IF DOES_FILE_EXIST "CLEO\BGA_UpgradeMember.s"
+THEN upgradeScriptExists = 1
+ELSE upgradeScriptExists = 0
+END
+
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Settings" "WEAPON_GIVE_MODE" weaponGiveMode
+THEN weaponGiveMode = 0
+END
+IF OR
+    weaponGiveMode > 1
+    weaponGiveMode < 0
+THEN weaponGiveMode = 0
+END
+
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Auto Attack" "ENABLE_AUTO_ATTACK" tempFlag
+THEN tempFlag = 0
+END
+
+IF tempFlag == 1
+THEN
+    IF DOES_FILE_EXIST "CLEO\BGA_AutoAttack.s"
+    THEN
+        tempInt = GET_SCRIPT_STRUCT_NAMED 'BGA_AAT'
+        IF tempInt == 0
+        THEN STREAM_CUSTOM_SCRIPT "BGA_AutoAttack.s"
+        END
+    END
+END
+
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Settings" "ENABLE_ENTER_GANG_INTERIOR" tempFlag
+THEN tempFlag = 0
+END
+
+IF tempFlag == 1
+THEN
+    IF DOES_FILE_EXIST "CLEO\BGA_EnterGangInterior.s"
+    THEN
+        tempInt = GET_SCRIPT_STRUCT_NAMED 'BGA_EGI'
+        IF tempInt == 0
+        THEN STREAM_CUSTOM_SCRIPT "BGA_EnterGangInterior.s"
+        END
+    END
+END
+
+RETURN
+
+//-----------------------------------------------------------------------------------//
+
+:PLAYER_STATE_BUFFER
+HEX
+    00(40) // 2 players * 5 ints * 4 bytes
+END

@@ -3,28 +3,30 @@ Mod Loader
 
 ## O que é?
 
-Mod Loader é um plugin ASI para o Grand Theft Auto San Andreas que adiciona uma forma extremamente fácil e amigável de se instalar e desinstalar modificações no jogo, sem tocar em qualquer arquivo do mesmo.
+Mod Loader é um plugin para Grand Theft Auto III, Vice City e San Andreas que adiciona uma forma fácil e amigável de instalar e desinstalar modificações no jogo, como se o jogo tivesse suporte oficial a mods. Nenhuma alteração é feita nos arquivos originais do jogo; tudo é injetado em tempo de execução!
 
-A utilização é simples: você só precisa criar uma ou mais pastas dentro do diretório modloader/ e então jogar o conteúdo das modificações lá e pronto!
-É recomendado que se tenha uma pasta para cada modificação, por questão de organização.
+A utilização é tão simples quanto colocar os arquivos do mod no diretório modloader/. Desinstalar é igualmente fácil: apague os arquivos do mod e pronto. Trocar mods com o jogo aberto? Com o Mod Loader você pode!
+
+Ainda com dúvidas? Confira este [vídeo](https://www.youtube.com/watch?v=TvRpQa8dJ7E) do Ivy.
 
 ## Instalando o Mod Loader
 
-### Instalando no GTA San Andreas
+### GTA San Andreas
 
-  Mod Loader requer um [ASI Loader](http://www.gtagarage.com/mods/show.php?id=21709), tenha certeza de que você tenha um.
+  Mod Loader requer um [ASI Loader](http://www.gtagarage.com/mods/show.php?id=21709). 
+  
+  Extraia o *modloader.asi* e a pasta *modloader* para o diretório do jogo.
 
-  Em seguida, extraia o *modloader.asi* e a pasta *modloader* para o diretório de seu jogo.
+### GTA Vice City ou GTA III:
 
-### Instalando no GTA Vice City ou GTA III:
+  Mod Loader requer o [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases).
+  
+  Extraia o *modloader.asi* para a pasta *scripts/* e a pasta *modloader* para o diretório do jogo.
 
-  Mod Loader requer o [Ultimate ASI Loader](https://github.com/ThirteenAG/Ultimate-ASI-Loader/releases), tenha certeza de que você tenha um.
 
-  Em seguida, extraia o *modloader.asi* para pasta *scripts/* e a pasta *modloader* para o diretório de seu jogo.
+## Instalando modificações
 
-## Instalando Mods no Mod Loader
-
-Para instalar um mod no Mod Loader, é extremamente simples, apenas extraia o conteúdo do seu mod **dentro de uma pasta** no diretório do *modloader*.
+Extraia o conteúdo da modificação em uma pasta dentro do diretório *modloader*.
 
 Isso significa que os seguintes são métodos válidos de instalação:
 
@@ -37,42 +39,31 @@ Entretanto, o seguinte **NÃO** é um método válido:
  - modloader/.data/infernus.dff
 
 
-## Desinstalando Mods do Mod Loader
+## Desinstalando modificações
 
-Ainda mais fácil, apenas delete o conteúdo do mod que deseja instalar do diretório do *modloader*.
-Se você só quiser desabilitar o mod por um instante, vá para o menu in-game para desabilitá-lo, ou edite o *modloader.ini* manualmente.
+Ainda mais fácil, apenas delete o conteúdo da modificação do diretório *modloader*.
+
+Se você só quiser desabilitar a modificação por um instante, vá para o menu in-game para desabilitá-la, ou edite o *modloader.ini* manualmente. 
 
 ## Destaques
 
 - Não substitua **NENHUM** arquivo original. Nunca. Sério.
 - Deixe que o Mod Loader tome conta de tudo.
-    + Mixagem de arquivos data
-        * Portanto você pode, por exemplo, ter 70 arquivos handling.cfg no modloader e eles irão funcionar perfeitamente.
-    + Leitura de arquivos 'leia-me'
-        * Não é necessário ligar para as linhas data em arquivos 'leia-me', o Mod Loader instala elas por você também !!!
-- Recarregar Mods
-    + Mude ou adiciona arquivos enquanto o jogo está rodando e veja-as imediatamente!!!
-- Suporte para linhas de comando
-    + Veja *modloader/.data/Command Line Arguments.md*
-- Menu 'em jogo' para configurações
-    + Vá para *Options > Mod Configuration*
-    + Quando o menu não estiver disponível, faça as edições manualmente em *modloader/modloader.ini* e *modloader/.data/config.ini*
-- Profiles, assim você pode ter varios jogos em um.
-    + Leia *modloader/.data/Profiles.md* for para detalhes
+- Mixagem de arquivos data. Você pode, por exemplo, ter 70 arquivos handling.cfg no modloader e eles irão funcionar perfeitamente.
+- Leitura de arquivos readme. Não é necessário se preocupar em copiar a linha data do arquivo readme para o arquivo data; o Mod Loader faz isso por você também!
+- Mods recarregáveis. Mude ou adicione arquivos enquanto o jogo está rodando e veja o resultado imediatamente!
+- Suporte para linha de comando. Veja *modloader/.data/Command Line Arguments.md*.
+- Menu em jogo para configurações. Vá para *Options > Mod Configuration*.
 
 ### Encontrou uma falha?
 
-É essencial que você reporte bugs, para que o Mod Loader seja melhorado. Para reportar um bug, vá para um dos canais a seguir:
+Encontrou um bug? Reporte em [nosso issue tracker](https://github.com/thelink2012/modloader/issues).
 
- * No GitHub, usando [nosso issue tracker](https://github.com/thelink2012/sa-modloader/issues)
- * Suporte em inglês na [GTA Forums](http://gtaforums.com/topic/669520-sarel-mod-loader/)
- * Suporte em português na [Brazilian Modding Studio Forums](http://brmodstudio.forumeiros.com/t3591-mod-loader-topico-oficial)
-
-Ao reportar um bug, **POR FAVOR**, forneça o arquivo *modloader/modloader.log* criado logo após o crash e dê informações detalhadas de como reproduzir o bug.
+Por favor, inclua o arquivo *modloader/modloader.log* criado logo após o crash e os passos para reproduzir.
 
 ### Executáveis suportados
 
-Nem todos os executáveis são suportados no momento. Os suportados são:
+Versões suportadas:
 
  + GTA III 1.0
  + GTA VC 1.0
@@ -81,26 +72,32 @@ Nem todos os executáveis são suportados no momento. Os suportados são:
 
 ## Download
 
-Você pode fazer o download da última versão do Mod Loader em um dos seguintes links:
+Você pode fazer o download da última versão do Mod Loader em:
 
- * [GTA Garage](http://www.gtagarage.com/mods/show.php?id=25377), para a última versão estável.
- * [GitHub](https://github.com/thelink2012/modloader/releases), para a última versão (incluindo não-estáveis).
+ * [GTA Garage](http://www.gtagarage.com/mods/show.php?id=25377) — última versão estável
+ * [GitHub](https://github.com/thelink2012/modloader/releases) — últimas versões, incluindo instáveis
 
 ## Código-Fonte
 
 Mod Loader é um projeto open source, sinta-se livre para aprender e contribuir.
 O código fonte está sob a MIT License, se ligue no [GitHub](https://github.com/thelink2012/modloader/).
 
-## Créditos
+## Colaboradores
 
-Finalmente, créditos.
+Originalmente desenvolvido por LINK/2012 com contribuições, suporte e testes de
 
-#### Desenvolvedor
-  * LINK/2012 (<dma_2012@hotmail.com>)
+- Andryo
+- ArtututuVidor$
+- CookiePLMonster
+- Fabio3rs
+- Gramps
+- Junior_Djjr
+- JNRois12
+- LINK/2012
+- rokuniichi
+- Silent
+- ThirteenAG
+- TheComputerGuy96
+- TJGM
 
-#### Muito Obrigado à
-  * ArtututuVidor$, Andryo, Junior_Djjr e JNRois12 por alpha-testarem
-  * Gramps e TJGM pelo suporte emocional.
-  * Silent por muitos fixes e ajudas no desenvolvimento do projeto.
-  * ThirteenAG por me fornecer varios ponteiros (literalmente) para a versão do GTA III / Vice City.
-
+e muitas outras pessoas.

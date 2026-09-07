@@ -85,4 +85,8 @@ vend, properf_dynamic
 cooler1, properf_dynamic
 lahills_lod, lodproperf_la
 ce_lod_05, lodproperf_country
+CJ_NOODLE_1, properf_dynamic
+lod3_las, lodproperf_la
+CJ_BINS, properf_dynamic
+vegasnlod2, lodproperf_vegas
 end

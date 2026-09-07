@@ -55,7 +55,7 @@ if and
     810F:   not player $PLAYER_CHAR wanted_level > 0
 jf @PoliceCar_Boot
     04C4: store_coords_to 1@ 2@ 3@ from_actor $PLAYER_ACTOR with_offset 0.0 0.0 0.0
-    0AE2: 0@ = random_vehicle_near_point 1@ 2@ 3@ in_radius 50.0 find_next 1 pass_wrecked 1
+    0AE2: 0@ = random_vehicle_near_point 1@ 2@ 3@ in_radius 40.0 find_next 1 pass_wrecked 1
 jf @PoliceCar
     046C: 4@ = car 0@ drive
 if

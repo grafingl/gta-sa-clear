@@ -1,0 +1,64 @@
+{$CLEO .s}
+
+SCRIPT_NAME 'BGA_BLP'
+
+//***********************************************************************************//
+///////////////////////////////////////////////////////////////////////////////////////
+// BGA: Target Blip 
+// Author: AlvarynGTA
+///////////////////////////////////////////////////////////////////////////////////////
+// Arguments
+INT slotTargetPtr, memberChar, targetChar, playerGroup
+
+// Variables
+INT targetBlip
+INT groupLeaderCount, groupMemberCount
+INT currentStoredTarget
+//***********************************************************************************//
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+IF targetChar <> -1
+THEN
+    targetBlip = ADD_BLIP_FOR_CHAR targetChar // Create a temporary blip for the member's current assigned target.
+    CHANGE_BLIP_COLOUR targetBlip 0 //Red
+
+    WHILE TRUE
+        groupLeaderCount, groupMemberCount = GET_GROUP_SIZE playerGroup
+        IF groupMemberCount == 0
+        THEN BREAK
+        END
+
+        IF targetChar == -1
+        THEN BREAK
+        END
+        IF NOT DOES_CHAR_EXIST targetChar
+        THEN BREAK
+        END
+        IF IS_CHAR_DEAD targetChar
+        THEN BREAK
+        END
+
+        IF memberChar == -1
+        THEN BREAK
+        END
+        IF NOT DOES_CHAR_EXIST memberChar
+        THEN BREAK
+        END
+        IF IS_CHAR_DEAD memberChar
+        THEN BREAK
+        END
+
+        currentStoredTarget = READ_MEMORY slotTargetPtr 4 0 // Stop showing the blip as soon as this slot is reassigned to a different target.
+        IF currentStoredTarget <> targetChar
+        THEN BREAK
+        END
+
+        WAIT 100 // Low-frequency update is enough here since this script only tracks blip lifetime.
+    END
+
+    REMOVE_BLIP targetBlip // Remove the blip when the target, member, or assigned slot state is no longer valid.
+END
+
+TERMINATE_THIS_CUSTOM_SCRIPT

@@ -1,0 +1,699 @@
+{$CLEO .s}
+{$USE CLEO+}
+
+SCRIPT_NAME 'BGA_AAT'
+
+//***********************************************************************************//
+///////////////////////////////////////////////////////////////////////////////////////
+// BGA: Auto Attack
+// Author: AlvarynGTA
+///////////////////////////////////////////////////////////////////////////////////////
+// INI settings
+INT isAutoAttackScriptEnabled, blipFlag, timeUpdate, timeClear
+INT useWeaponSlotRange
+FLOAT rangeSearchDefault
+
+// Variables
+INT playerID, playerGroup, player2Char
+
+INT isAutoAttackActive, playerStateResetFlag
+
+INT priorityPedType // Central targeting rule: all auto-attack decisions depend on this value.
+INT warEnemyGang, isGangWarActive
+INT manualMarkedTarget
+
+INT currentSlotIndex, currentGroupMember
+
+INT slotTarget          // Target currently stored in this member slot
+INT assignedTarget     // Best valid target found for current member
+
+INT dpadUpDownPressed[2]
+INT manualTargetCommandPressed[2]
+
+INT slotTargetPtr, slotOffset
+
+INT rangeBufferPtr, rangeSlotOffset, slotIndex = 0
+FLOAT rangeSearchTarget, tempValue
+
+// Constants
+CONST
+    CWorld__PlayerInFocus = 0xB7CD74
+END
+//***********************************************************************************//
+
+GOSUB @read_INI
+
+GOSUB @RESET_ALL_STATE
+
+playerID = 0
+
+playerGroup = GET_PLAYER_GROUP playerID
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+
+//-----------------------------------------------------------------------------//
+:MAIN_LOOP
+//-----------------------------------------------------------------------------//
+WAIT 50
+
+
+// ---------------------------------------------
+// PLAYER STATE VALIDATION
+// ---------------------------------------------
+playerID = READ_MEMORY CWorld__PlayerInFocus 1 FALSE
+IF NOT IS_PLAYER_PLAYING playerID
+THEN
+    IF playerStateResetFlag == 0
+    THEN
+        playerStateResetFlag = 1
+        IF isAutoAttackActive == 1
+        THEN GOSUB @CANCEL_AUTO_ATTACK
+        END
+        GOSUB @RESET_ALL_STATE
+    END
+    GOTO @MAIN_LOOP
+ELSE playerStateResetFlag = 0
+END
+
+
+player2Char = GET_PLAYER_CHAR 1
+
+FOR playerID = 0 TO 1
+    // ---------------------------------------------
+    // TRACK VANILLA GROUP STATE
+    // ---------------------------------------------
+    IF OR
+        IS_BUTTON_PRESSED playerID Button.DpadUp
+        IS_BUTTON_PRESSED playerID Button.DpadDown
+    THEN dpadUpDownPressed[playerID] = 1
+    ELSE
+        IF dpadUpDownPressed[playerID] == 1
+        THEN
+            dpadUpDownPressed[playerID] = 0
+            
+            IF AND
+                isAutoAttackActive == 1
+                NOT IS_BUTTON_PRESSED playerID 4
+            THEN GOSUB @CANCEL_AUTO_ATTACK
+            END
+        END
+    END
+    
+    // ---------------------------------------------
+    // MANUAL PRIORITY SET + IMMEDIATE ATTACK
+    // ---------------------------------------------
+    IF AND
+        IS_BUTTON_PRESSED playerID Button.RightShoulder1
+        IS_BUTTON_PRESSED playerID 4
+    THEN
+        IF manualTargetCommandPressed[playerID] == 0
+        THEN
+            manualTargetCommandPressed[playerID] = 1
+            
+            GOSUB @SET_MANUAL_PRIORITY_AND_ORDER_ATTACK
+        END
+    ELSE manualTargetCommandPressed[playerID] = 0
+    END
+END
+
+// ---------------------------------------------
+// GANG WAR STATE
+// ---------------------------------------------
+IF IS_GANG_WAR_FIGHTING_GOING_ON
+THEN
+    IF isGangWarActive == 0
+    THEN
+        isGangWarActive = 1
+
+        warEnemyGang = READ_MEMORY 0x96AB84 4 0
+        warEnemyGang += 7
+        priorityPedType = warEnemyGang
+
+        IF AND
+            IS_VALID_GROUP(playerGroup)
+            isAutoAttackActive == 0
+        THEN GOSUB @ACTIVATE_AUTO_ATTACK
+        END
+    END
+ELSE
+    IF isGangWarActive == 1
+    THEN
+        isGangWarActive = 0
+
+        warEnemyGang = -1
+        
+        IF isAutoAttackActive == 1
+        THEN GOSUB @CANCEL_AUTO_ATTACK
+        END
+    END
+END
+
+// ---------------------------------------------
+// AUTO ATTACK UPDATE
+// ---------------------------------------------
+IF isAutoAttackActive == 1
+THEN
+    IF TIMERA > timeUpdate
+    THEN
+        TIMERA = 0
+        GOSUB @UPDATE_GROUP_TARGETS
+    END
+END
+
+GOTO @MAIN_LOOP
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+
+//_______________________________________________________________
+:ACTIVATE_AUTO_ATTACK
+//_______________________________________________________________
+isAutoAttackActive = 1
+TIMERA = 0
+TIMERB = 0
+
+//PRINT_STRING_NOW "AUTO ATTACK ACTIVATED" 1500
+
+RETURN
+
+//_______________________________________________________________
+:CANCEL_AUTO_ATTACK
+//_______________________________________________________________
+// stop auto-attack and force group back to player control
+isAutoAttackActive = 0
+priorityPedType = 0
+manualMarkedTarget = -1
+TIMERA = 0
+TIMERB = 0
+
+//PRINT_STRING_NOW "AUTO ATTACK DEACTIVATED" 1500
+
+GOSUB @CLEAR_SLOT_TARGETS
+REGROUP_MEMBERS_FOR_PLAYER_GROUP(playerGroup)
+
+RETURN
+
+//_______________________________________________________________
+:RESET_ALL_STATE
+//_______________________________________________________________
+isAutoAttackActive = 0
+isGangWarActive = 0
+priorityPedType = 0
+warEnemyGang = -1
+manualMarkedTarget = -1
+
+currentSlotIndex = 0
+currentGroupMember = -1
+
+slotTarget = -1
+assignedTarget = -1
+
+dpadUpDownPressed[0] = 0
+manualTargetCommandPressed[0] = 0
+dpadUpDownPressed[1] = 0
+manualTargetCommandPressed[1] = 0
+
+TIMERA = 0
+TIMERB = 0
+
+GOSUB @CLEAR_SLOT_TARGETS
+RETURN
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+
+//_______________________________________________________________
+:SET_MANUAL_PRIORITY_AND_ORDER_ATTACK
+//_______________________________________________________________
+IF NOT IS_VALID_GROUP(playerGroup)
+THEN
+    GOSUB @CANCEL_AUTO_ATTACK
+    RETURN
+END
+
+manualMarkedTarget = GET_CHAR_PLAYER_IS_TARGETING playerID
+IF manualMarkedTarget <> -1
+THEN
+    IF AND
+        NOT IS_GROUP_MEMBER manualMarkedTarget playerGroup
+        NOT IS_GANG_TYPE_FRIENDLY(manualMarkedTarget, warEnemyGang)
+    THEN
+        priorityPedType = GET_PED_TYPE manualMarkedTarget
+
+        IF isAutoAttackActive == 0
+        THEN GOSUB @ACTIVATE_AUTO_ATTACK
+        END
+
+        GOSUB @ORDER_GROUP_ATTACK_MANUAL_TARGET
+
+        TIMERA = 0
+        TIMERB = 0
+    END
+END
+manualMarkedTarget = -1
+
+RETURN
+
+//_______________________________________________________________
+:ORDER_GROUP_ATTACK_MANUAL_TARGET
+//_______________________________________________________________
+IF manualMarkedTarget == -1
+THEN RETURN
+END
+
+FOR currentSlotIndex = 0 TO 6
+    currentGroupMember = GET_GROUP_MEMBER playerGroup currentSlotIndex
+
+    IF AND
+    currentGroupMember <> -1
+    currentGroupMember <> player2Char
+    THEN
+        slotTarget = manualMarkedTarget
+        GOSUB @WRITE_SLOT_TARGET
+
+        IF blipFlag == 1
+        THEN
+            GOSUB @SET_CURRENT_SLOT_ADDRESS
+            STREAM_CUSTOM_SCRIPT "BGA_TargetBlip.s" slotTargetPtr currentGroupMember manualMarkedTarget playerGroup
+        END
+        
+        IF NOT IS_CHAR_IN_ANY_CAR currentGroupMember
+        THEN TASK_KILL_CHAR_ON_FOOT currentGroupMember manualMarkedTarget
+        ELSE TASK_DRIVE_BY currentGroupMember manualMarkedTarget -1 0.0 0.0 0.0 100.0 8 1 100
+        END
+    ELSE
+        slotTarget = -1
+        GOSUB @WRITE_SLOT_TARGET
+    END
+END
+
+RETURN
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+
+//_______________________________________________________________
+:UPDATE_GROUP_TARGETS
+//_______________________________________________________________
+IF NOT IS_VALID_GROUP(playerGroup)
+THEN
+    GOSUB @CANCEL_AUTO_ATTACK
+    RETURN
+END
+
+IF priorityPedType <= 3
+THEN RETURN
+END
+
+IF TIMERB > timeClear
+THEN
+    TIMERB = 0
+    GOSUB @CLEAR_SLOT_TARGETS
+END
+
+FOR currentSlotIndex = 0 TO 6
+    currentGroupMember = GET_GROUP_MEMBER playerGroup currentSlotIndex
+
+    IF AND
+    currentGroupMember <> -1
+    currentGroupMember <> player2Char
+    THEN
+        GOSUB @CHECK_OR_ASSIGN_SLOT_TARGET
+
+        //DEBUG
+        //GOSUB @READ_SLOT_TARGET
+        //PRINT_FORMATTED_NOW "slot:%i, member:%i, target:%i, priority:%i, gangwar:%i" 500 currentSlotIndex currentGroupMember slotTarget priorityPedType wasGangWarActive
+        //WAIT 250
+    ELSE
+        slotTarget = -1
+        GOSUB @WRITE_SLOT_TARGET
+    END
+END
+
+RETURN
+
+//_______________________________________________________________
+:CHECK_OR_ASSIGN_SLOT_TARGET
+//_______________________________________________________________
+IF currentGroupMember == -1
+THEN
+    slotTarget = -1
+    GOSUB @WRITE_SLOT_TARGET
+    RETURN
+END
+
+GOSUB @READ_SLOT_TARGET
+IF IS_TARGET_VALID(slotTarget, priorityPedType, warEnemyGang, playerGroup)
+THEN RETURN
+END
+
+IF useWeaponSlotRange == 1
+THEN rangeSearchTarget = GET_RANGE_SEARCH_PER_WEAPON_SLOT_FOR_MEMBER(currentGroupMember, rangeBufferPtr)
+ELSE rangeSearchTarget = rangeSearchDefault
+END
+
+assignedTarget = FIND_NEAREST_TARGET_FOR_MEMBER(currentGroupMember, priorityPedType, warEnemyGang, rangeSearchTarget, playerGroup)
+
+IF assignedTarget <> -1
+THEN
+    slotTarget = assignedTarget
+    GOSUB @WRITE_SLOT_TARGET
+
+    IF blipFlag == 1
+    THEN
+        GOSUB @SET_CURRENT_SLOT_ADDRESS
+        STREAM_CUSTOM_SCRIPT "BGA_TargetBlip.s" slotTargetPtr currentGroupMember assignedTarget playerGroup
+    END
+    
+    IF NOT IS_CHAR_IN_ANY_CAR currentGroupMember
+    THEN TASK_KILL_CHAR_ON_FOOT currentGroupMember assignedTarget
+    ELSE TASK_DRIVE_BY currentGroupMember assignedTarget -1 0.0 0.0 0.0 rangeSearchTarget 8 1 100
+    END
+    //TASK_KILL_CHAR_ON_FOOT currentGroupMember assignedTarget
+ELSE
+    slotTarget = -1
+    GOSUB @WRITE_SLOT_TARGET
+END
+
+RETURN
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+
+//=========================================================================//
+FUNCTION REGROUP_MEMBERS_FOR_PLAYER_GROUP(playerGroup:INT)
+    INT memberSlot, charMember, player2Char, playerChar
+    FLOAT px, py, pz
+    
+    player2Char = GET_PLAYER_CHAR 1
+    playerChar = GET_PLAYER_CHAR 0
+    px, py, pz = GET_CHAR_COORDINATES playerChar
+    SET_GROUP_DEFAULT_TASK_ALLOCATOR playerGroup 0
+    
+    FOR memberSlot = 0 TO 6
+        charMember = GET_GROUP_MEMBER playerGroup memberSlot
+        IF AND
+        charMember <> -1
+        charMember <> player2Char
+        THEN
+            IF AND
+                DOES_CHAR_EXIST charMember
+                NOT IS_CHAR_DEAD charMember
+                NOT IS_CHAR_IN_ANY_CAR charMember
+            THEN TASK_GO_STRAIGHT_TO_COORD charMember px py pz MoveState.Sprint -1
+            END
+        END
+    END
+END
+
+//=========================================================================//
+FUNCTION IS_GANG_TYPE_FRIENDLY(pedTarget:INT, enemyGangType:INT): LOGICAL
+    INT pedType = GET_PED_TYPE pedTarget
+    IF pedType <> enemyGangType
+    THEN
+        IF OR
+            pedType == 8
+            IS_RELATIONSHIP_SET 1 8 pedType
+            IS_RELATIONSHIP_SET 0 8 pedType
+        THEN CLEO_RETURN 0 TRUE
+        END
+    END
+    CLEO_RETURN 0 FALSE
+END
+
+//=========================================================================//
+FUNCTION IS_VALID_GROUP(groupID:INT): LOGICAL
+    INT leaderCount, memberCount, player2Char
+    
+    player2Char = GET_PLAYER_CHAR 1
+
+    leaderCount, memberCount = GET_GROUP_SIZE groupID
+    
+    IF IS_GROUP_MEMBER player2Char groupID
+    THEN memberCount -= 1
+    END
+    
+    IF memberCount > 0
+    THEN CLEO_RETURN 0 TRUE
+    END
+    CLEO_RETURN 0 FALSE
+END
+
+//=========================================================================//
+FUNCTION IS_TARGET_VALID(slotTarget:INT, priorityPedType:INT, warEnemyGang:INT, playerGroup:INT): LOGICAL
+    IF AND
+        slotTarget <> -1
+        DOES_CHAR_EXIST slotTarget
+        NOT IS_CHAR_DEAD slotTarget
+        NOT IS_GROUP_MEMBER slotTarget playerGroup
+    THEN
+        INT targetPedType = GET_PED_TYPE slotTarget
+        IF AND
+            NOT IS_GANG_TYPE_FRIENDLY(slotTarget, warEnemyGang)
+            priorityPedType > 0
+            targetPedType == priorityPedType
+        THEN CLEO_RETURN 0 TRUE
+        END
+    END
+
+    CLEO_RETURN 0 FALSE
+END
+
+//=========================================================================//
+FUNCTION GET_RANGE_SEARCH_PER_WEAPON_SLOT_FOR_MEMBER(currentGroupMember:INT, rangeBufferPtr: INT): FLOAT
+    INT memberWeaponSlot, rangeSlotOffset, slotIndex = 0
+    FLOAT rangeSearchTarget = -1.0
+
+    memberWeaponSlot = GET_CURRENT_CHAR_WEAPON currentGroupMember
+    memberWeaponSlot = GET_WEAPONTYPE_SLOT memberWeaponSlot
+
+    SWITCH memberWeaponSlot
+    CASE 0 // Melee
+        slotIndex = 0
+    CASE 1 // Melee
+        slotIndex = 0
+    CASE 2 // Pistol
+        slotIndex = 1
+    CASE 3 // Shotgun
+        slotIndex = 2
+    CASE 4 // SMG
+        slotIndex = 3
+    CASE 5 // Assault
+        slotIndex = 4
+    CASE 6 // Sniper
+        slotIndex = 5
+    CASE 7 // Heavy
+        slotIndex = 6
+    CASE 8 // Thrown
+        slotIndex = 7
+    CASE 9 // Special
+        slotIndex = 0
+    CASE 10 // Melee Gift
+        slotIndex = 0
+    CASE 11 // Special
+        slotIndex = 0
+    CASE 12
+        slotIndex = 0
+    END
+
+    rangeSlotOffset = slotIndex * 4
+    rangeSlotOffset = rangeBufferPtr + rangeSlotOffset
+    rangeSearchTarget = READ_MEMORY rangeSlotOffset 4 0
+    //PRINT_FORMATTED_NOW "rangeSearchTarget:%f" 100 rangeSearchTarget
+    //wait 100
+    CLEO_RETURN 1 rangeSearchTarget
+END
+
+//=========================================================================//
+FUNCTION FIND_NEAREST_TARGET_FOR_MEMBER(currentGroupMember:INT, priorityPedType:INT, warEnemyGang:INT, rangeSearchTarget:FLOAT, playerGroup:INT): INT
+    //***********************************************************************************//
+    // Variables
+    FLOAT memberX, memberY, memberZ, targetX, targetY, targetZ
+    FLOAT currentDistance, nearestDistance = 9999.0
+    INT searchTarget, assignedTarget = -1
+    //***********************************************************************************//
+
+    memberX, memberY, memberZ = GET_CHAR_COORDINATES currentGroupMember
+    searchTarget = GET_RANDOM_CHAR_IN_SPHERE_NO_SAVE_RECURSIVE memberX memberY memberZ rangeSearchTarget 0 CharSearchFilter.AnyAliveNPC
+    WHILE searchTarget <> -1
+
+        IF IS_TARGET_VALID(searchTarget, priorityPedType, warEnemyGang, playerGroup)
+        THEN
+            targetX, targetY, targetZ = GET_CHAR_COORDINATES searchTarget
+            currentDistance = GET_DISTANCE_BETWEEN_COORDS_3D memberX memberY memberZ targetX targetY targetZ
+
+            IF currentDistance < nearestDistance
+            THEN
+                nearestDistance = currentDistance
+                assignedTarget = searchTarget
+            END
+        END
+
+        searchTarget = GET_RANDOM_CHAR_IN_SPHERE_NO_SAVE_RECURSIVE memberX memberY memberZ rangeSearchTarget 1 CharSearchFilter.AnyAliveNPC
+    END
+
+    CLEO_RETURN 1 assignedTarget
+END
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+
+//=========================================================================//
+:read_INI
+//=========================================================================//
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Auto Attack" "ENABLE_AUTO_ATTACK" isAutoAttackScriptEnabled
+THEN isAutoAttackScriptEnabled = 0
+END
+IF isAutoAttackScriptEnabled <> 1
+THEN TERMINATE_THIS_CUSTOM_SCRIPT
+END
+
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Auto Attack" "USE_TARGET_BLIPS" blipFlag
+THEN blipFlag = 0
+END
+IF OR
+    blipFlag <> 1
+    NOT DOES_FILE_EXIST "CLEO\BGA_TargetBlip.s"
+THEN blipFlag = 0
+END
+
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Auto Attack" "AUTO_ATTACK_UPDATE_MS" timeUpdate
+THEN timeUpdate = 1000
+END
+IF timeUpdate > 10000
+THEN timeUpdate = 10000
+ELSE
+    IF timeUpdate < 250
+    THEN timeUpdate = 250
+    END
+END
+
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Auto Attack" "AUTO_ATTACK_RETARGET_MS" timeClear
+THEN timeClear = 5000
+END
+IF timeClear > 60000
+THEN timeClear = 60000
+ELSE
+    IF timeClear < 2000
+    THEN timeClear = 2000
+    END
+END
+
+IF NOT READ_FLOAT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Find Target" "RADIUS_DEFAULT" rangeSearchDefault
+THEN rangeSearchDefault = -1.0
+END
+IF rangeSearchDefault < 1.0
+THEN rangeSearchDefault = 48.0
+END
+
+IF NOT READ_INT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Find Target" "ENABLE_SEARCH_PER_WEAPON_SLOT" useWeaponSlotRange
+THEN useWeaponSlotRange = 0
+END
+IF useWeaponSlotRange <> 1
+THEN useWeaponSlotRange = 0
+END
+
+rangeBufferPtr = GET_LABEL_POINTER @RANGE_BUFFER
+FOR slotIndex = 0 TO 7 // Variable re used
+    SWITCH slotIndex
+    CASE 0
+        IF NOT READ_FLOAT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Find Target" "RADIUS_SLOT_MELEE" tempValue
+        THEN tempValue = -1.0
+        END
+    CASE 1
+        IF NOT READ_FLOAT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Find Target" "RADIUS_SLOT_PISTOL" tempValue
+        THEN tempValue = -1.0
+        END
+    CASE 2
+        IF NOT READ_FLOAT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Find Target" "RADIUS_SLOT_SHOTGUN" tempValue
+        THEN tempValue = -1.0
+        END
+    CASE 3
+        IF NOT READ_FLOAT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Find Target" "RADIUS_SLOT_SMG" tempValue
+        THEN tempValue = -1.0
+        END
+    CASE 4
+        IF NOT READ_FLOAT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Find Target" "RADIUS_SLOT_ASSAULT" tempValue
+        THEN tempValue = -1.0
+        END
+    CASE 5
+        IF NOT READ_FLOAT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Find Target" "RADIUS_SLOT_SNIPER" tempValue
+        THEN tempValue = -1.0
+        END
+    CASE 6
+        IF NOT READ_FLOAT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Find Target" "RADIUS_SLOT_HEAVY" tempValue
+        THEN tempValue = -1.0
+        END
+    CASE 7
+        IF NOT READ_FLOAT_FROM_INI_FILE "CLEO\BetterGroupAdjustments.ini" "Find Target" "RADIUS_SLOT_THROWN" tempValue
+        THEN tempValue = -1.0
+        END
+    END
+
+    IF tempValue < 1.0
+    THEN tempValue = rangeSearchDefault
+    END
+
+    rangeSlotOffset = slotIndex * 4
+    rangeSlotOffset = rangeBufferPtr + rangeSlotOffset
+    WRITE_MEMORY rangeSlotOffset 4 tempValue 0
+END
+
+RETURN
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+:RANGE_BUFFER
+HEX
+    00(32) // 8 floats * 4 bytes
+END
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+
+//_______________________________________________________________
+:SET_CURRENT_SLOT_ADDRESS
+//_______________________________________________________________
+slotTargetPtr = GET_LABEL_POINTER @TARGET_BUFFER
+slotOffset = currentSlotIndex * 4
+slotTargetPtr += slotOffset
+RETURN
+
+//_______________________________________________________________
+:CLEAR_SLOT_TARGETS
+//_______________________________________________________________
+FOR currentSlotIndex = 0 TO 6
+    GOSUB @SET_CURRENT_SLOT_ADDRESS
+    WRITE_MEMORY slotTargetPtr 4 -1 0
+END
+RETURN
+
+//_______________________________________________________________
+:WRITE_SLOT_TARGET
+//_______________________________________________________________
+GOSUB @SET_CURRENT_SLOT_ADDRESS
+WRITE_MEMORY slotTargetPtr 4 slotTarget 0
+RETURN
+
+//_______________________________________________________________
+:READ_SLOT_TARGET
+//_______________________________________________________________
+GOSUB @SET_CURRENT_SLOT_ADDRESS
+slotTarget = READ_MEMORY slotTargetPtr 4 0
+RETURN
+
+//=========================================================================//
+:TARGET_BUFFER
+//=========================================================================//
+HEX
+    00(32)
+END

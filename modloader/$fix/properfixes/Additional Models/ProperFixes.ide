@@ -71,6 +71,8 @@ tobj
 #pyramid - replaced hours
 9100, luxorlight_dy, pyramid, 150, 128, 5, 20
 9101, luxorlight_nt, pyramid, 150, 128, 20, 5
+9102, lodorlight_dy, vegaselod1, 1500, 128, 5, 20
+9103, lodorlight_nt, vegaselod1, 1500, 128, 20, 5
 8395, vgEpyrmd_dy, pyramid, 150, 128, 5, 20
 8701, lodpyrmd_dy, vegaselod1, 1500, 128, 5, 20
 9104, vgEpyrmd_nt, pyramid, 150, 128, 20, 5

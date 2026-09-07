@@ -365,7 +365,7 @@ wait 20
                     check_damage == true
                 then
                     check_damage = false
-                    
+
                     095F: get_car car_security door 4 angle_to 1@
                     095F: get_car car_security door 5 angle_to 2@
                     if or
@@ -408,7 +408,7 @@ wait 20
                                 end
                             end
                         end
-                    
+
                         if
                             check_damage == true
                         then
@@ -429,7 +429,7 @@ wait 20
                         end
                     end
                 end
-                
+
                 if 856E:   not car car_security defined
                 then break
                 end
@@ -446,6 +446,7 @@ wait 20
                         0EE5: locate_char_distance_to_car $PLAYER_ACTOR car car_security radius 30.0
                         1@ < 500
                     then
+                        check_damage = false
                         gosub @Open_Door
                         break
                     end
@@ -458,6 +459,7 @@ wait 20
                     1@ <= -0.7
                     2@ >= 0.7
                 then
+                    check_damage = false
                     gosub @Open_Door
                     break
                 end
@@ -467,6 +469,7 @@ wait 20
                     08A7:   car car_security componentB 4 opened_or_not_present
                     08A7:   car car_security componentB 5 opened_or_not_present
                 then
+                    check_damage = false
                     gosub @Open_Door
                     break
                 end
@@ -567,28 +570,32 @@ wait 0
             0A97: 4@ = car car_security struct
             0E28: write_struct 4@ offset Memory_adr size 1 value 1 // Ставим метку для невозможности повторного кейса
 
-            // Если в машине сидят то будут атаковать игрока, а не поедут дальше
-            if and
-                803B:   not Security_second == $PLAYER_ACTOR  // (int)
-                056D:   actor Security_second defined
-                Security_second > 0
+            if
+                check_damage == true
             then
-                if
-                    00DB:   actor Security_second in_car car_security
+                // Если в машине сидят то будут атаковать игрока, а не поедут дальше
+                if and
+                    803B:   not Security_second == $PLAYER_ACTOR  // (int)
+                    056D:   actor Security_second defined
+                    Security_second > 0
                 then
-                    05E2: AS_actor Security_second kill_actor $PLAYER_ACTOR
-                    gosub @Wanted_level
+                    if
+                        00DB:   actor Security_second in_car car_security
+                    then
+                        05E2: AS_actor Security_second kill_actor $PLAYER_ACTOR
+                        gosub @Wanted_level
+                    end
                 end
-            end
-            if and
-                803B:   not Security_Driver == $PLAYER_ACTOR  // (int)
-                056D:   actor Security_Driver defined
-            then
-                if
-                    00DB:   actor Security_Driver in_car car_security
+                if and
+                    803B:   not Security_Driver == $PLAYER_ACTOR  // (int)
+                    056D:   actor Security_Driver defined
                 then
-                    05E2: AS_actor Security_Driver kill_actor $PLAYER_ACTOR
-                    gosub @Wanted_level
+                    if
+                        00DB:   actor Security_Driver in_car car_security
+                    then
+                        05E2: AS_actor Security_Driver kill_actor $PLAYER_ACTOR
+                        gosub @Wanted_level
+                    end
                 end
             end
             break

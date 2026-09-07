@@ -697,8 +697,6 @@ objs
 9093, cmdgrgdoor_lvs, vgselckupgrgdr, 50, 2176
 9098, vgsEsvhse01, vgesvhouse01, 130, 0
 9099, vgsEsvehse1, vgesvhouse01, 126, 2099328
-9102, lodorlight_dy, vegaselod1, 1500, 128
-9103, lodorlight_nt, vegaselod1, 1500, 128
 9106, vgsEamuntn, vgeamun, 150, 128
 9107, lodtebrdg01_lvS, vegaselod2, 1500, 128
 9108, vgsEtrainfence06, vgetrainfnce, 150, 2097284
@@ -791,6 +789,8 @@ tobj
 9097, lodElights_nt, vegaselod1, 1500, 128, 22, 5
 9100, luxorlight_dy, pyramid, 150, 128, 5, 22
 9101, luxorlight_nt, pyramid, 150, 0, 22, 5
+9102, lodorlight_dy, vegaselod1, 1500, 128, 5, 22
+9103, lodorlight_nt, vegaselod1, 1500, 128, 22, 5
 9104, vgEpyrmd_nt, pyramid, 150, 128, 22, 5
 9105, lodpyrmd_nt, vegaselod1, 1500, 128, 22, 5
 9121, flmngoneon01, vgseneonwires, 225, 4, 20, 5

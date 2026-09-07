@@ -93,3 +93,5 @@ Supports wildcards.
 --------------------------------------
 Defines mods priorities, that's if two mods modify the same file which should have precedence over the other.
 The key in this section is the mod name and the value the priority from 0 to 100.
+
+The maximum priority can be adjusted in `modloader.ini` to a value higher than 100.

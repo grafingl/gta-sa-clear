@@ -11,6 +11,8 @@ script_name "StAxe"
 
 // By ArtemQa146
 
+wait 500
+
 :LoadedModels
 wait 500
 0AF0: 1@ = read_int_from_ini_file "cleo\StreetCleaners.ini" section "Models" key "Loaded4"
@@ -19,9 +21,6 @@ if
 jf @LoadedModels
 1@ = 0 
 0AF1: write_int 1@ to_ini_file "cleo\StreetCleaners.ini" section "Models" key "Loaded4"
-0AF0: 6@ = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Street Cleaners" key "Ped ID Axe"
-0AF0: 30@ = read_int_from_ini_file "cleo\StreetCleaners.ini" section "Models" key "StumpWood"
-0AF0: 31@ = read_int_from_ini_file "cleo\StreetCleaners.ini" section "Models" key "Axe"
 
 0AF0: 0@ = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Settings" key "Street Cleaners"
 if
@@ -30,13 +29,23 @@ then
     0A93: terminate_this_custom_script
 end
 
+0AF0: 6@ = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Street Cleaners" key "Ped ID Axe"
+0AF0: 30@ = read_int_from_ini_file "cleo\StreetCleaners.ini" section "Models" key "StumpWood"
+0AF0: 31@ = read_int_from_ini_file "cleo\StreetCleaners.ini" section "Models" key "Axe"
+
+if
+    6@ <= 0
+then
+    6@ = 158
+end
+
 // 1@ actor
 // 0@ render
 // 5@ particle
 // 6@ Ped ID from ini
 
 :Axe
-wait 100
+wait 150
 if 
    Player.Defined($PLAYER_CHAR)
 jf @Axe

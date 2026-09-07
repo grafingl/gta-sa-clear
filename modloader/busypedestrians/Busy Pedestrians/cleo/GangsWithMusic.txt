@@ -267,7 +267,7 @@ then
                             0EB2: get_offset_from_camera_in_world_coords 0.0 0.0 0.0 store_to 4@ 5@ 6@
                             050A: 1@ = distance_between_XYZ 1@ 2@ 3@ and_XYZ 4@ 5@ 6@
                             1@ /= 50.0
-                            0087: 2@ = VolumeActor // ֳנמלךמסעü טח .ini פאיכא
+                            0087: 2@ = VolumeCar // ֳנמלךמסעü טח .ini פאיכא
                             0063: 2@ -= 1@  // (float)
                                 if
                                     2@ < 0.0

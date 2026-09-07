@@ -88,8 +88,6 @@ end
                 
                     080E: get_actor Chef_1 ped_event_to 1@
                     if or
-                        051A:   actor Chef_1 damaged_by_actor $PLAYER_ACTOR
-                        0118:   actor Chef_1 dead
                         1@ == 49
                         1@ == 9
                         1@ == 15

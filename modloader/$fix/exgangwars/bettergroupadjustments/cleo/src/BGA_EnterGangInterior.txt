@@ -1,0 +1,143 @@
+{$CLEO .s}
+{$USE CLEO+}
+
+SCRIPT_NAME 'BGA_EGI'
+
+//***********************************************************************************//
+///////////////////////////////////////////////////////////////////////////////////////
+// BGA: Enter Gang Interior
+// Author: AlvarynGTA
+///////////////////////////////////////////////////////////////////////////////////////
+// Variables
+INT currentArea, lastArea = 0, memberArea = -1, spawnActive = 0, charMember = -1, memberSlot = 0, changeState = 0
+FLOAT mx[7], my[7], x, y, z, h, goToX, goToY
+INT dpadUpFlag, dpadDownFlag, numMember, numLeader
+//***********************************************************************************//
+
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+
+//-----------------------------------------------------------------------------//
+:MAIN_LOOP
+//-----------------------------------------------------------------------------//
+WAIT 50
+
+numLeader, numMember = GET_GROUP_SIZE $PLAYERS_GROUP
+IF OR
+    numMember == 0
+    NOT IS_PLAYER_PLAYING 0
+THEN GOTO @MAIN_LOOP
+END
+
+IF IS_BUTTON_PRESSED 0 Button.DpadUp
+THEN dpadUpFlag = 1
+ELSE
+    IF dpadUpFlag == 1
+    THEN
+        dpadUpFlag = 0
+
+        IF AND
+            changeState == 2
+            spawnActive == 0
+        THEN TIMERA = 0
+        END
+        spawnActive = 1
+    END
+END
+IF IS_BUTTON_PRESSED 0 Button.DpadDown
+THEN dpadDownFlag = 1
+ELSE
+    IF dpadDownFlag == 1
+    THEN
+        dpadDownFlag = 0
+        spawnActive = 0
+    END
+END
+
+// --------------------------------------------------
+// Detect interior change
+// --------------------------------------------------
+//* Extreme teleports or unusual scripted relocations may break normal group positioning behavior
+currentArea = GET_AREA_VISIBLE
+IF currentArea <> lastArea
+THEN
+    lastArea = currentArea
+    IF changeState == 0
+    THEN
+        TIMERA = 0
+        changeState = 1
+    END
+END
+
+IF changeState == 1
+THEN
+    IF TIMERA >= 2150
+    THEN
+        mx[0], my[0], z = GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS $SCPLAYER 0.5 0.5 0.0
+        mx[1], my[1], z = GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS $SCPLAYER -0.5 0.5 0.0
+        mx[2], my[2], z = GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS $SCPLAYER 0.5 0.0 0.0
+        mx[3], my[3], z = GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS $SCPLAYER -0.5 0.0 0.0
+        mx[4], my[4], z = GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS $SCPLAYER 0.5 -0.5 0.0
+        mx[5], my[5], z = GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS $SCPLAYER -0.5 -0.5 0.0
+        mx[6], my[6], z = GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS $SCPLAYER 0.0 -0.5 0.0
+        
+        goToX, goToY, z = GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS $SCPLAYER 0.0 3.0 0.0
+        x, y, z = GET_OFFSET_FROM_CHAR_IN_WORLD_COORDS $SCPLAYER 0.0 0.0 0.0
+        z -= 1.0
+        h = GET_CHAR_HEADING $SCPLAYER
+        
+        // Auto bring members only if they were following.
+        IF spawnActive == 1
+        THEN TIMERA = 0
+        END
+        memberSlot = 0
+        changeState = 2
+    ELSE GOTO @MAIN_LOOP
+    END
+END
+
+// --------------------------------------------------
+// Bring members one by one to player entry point
+// --------------------------------------------------
+IF AND
+    changeState == 2
+    spawnActive == 1
+THEN
+    IF TIMERA >= 1000
+    THEN
+        IF memberSlot <= 6
+        THEN
+            charMember = GET_GROUP_MEMBER $PLAYERS_GROUP memberSlot
+            IF AND
+                charMember <> -1
+                DOES_CHAR_EXIST charMember
+                NOT IS_CHAR_DEAD charMember
+            THEN
+                
+                // Wait until the player moves away from the entry point.
+                // This prevents members from spawning on top of the player
+                // and blocking narrow doors or interior exits.
+                IF LOCATE_CHAR_ANY_MEANS_3D $SCPLAYER x y z 1.0 1.0 1.5 0
+                THEN GOTO @MAIN_LOOP
+                END
+                
+                memberArea = GET_CHAR_AREA_VISIBLE charMember
+                IF memberArea <> currentArea
+                THEN
+                    TIMERA = 0
+                    SET_CHAR_COORDINATES charMember mx[memberSlot] my[memberSlot] z
+                    SET_CHAR_AREA_VISIBLE charMember currentArea
+                    SET_CHAR_HEADING charMember h
+                    TASK_GO_STRAIGHT_TO_COORD charMember goToX goToY z 4 -1
+                END
+            END
+
+            memberSlot ++
+        ELSE changeState = 0
+        END
+    END
+END
+
+GOTO @MAIN_LOOP

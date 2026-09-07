@@ -58,6 +58,7 @@ const
     scr_ammo = 22@
     scr_sex = 21@
     time = 20@
+    scr_dance = 19@
     time_inside = 1500
 end
 
@@ -73,6 +74,7 @@ end
 0AF0: scr_barber = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Improved interiors" key "Barber"
 0AF0: scr_ammo = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Improved interiors" key "AmmuNation"
 0AF0: scr_sex = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Improved interiors" key "Sex Shop"
+0AF0: scr_dance = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Improved interiors" key "Dance"
 
 time = 0
 
@@ -375,6 +377,11 @@ wait time
                     not $ACTIVE_INTERIOR == 0
                 then
                     0A92: stream_custom_script "Improved Club.qa" Spanner Sponge Broom
+                    if
+                        scr_dance == 1
+                    then
+                        0A92: stream_custom_script "Improved Dance.qa"
+                    end
                     wait 1000
                     time = time_inside
                     continue
@@ -392,6 +399,7 @@ wait time
             if and
                 scr_barber == 1
                 1@ > 0
+                056D:   actor $9731 defined
             then
                 0AAA: 1@ = get_script_struct_named 'ImBarb'
                 if and

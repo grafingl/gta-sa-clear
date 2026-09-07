@@ -10,6 +10,8 @@ script_name "StBroom"
 
 // By ArtemQa146
 
+wait 500
+
 :LoadedModels
 wait 500
 0AF0: 1@ = read_int_from_ini_file "cleo\StreetCleaners.ini" section "Models" key "Loaded1"
@@ -18,14 +20,21 @@ if
 jf @LoadedModels
 1@ = 0 
 0AF1: write_int 1@ to_ini_file "cleo\StreetCleaners.ini" section "Models" key "Loaded1"
-0AF0: 6@ = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Street Cleaners" key "Ped ID Broom"
-0AF0: 28@ = read_int_from_ini_file "cleo\StreetCleaners.ini" section "Models" key "Broom"
 
 0AF0: 0@ = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Settings" key "Street Cleaners"
 if
     0@ == 0
 then
     0A93: terminate_this_custom_script
+end
+
+0AF0: 6@ = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Street Cleaners" key "Ped ID Broom"
+0AF0: 28@ = read_int_from_ini_file "cleo\StreetCleaners.ini" section "Models" key "Broom"
+
+if
+    6@ <= 0
+then
+    6@ = 183
 end
 
 // 1@ actor
@@ -35,7 +44,7 @@ end
 
 
 :Broom
-wait 100
+wait 150
 if 
    Player.Defined($PLAYER_CHAR)
 jf @Broom

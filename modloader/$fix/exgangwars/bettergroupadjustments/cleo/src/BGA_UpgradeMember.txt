@@ -1,0 +1,106 @@
+{$CLEO .s}
+{$USE CLEO+}
+
+SCRIPT_NAME 'BGA_UPM'
+
+//***********************************************************************************//
+///////////////////////////////////////////////////////////////////////////////////////
+// BGA: Upgrade Member
+// Author: AlvarynGTA
+///////////////////////////////////////////////////////////////////////////////////////
+// Arguments
+INT targetedMember, playerID, playerGroup
+//***********************************************************************************//
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+
+IF targetedMember == -1
+THEN GOTO @END_SCRIPT
+END
+/*
+TIMERA = 0
+WHILE TRUE // Wait briefly until the target is fully recognized as a valid group member.
+    WAIT 0
+
+    IF TIMERA > 3000 // Safety timeout to avoid getting stuck if the member never joins the group properly.
+    THEN GOTO @END_SCRIPT
+    END
+
+    IF OR // Abort if the handle becomes invalid or the target dies before upgrade can be applied.
+        targetedMember == -1
+        NOT DOES_CHAR_EXIST targetedMember
+        IS_CHAR_DEAD targetedMember
+    THEN GOTO @END_SCRIPT
+    END
+
+    IF IS_GROUP_MEMBER targetedMember playerGroup
+    THEN BREAK
+    END
+END
+*/
+IF NOT IS_GROUP_MEMBER targetedMember playerGroup
+THEN GOTO @END_SCRIPT
+END
+
+//***********************************************************************************//
+// Variables
+INT charPlayer
+INT charSkill, charAccuracy, charFireRate
+INT bulletProof, fireProof, explosionProof, collisionProof, meleeProof
+INT intCharHealth
+FLOAT playerMaxHealth, memberMaxHealth
+//***********************************************************************************//
+
+//INT pedtype = GET_PED_TYPE targetedMember
+//print_formatted_now "pedtype:%i" 1000 pedtype
+charPlayer = GET_PLAYER_CHAR playerID
+// Copy the player's current protection flags so upgraded members inherit the same survivability profile.
+bulletProof, fireProof, explosionProof, collisionProof, meleeProof = GET_CHAR_PROOFS charPlayer //CLEO+
+
+IF $DONE_FIRETRUCK_PROGRESS >= 2 // Preserve permanent fireproof reward from firefighter side mission, even if player proofs were not manually modified.
+THEN fireProof = 1
+END
+
+playerMaxHealth = GET_CHAR_MAX_HEALTH charPlayer
+memberMaxHealth = GET_CHAR_MAX_HEALTH targetedMember
+IF memberMaxHealth < playerMaxHealth // Raise member max health up to the player's current maximum health value.
+THEN
+    intCharHealth =# playerMaxHealth
+    SET_CHAR_MAX_HEALTH targetedMember intCharHealth
+    SET_CHAR_HEALTH targetedMember intCharHealth
+
+    IF $DONE_COPCAR_PROGRESS == 1 // Preserve armor bonus from vigilante side mission, applied only during initial upgrade.
+    THEN ADD_ARMOUR_TO_CHAR targetedMember 100
+    END
+END
+
+IF $FLAG_RETURNED_TAGS == 1 // Completing all tags unlocks the stronger upgrade tier for recruited members.
+THEN
+    // Final combat upgrade: improve weapon handling and shooting accuracy.
+    charSkill = 2
+    charAccuracy = 90
+    charFireRate = 75
+    SET_CHAR_SUFFERS_CRITICAL_HITS targetedMember FALSE // High-tier upgrade also removes vulnerability to critical headshots.
+ELSE
+    charSkill = 1
+    charAccuracy = 75
+    charFireRate = 50
+END
+collisionProof = 1
+// Apply the player's current protection setup to the upgraded member.
+SET_CHAR_PROOFS targetedMember bulletProof fireProof explosionProof collisionProof meleeProof
+
+SET_CHAR_WEAPON_SKILL targetedMember charSkill
+SET_CHAR_ACCURACY targetedMember charAccuracy
+SET_CHAR_SHOOT_RATE targetedMember charFireRate
+
+//-----------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------//
+
+//-----------------------------------------------------------------------------//
+:END_SCRIPT
+//-----------------------------------------------------------------------------//
+TERMINATE_THIS_CUSTOM_SCRIPT

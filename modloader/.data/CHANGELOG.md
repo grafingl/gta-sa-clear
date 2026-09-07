@@ -1,17 +1,22 @@
+v0.3.10 (Aug 8 2026)
+-----------------------
+ * Added support for loading the modloader folder next to the ASI (e.g. scripts/modloader/) [[#142](https://github.com/thelink2012/modloader/pull/142) — contributed by [@sndth](https://github.com/sndth)]
+ * Improved id limit adjusters compatibility [[#139](https://github.com/thelink2012/modloader/pull/139) — contributed by [@CookiePLMonster](https://github.com/CookiePLMonster)]
+
 v0.3.9 (May 16 2026)
 -----------------------
- * Added audio support for GTA III and Vice City [#135 — contributed by @CookiePLMonster]
- * Improved FXT parser to trim trailing spaces similar to CLEO [#137 — contributed by @CookiePLMonster]
- * Improved support for ASI plugins that open files during `DllMain` initialization [#137 — contributed by @CookiePLMonster]
- * Improved the way paths are translated during the dance between CLEO, ASIs and EXE [#130 — contributed by @CookiePLMonster]
- * Improved compatibility with handling limit adjusters [#137 — contributed by @CookiePLMonster]
- * Improved compatibility with ZMenu [#122 — contributed by @TheComputerGuy96]
- * Fixed issue where having `coach.dff|txd` from both `gta3.img` and `player.img` would load only one or the other [#120 — contributed by @rokuniichi]
- * Fixed load screen crashes when having a corrupted data file cache [#129 — contributed by @Fabio3rs]
- * Support for adjusting maximum mod priority in `modloader.ini` [#132 — contributed by @Fabio3rs]
- * Support for arbitrarily named SCM scripts (e.g. `main_d.scm`) required by gtadebug [#130 — contributed by @CookiePLMonster]
- * Support for `MAPZONE` definitions in GTA III [#130 — contributed by @CookiePLMonster]
- * Continuous deployment pipeline [#133 — contributed by @Fabio3rs]
+ * Added audio support for GTA III and Vice City [[#135](https://github.com/thelink2012/modloader/pull/135) — contributed by [@CookiePLMonster](https://github.com/CookiePLMonster)]
+ * Improved FXT parser to trim trailing spaces similar to CLEO [[#137](https://github.com/thelink2012/modloader/pull/137) — contributed by [@CookiePLMonster](https://github.com/CookiePLMonster)]
+ * Improved support for ASI plugins that open files during `DllMain` initialization [[#137](https://github.com/thelink2012/modloader/pull/137) — contributed by [@CookiePLMonster](https://github.com/CookiePLMonster)]
+ * Improved the way paths are translated during the dance between CLEO, ASIs and EXE [[#130](https://github.com/thelink2012/modloader/pull/130) — contributed by [@CookiePLMonster](https://github.com/CookiePLMonster)]
+ * Improved compatibility with handling limit adjusters [[#137](https://github.com/thelink2012/modloader/pull/137) — contributed by [@CookiePLMonster](https://github.com/CookiePLMonster)]
+ * Improved compatibility with ZMenu [[#122](https://github.com/thelink2012/modloader/pull/122) — contributed by [@TheComputerGuy96](https://github.com/TheComputerGuy96)]
+ * Fixed issue where having `coach.dff|txd` from both `gta3.img` and `player.img` would load only one or the other [[#120](https://github.com/thelink2012/modloader/pull/120) — contributed by [@rokuniichi](https://github.com/rokuniichi)]
+ * Fixed load screen crashes when having a corrupted data file cache [[#129](https://github.com/thelink2012/modloader/pull/129) — contributed by [@Fabio3rs](https://github.com/Fabio3rs)]
+ * Support for adjusting maximum mod priority in `modloader.ini` [[#132](https://github.com/thelink2012/modloader/pull/132) — contributed by [@Fabio3rs](https://github.com/Fabio3rs)]
+ * Support for arbitrarily named SCM scripts (e.g. `main_d.scm`) required by gtadebug [[#130](https://github.com/thelink2012/modloader/pull/130) — contributed by [@CookiePLMonster](https://github.com/CookiePLMonster)]
+ * Support for `MAPZONE` definitions in GTA III [[#130](https://github.com/thelink2012/modloader/pull/130) — contributed by [@CookiePLMonster](https://github.com/CookiePLMonster)]
+ * Continuous deployment pipeline [[#133](https://github.com/thelink2012/modloader/pull/133) — contributed by [@Fabio3rs](https://github.com/Fabio3rs)]
 
 v0.3.7 (Jan 20 2018)
 -----------------------

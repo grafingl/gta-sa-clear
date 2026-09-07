@@ -1,0 +1,19 @@
+# Created with FXT_Editor (Rus) by yelmi
+# -------------- © 2009 --------------- 
+
+DEALR01 ~s~‹oŸ¢pa¡ac¬, ko™ša y ¦e—¬ —yšy¦ še®©™œ!
+DEALR02 ~r~Œožœ œ¬~s~ ®a£y™aža šœžepa.
+DEALR03 ~s~ƒœžep pe¥œž y¦œ.
+DEALR04 ~s~¢o¬ ~y~~h~£oky£ka~s~ c—po¥e®a.
+DEALR05 ~s~¢o¬ ~y~~h~£oky£ka~s~ c—po¥e®a. ~r~~h~-~1~$~s~.
+DEALR06 ~s~¢o¬ ~y~~h~£oky£ka~s~ —¨ža c—po¥e®a. ~r~~h~-~1~ –apœxya®a~s~.
+DEALR11 ~s~­a›¯œ ~k~~CONVERSATION_YES~, ¤¦o—¨ ky£œ¦© ~y~~h~Tec-9 Mark 2~s~.~n~‰e®a: ~g~~1~$~s~.
+DEALR12 ~s~­a›¯œ ~k~~CONVERSATION_YES~, ¤¦o—¨ ky£œ¦© ~y~~h~Ap¯ecka¬ ¢œ®¦o¢ka Mark 2~s~.~n~‰e®a: ~g~~1~$~s~.
+DEALR13 ~s~­a›¯œ ~k~~CONVERSATION_YES~, ¤¦o—¨ ky£œ¦© ~y~~h~–œ®œ™a®~s~.~n~‰e®a: ~g~~1~$~s~.
+DEALR14 ~s~­a›¯œ ~k~~CONVERSATION_YES~, ¤¦o—¨ ky£œ¦© ~y~~h~MP-AG~s~.~n~‰e®a: ~g~~1~$~s~.
+DEALR15 ~s~­a›¯œ ~k~~CONVERSATION_YES~, ¤¦o—¨ ky£œ¦©~y~~h~™pa®a¦¨~s~.~n~‰e®a: ~g~~1~$~s~.
+DEALR21 ~s~­a›¯œ ~k~~CONVERSATION_YES~, ¤¦o—¨ ky£œ¦© oš®y ~g~€y¦¨žky Sooth~s~.~n~‰e®a: ~g~~1~$~s~.
+DEALR31 refer to consumables.fxt
+DEALR41 ~s~­a›¯œ ~k~~CONVERSATION_YES~, ¤¦o—¨ ky£œ¦© ~y~~h~Ap¯ecka¬ ¢œ®¦o¢ka Mark 2~s~.~n~‰e®a: ~g~~1~ –apœxya®a~s~.
+DEALR42 ~s~­a›¯œ ~k~~CONVERSATION_YES~, ¤¦o—¨ ky£œ¦© ~y~~h~–œ®œ™a®~s~.~n~‰e®a:~g~~1~ –apœxya®a~s~.
+DEALR43 ~s~­a›¯œ ~k~~CONVERSATION_YES~, ¤¦o—¨ ky£œ© ~y~~h~A¢¦o¯a¦œ¤eckœ £œc¦ože¦ Kož©¦~s~.~n~‰e®a: ~g~~1~ –apœxya®a~s~.

@@ -34,7 +34,16 @@ while 0EA7: get_any_char_no_save_recursive 31@ progress_to 31@ char_to 0@
                 0AD3: 5@v = string_format "WalkIdle%d" 1@
                 0A1A: actor 0@ perform_walk_animation 5@v IFP "PedEventsMod" framedelta 2.0 loopA 0 lockX 0 lockY 0 lockF 0 -1 ms // versionC
             else
-                0605: actor 0@ perform_animation "TripUp" IFP "PedEventsMod" framedelta 2.0 loop 0 lockX 1 lockY 1 lockF 0 time -1
+                if or
+                    02F2:   actor 0@ model == 31 //
+                    02F2:   actor 0@ model == 53 //
+                    02F2:   actor 0@ model == 88 //
+                    02F2:   actor 0@ model == 160 //
+                then
+                    0605: actor 0@ perform_animation "old_man_1" IFP "PedEventsMod" framedelta 2.0 loop 0 lockX 1 lockY 1 lockF 0 time -1
+                else
+                    0605: actor 0@ perform_animation "TripUp" IFP "PedEventsMod" framedelta 2.0 loop 0 lockX 1 lockY 1 lockF 0 time -1
+                end
             end
 
             wait 1000

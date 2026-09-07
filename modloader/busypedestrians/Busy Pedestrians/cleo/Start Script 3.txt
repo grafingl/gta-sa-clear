@@ -554,7 +554,7 @@ wait pause
                 if and
                     not 2@ == 8
                     not 2@ == 16
-                    1@ > 9
+                    1@ >= 7
                     1@ < 16
                 then
                     1@ = 0.0
@@ -568,6 +568,15 @@ wait pause
                         2@ = -1875.0103
                         3@ = 2.9697
                         4@ = 232.0176
+                    end
+                    
+                    if
+                        0EEA: locate_char_distance_to_coordinates $player_actor pos 509.6866 -1819.9821 5.6796 radius 80.0
+                    then
+                        1@ = 509.6866 
+                        2@ = -1819.9821
+                        3@ = 5.6796
+                        4@ = 132.9903
                     end
                     
                     if
