@@ -84,7 +84,8 @@ wait 200
                     04ED: load_animation  "PedEventsMod"
                     until 04EE:   animation "PedEventsMod" loaded
                     
-                    if
+                    if and
+                        056D:   actor ped_Vend defined
                         03CA:   object Vend_Obj exists
                     then
                         0984: 1@ = object Vend_Obj model

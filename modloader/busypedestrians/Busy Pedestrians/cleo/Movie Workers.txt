@@ -1,0 +1,251 @@
+{$CLEO .qa}
+{$USE CLEO+}
+{$USE Audio}
+{$USE newOpcodes}
+{$USE ini}
+
+0000: NOP
+
+script_name "MOVIWRK"
+
+// By ArtemQa146
+
+const
+    model_id = 29@
+    angle_1 = 28@
+    coords_x = 27@
+    coords_y = 26@
+    coords_z = 25@
+    ped_1 = 21@
+    ped_2 = 20@
+    ped_3 = 19@
+    ped_4 = 18@
+    render_broom = 17@
+    render_spaner = 16@
+end
+
+coords_x = 110.8
+coords_y = 1060.2
+coords_z = 12.5
+angle_1 = 180.0
+
+0085: render_broom = 0@ // (int)
+0085: render_spaner = 1@ // (int)
+
+0E40: get_current_hour 0@
+if and
+    0@ > 5
+    0@ < 12
+then
+    if
+        locate_char_distance_to_coordinates $player_actor pos coords_x coords_y coords_z radius 60.0
+    then
+        repeat
+        wait 0
+        until not locate_char_distance_to_coordinates $player_actor pos coords_x coords_y coords_z radius 70.0
+        0A93: terminate_this_custom_script
+    end
+else
+    repeat
+    wait 0
+    until not locate_char_distance_to_coordinates $player_actor pos coords_x coords_y coords_z radius 120.0
+    0A93: terminate_this_custom_script
+end
+
+    repeat
+    wait 0
+    04ED: load_animation  "PedEventsMod"
+    until 04EE:   animation "PedEventsMod" loaded
+    
+    model.Load(260)
+    if
+        not model.Available(260)
+    then
+        repeat
+        wait 0
+        model.Load(260)
+        until model.Available(260)
+    end
+    
+     model.Load(183)
+    if
+        not model.Available(183)
+    then
+        repeat
+        wait 0
+        model.Load(183)
+        until model.Available(183)
+    end
+
+    038B: load_requested_models
+
+
+    009A: ped_1 = create_actor_pedtype 21 model 260 at 109.5069 1066.7762 13.6094
+    0173: set_actor ped_1 Z_angle_to 57.3195
+    0E24: fix_char ped_1 ground 1 brightness 1 and_fade_in 0
+
+    
+    009A: ped_2 = create_actor_pedtype 21 model 260 at 112.6312 1048.325 13.6094
+    0173: set_actor ped_2 Z_angle_to 179.1839
+    0E24: fix_char ped_2 ground 1 brightness 1 and_fade_in 0
+    
+    009A: ped_3 = create_actor_pedtype 21 model 183 at 120.2048 1053.9146 13.6094
+    0173: set_actor ped_3 Z_angle_to 320.3195
+    0E24: fix_char ped_3 ground 1 brightness 1 and_fade_in 0
+
+    009A: ped_4 = create_actor_pedtype 21 model 183 at 105.4908 1073.0573 13.6094
+    0173: set_actor ped_4 Z_angle_to 51.1839
+    0E24: fix_char ped_4 ground 1 brightness 1 and_fade_in 0
+
+
+    0605: actor ped_1 perform_animation "REPAIR_2" IFP "PedEventsMod" framedelta 1000.0 loop 1 lockX 0 lockY 0 lockF 0 time -1
+    0F02:  ped_1 special_model render_spaner bone 24 offset 0 0 0 rotation 0 0 0 scale 0@ // bone 34 left hand, 24 right hand, 9 had, 3 tors, 4 upper tors
+    0E30: set_render_object_auto_hide 0@ dead 1 weapon 1 car 0
+
+    0605: actor ped_2 perform_animation "REPAIR_2" IFP "PedEventsMod" framedelta 1000.0 loop 1 lockX 0 lockY 0 lockF 0 time -1
+    0F02:  ped_2 special_model render_spaner bone 24 offset 0 0 0 rotation 0 0 0 scale 0@ // bone 34 left hand, 24 right hand, 9 had, 3 tors, 4 upper tors
+    0E30: set_render_object_auto_hide 0@ dead 1 weapon 1 car 0
+
+    0605: actor ped_3 perform_animation "SWEEP" IFP "PedEventsMod" framedelta 1000.0 loop 1 lockX 0 lockY 0 lockF 0 time -1
+    0F02:  ped_3 special_model render_broom bone 24 offset 0 0 0 rotation 0 0 0 scale 0@ // bone 34 left hand, 24 right hand, 9 had, 3 tors, 4 upper tors
+    0E30: set_render_object_auto_hide 0@ dead 1 weapon 1 car 0
+    
+    0605: actor ped_4 perform_animation "SWEEP" IFP "PedEventsMod" framedelta 1000.0 loop 1 lockX 0 lockY 0 lockF 0 time -1
+    0F02:  ped_4 special_model render_broom bone 24 offset 0 0 0 rotation 0 0 0 scale 0@ // bone 34 left hand, 24 right hand, 9 had, 3 tors, 4 upper tors
+    0E30: set_render_object_auto_hide 0@ dead 1 weapon 1 car 0
+
+    TIMERA = 0
+    timerb = 0
+    
+    model.Destroy(183)
+    model.Destroy(260)
+
+    repeat
+    wait 0
+    if and
+        056D:   actor ped_1 defined
+        056D:   actor ped_2 defined
+        056D:   actor ped_3 defined
+        056D:   actor ped_4 defined
+    then
+
+        if or
+            not locate_char_distance_to_char $player_actor char ped_1 radius 200.0
+            not $ACTIVE_INTERIOR == 0
+        then
+            break
+        end
+
+        if or
+            051A:   actor ped_1 damaged_by_actor $PLAYER_ACTOR
+            051A:   actor ped_2 damaged_by_actor $PLAYER_ACTOR
+            051A:   actor ped_3 damaged_by_actor $PLAYER_ACTOR
+            051A:   actor ped_4 damaged_by_actor $PLAYER_ACTOR
+        then
+            break
+        end
+
+        if or
+            0457:   player $PLAYER_CHAR aiming_at_actor ped_1
+            0457:   player $PLAYER_CHAR aiming_at_actor ped_2
+            0457:   player $PLAYER_CHAR aiming_at_actor ped_3
+            0457:   player $PLAYER_CHAR aiming_at_actor ped_4
+        then
+            0E83: get_current_char_weaponinfo $PLAYER_ACTOR store_to 1@
+            0E89: get_weaponinfo_fire_type 1@ store_to 2@ // Проверяем с каким оружием игрок
+            if or
+                2@ == 1 // Огнестрельное оружие
+                2@ == 3 // Тяжелое оружие (Огнемет и т.д.)
+            then
+                break
+            end
+        end
+
+        080E: get_actor ped_1 ped_event_to 1@
+        if or
+            1@ == 49
+            1@ == 9
+            1@ == 15
+            1@ == 31
+            1@ == 59
+        then
+            break
+        end
+
+        080E: get_actor ped_2 ped_event_to 1@
+        if or
+            1@ == 49
+            1@ == 9
+            1@ == 15
+            1@ == 31
+            1@ == 59
+        then
+            break
+        end
+
+        080E: get_actor ped_3 ped_event_to 1@
+        if or
+            1@ == 49
+            1@ == 9
+            1@ == 15
+            1@ == 31
+            1@ == 59
+        then
+            break
+        end
+
+        080E: get_actor ped_4 ped_event_to 1@
+        if or
+            1@ == 49
+            1@ == 9
+            1@ == 15
+            1@ == 31
+            1@ == 59
+        then
+            break
+        end
+
+        if or
+            0118:   actor ped_1 dead
+            0118:   actor ped_2 dead
+            0118:   actor ped_3 dead
+            0118:   actor ped_4 dead
+        then
+            break
+        end
+
+        0E40: get_current_hour 0@
+        if and
+            0@ > 5
+            0@ < 12
+        then
+        else
+            break
+        end
+
+
+
+
+    else
+        break
+    end
+    until not player.Defined(0)
+    04EF: release_animation "PedEventsMod"
+    if 056D:   actor ped_1 defined
+    then 01C2: remove_references_to_actor ped_1 // Like turning an actor into a random pedestrian
+    end
+    if 056D:   actor ped_2 defined
+    then 01C2: remove_references_to_actor ped_2 // Like turning an actor into a random pedestrian
+    end
+    if 056D:   actor ped_3 defined
+    then 01C2: remove_references_to_actor ped_3 // Like turning an actor into a random pedestrian
+    end
+    if 056D:   actor ped_4 defined
+    then 01C2: remove_references_to_actor ped_4 // Like turning an actor into a random pedestrian
+    end
+
+    repeat
+    wait 0
+    until not locate_char_distance_to_coordinates $player_actor pos coords_x coords_y coords_z radius 120.0
+
+    0A93: terminate_this_custom_script

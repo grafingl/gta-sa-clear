@@ -99,6 +99,10 @@ then
     end
 end
 
+if 1@ <= 100
+then 1@ = 102
+end
+
 model.Load(1@)
 model.Load(3000)
 model.Load(365)

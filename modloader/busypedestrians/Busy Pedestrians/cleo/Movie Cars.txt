@@ -1,0 +1,394 @@
+{$CLEO .qa}
+{$USE CLEO+}
+{$USE Audio}
+{$USE newOpcodes}
+{$USE ini}
+
+0000: NOP
+
+script_name "MOVICAR"
+
+// By ArtemQa146
+
+const
+    car_1 = 31@
+    model_id = 29@
+    angle_1 = 28@
+    coords_x = 27@
+    coords_y = 26@
+    coords_z = 25@
+    car_2 = 24@
+    car_3 = 23@
+    car_4 = 22@
+    ped_1 = 21@
+    ped_2 = 20@
+    ped_3 = 19@
+    ped_4 = 18@
+    render_dr = 17@
+    render_eat = 16@
+end
+
+coords_x = 110.8
+coords_y = 1060.2
+coords_z = 12.5
+angle_1 = 180.0
+
+0085: render_dr = 0@ // (int)
+    0085: render_eat = 1@ // (int)
+
+0E40: get_current_hour 0@
+if or
+    0@ > 21
+    0@ < 5
+then
+    if
+        locate_char_distance_to_coordinates $player_actor pos coords_x coords_y coords_z radius 80.0
+    then
+        repeat
+        wait 0
+        until not locate_char_distance_to_coordinates $player_actor pos coords_x coords_y coords_z radius 110.0
+        0A93: terminate_this_custom_script
+    end
+else
+    repeat
+    wait 0
+    until not locate_char_distance_to_coordinates $player_actor pos coords_x coords_y coords_z radius 120.0
+    0A93: terminate_this_custom_script
+end
+
+    repeat
+    wait 0
+    04ED: load_animation  "PedEventsMod"
+    until 04EE:   animation "PedEventsMod" loaded
+
+
+    model.Load(527)
+    if
+        not model.Available(527)
+    then
+        repeat
+        wait 0
+        model.Load(527)
+        until model.Available(527)
+    end
+    
+    model.Load(575)
+    if
+        not model.Available(575)
+    then
+        repeat
+        wait 0
+        model.Load(575)
+        until model.Available(575)
+    end
+    
+    model.Load(410)
+    if
+        not model.Available(410)
+    then
+        repeat
+        wait 0
+        model.Load(410)
+        until model.Available(410)
+    end
+    
+    model.Load(547)
+    if
+        not model.Available(547)
+    then
+        repeat
+        wait 0
+        model.Load(547)
+        until model.Available(547)
+    end
+
+    038B: load_requested_models
+
+    0209: 1@ = random_int_in_ranges 1 5
+    if
+        1@ == 1
+    then
+        00A5: car_1 = create_car 527 at 105.5354 1053.8357 13.6094
+        00A5: car_2 = create_car 575 at 118.5686 1058.7429 13.6094
+        00A5: car_3 = create_car 410 at 115.0361 1077.005 13.6154
+        00A5: car_4 = create_car 547 at 100.2434 1066.0775 13.6094
+        0175: set_car car_1 Z_angle_to 184.0407
+        0175: set_car car_2 Z_angle_to 174.7973
+        0175: set_car car_3 Z_angle_to 179.1606
+        0175: set_car car_4 Z_angle_to 188.9642
+    else
+        if
+            1@ == 2
+        then
+            00A5: car_1 = create_car 527 at 118.5686 1058.7429 13.6094
+            00A5: car_2 = create_car 575 at 105.5354 1053.8357 13.6094
+            00A5: car_3 = create_car 410 at 100.2434 1066.0775 13.6094
+            00A5: car_4 = create_car 547 at 115.0361 1077.005 13.6154
+            0175: set_car car_1 Z_angle_to 174.0407 
+            0175: set_car car_2 Z_angle_to 184.0407
+            0175: set_car car_3 Z_angle_to 196.1606
+            0175: set_car car_4 Z_angle_to 179.7074
+        else
+            if
+                1@ == 3
+            then
+                00A5: car_1 = create_car 527 at 94.0093 1076.7826 13.6094
+                00A5: car_2 = create_car 575 at 115.0361 1077.005 13.6154
+                00A5: car_3 = create_car 410 at 118.5686 1058.7429 13.6094
+                00A5: car_4 = create_car 547 at 105.5354 1053.8357 13.6094
+                0175: set_car car_1 Z_angle_to 184.0407
+                0175: set_car car_2 Z_angle_to 174.7973
+                0175: set_car car_3 Z_angle_to 179.1606
+                0175: set_car car_4 Z_angle_to 196.7074
+            else
+                00A5: car_1 = create_car 527 at 115.0361 1077.005 13.6154
+                00A5: car_2 = create_car 575 at 118.5686 1058.7429 13.6094
+                00A5: car_3 = create_car 410 at 105.5354 1053.8357 13.6094
+                00A5: car_4 = create_car 547 at 100.2434 1066.0775 13.6094
+                0175: set_car car_1 Z_angle_to 184.0407
+                0175: set_car car_2 Z_angle_to 174.7973
+                0175: set_car car_3 Z_angle_to 179.1606
+                0175: set_car car_4 Z_angle_to 196.7074
+            end
+        end
+    end
+    
+    
+    0376: ped_1 = create_random_actor_at 105.5354 1053.8357 19.6094
+    072A: put_actor ped_1 into_car car_1 driverseat
+    0376: ped_2 = create_random_actor_at 105.5354 1053.8357 19.6094
+    072A: put_actor ped_2 into_car car_2 driverseat
+    0376: ped_3 = create_random_actor_at 105.5354 1053.8357 19.6094
+    072A: put_actor ped_3 into_car car_3 driverseat
+    0376: ped_4 = create_random_actor_at 105.5354 1053.8357 19.6094
+    072A: put_actor ped_4 into_car car_4 driverseat
+    
+    0605: actor ped_1 perform_animation "DrinkCar" IFP "PedEventsMod" framedelta 1000.0 loop 0 lockX 0 lockY 0 lockF 0 time -1
+    0F02:  ped_1 special_model render_dr bone 24 offset 0.04 0.05 0.0 rotation 0 0 0 scale 0@ // bone 34 left hand, 24 right hand, 9 had, 3 tors, 4 upper tors
+    0E30: set_render_object_auto_hide 0@ dead 1 weapon 1 car 0
+    
+    0605: actor ped_2 perform_animation "EatCar" IFP "PedEventsMod" framedelta 1000.0 loop 0 lockX 0 lockY 0 lockF 0 time -1
+    0F02:  ped_2 special_model render_eat bone 34 offset 0.09 0.05 0.01 rotation 0 90.0 180.0 scale 0@ // bone 34 left hand, 24 right hand, 9 had, 3 tors, 4 upper tors
+    0E30: set_render_object_auto_hide 0@ dead 1 weapon 1 car 0
+    
+    0605: actor ped_3 perform_animation "LookCar" IFP "PedEventsMod" framedelta 1000.0 loop 0 lockX 0 lockY 0 lockF 0 time -1
+    0605: actor ped_4 perform_animation "LookCar" IFP "PedEventsMod" framedelta 1000.0 loop 0 lockX 0 lockY 0 lockF 0 time -1
+    
+
+
+    model.Destroy(410)
+    model.Destroy(547)
+    model.Destroy(575)
+    model.Destroy(527)
+
+    TIMERA = 0
+    timerb = 0
+
+    repeat
+    wait 0
+    if and
+        056E:   car car_1 defined
+        056E:   car car_2 defined
+        056E:   car car_3 defined
+        056E:   car car_4 defined
+        056D:   actor ped_1 defined
+        056D:   actor ped_2 defined
+        056D:   actor ped_3 defined
+        056D:   actor ped_4 defined
+    then
+    
+        0ABF: set_car car_1 engine_state_to 0
+        0ABF: set_car car_2 engine_state_to 0
+        0ABF: set_car car_3 engine_state_to 0
+        0ABF: set_car car_4 engine_state_to 0
+        
+        if
+            timera > 10000
+        then
+            timera = 0
+            0605: actor ped_1 perform_animation "DrinkCar" IFP "PedEventsMod" framedelta 2.0 loop 0 lockX 0 lockY 0 lockF 0 time -1
+            0605: actor ped_2 perform_animation "EatCar" IFP "PedEventsMod" framedelta 2.0 loop 0 lockX 0 lockY 0 lockF 0 time -1
+        end
+        
+        if
+            timerb > 15000
+        then
+            timerb = 0
+            if 0E4D: random_percent 50
+            then 0605: actor ped_3 perform_animation "LookCar" IFP "PedEventsMod" framedelta 2.0 loop 0 lockX 0 lockY 0 lockF 0 time -1
+            else 0605: actor ped_4 perform_animation "LookCar" IFP "PedEventsMod" framedelta 2.0 loop 0 lockX 0 lockY 0 lockF 0 time -1
+            end
+        end
+
+        if or
+            not locate_char_distance_to_car $player_actor car car_1 radius 200.0
+            051C:   car car_1 damaged_by_actor $PLAYER_ACTOR
+            051C:   car car_2 damaged_by_actor $PLAYER_ACTOR
+            051C:   car car_3 damaged_by_actor $PLAYER_ACTOR
+            051C:   car car_4 damaged_by_actor $PLAYER_ACTOR
+            not $ACTIVE_INTERIOR == 0
+        then
+            0ABF: set_car car_1 engine_state_to 1
+            0ABF: set_car car_2 engine_state_to 1
+            0ABF: set_car car_3 engine_state_to 1
+            0ABF: set_car car_4 engine_state_to 1
+            break
+        end
+        
+        if or
+            051A:   actor ped_1 damaged_by_actor $PLAYER_ACTOR
+            051A:   actor ped_2 damaged_by_actor $PLAYER_ACTOR
+            051A:   actor ped_3 damaged_by_actor $PLAYER_ACTOR
+            051A:   actor ped_4 damaged_by_actor $PLAYER_ACTOR
+        then
+            0ABF: set_car car_1 engine_state_to 1
+            0ABF: set_car car_2 engine_state_to 1
+            0ABF: set_car car_3 engine_state_to 1
+            0ABF: set_car car_4 engine_state_to 1
+            break
+        end
+        
+        if or
+            0457:   player $PLAYER_CHAR aiming_at_actor ped_1
+            0457:   player $PLAYER_CHAR aiming_at_actor ped_2
+            0457:   player $PLAYER_CHAR aiming_at_actor ped_3
+            0457:   player $PLAYER_CHAR aiming_at_actor ped_4
+        then
+            0E83: get_current_char_weaponinfo $PLAYER_ACTOR store_to 1@
+            0E89: get_weaponinfo_fire_type 1@ store_to 2@ // Проверяем с каким оружием игрок
+            if or
+                2@ == 1 // Огнестрельное оружие
+                2@ == 3 // Тяжелое оружие (Огнемет и т.д.)
+            then
+                0ABF: set_car car_1 engine_state_to 1
+                0ABF: set_car car_2 engine_state_to 1
+                0ABF: set_car car_3 engine_state_to 1
+                0ABF: set_car car_4 engine_state_to 1
+                break
+            end
+        end
+        
+        080E: get_actor ped_1 ped_event_to 1@
+        if or
+            1@ == 49
+            1@ == 9
+            1@ == 15
+            1@ == 31
+            1@ == 59
+        then
+            0ABF: set_car car_1 engine_state_to 1
+            0ABF: set_car car_2 engine_state_to 1
+            0ABF: set_car car_3 engine_state_to 1
+            0ABF: set_car car_4 engine_state_to 1
+            break
+        end
+        
+        080E: get_actor ped_2 ped_event_to 1@
+        if or
+            1@ == 49
+            1@ == 9
+            1@ == 15
+            1@ == 31
+            1@ == 59
+        then
+            0ABF: set_car car_1 engine_state_to 1
+            0ABF: set_car car_2 engine_state_to 1
+            0ABF: set_car car_3 engine_state_to 1
+            0ABF: set_car car_4 engine_state_to 1
+            break
+        end
+        
+        080E: get_actor ped_3 ped_event_to 1@
+        if or
+            1@ == 49
+            1@ == 9
+            1@ == 15
+            1@ == 31
+            1@ == 59
+        then
+            0ABF: set_car car_1 engine_state_to 1
+            0ABF: set_car car_2 engine_state_to 1
+            0ABF: set_car car_3 engine_state_to 1
+            0ABF: set_car car_4 engine_state_to 1
+            break
+        end
+        
+        080E: get_actor ped_4 ped_event_to 1@
+        if or
+            1@ == 49
+            1@ == 9
+            1@ == 15
+            1@ == 31
+            1@ == 59
+        then
+            0ABF: set_car car_1 engine_state_to 1
+            0ABF: set_car car_2 engine_state_to 1
+            0ABF: set_car car_3 engine_state_to 1
+            0ABF: set_car car_4 engine_state_to 1
+            break
+        end
+        
+        if or
+            0119:   car car_1 wrecked
+            0119:   car car_2 wrecked
+            0119:   car car_2 wrecked
+            0119:   car car_3 wrecked
+        then
+            0ABF: set_car car_1 engine_state_to 1
+            0ABF: set_car car_2 engine_state_to 1
+            0ABF: set_car car_3 engine_state_to 1
+            0ABF: set_car car_4 engine_state_to 1
+            break
+        end
+        
+        0E40: get_current_hour 0@
+        if or
+            0@ > 21
+            0@ < 5
+        then
+        else
+            0ABF: set_car car_1 engine_state_to 1
+            0ABF: set_car car_2 engine_state_to 1
+            0ABF: set_car car_3 engine_state_to 1
+            0ABF: set_car car_4 engine_state_to 1
+            break
+        end
+
+        
+        
+
+    else
+        break
+    end
+    until not player.Defined(0)
+    04EF: release_animation "PedEventsMod"
+    if 056E:   car car_1 defined
+    then 01C3: remove_references_to_car car_1
+    end
+    if 056E:   car car_2 defined
+    then 01C3: remove_references_to_car car_2
+    end
+    if 056E:   car car_3 defined
+    then 01C3: remove_references_to_car car_3
+    end
+    if 056E:   car car_4 defined
+    then 01C3: remove_references_to_car car_4
+    end
+    if 056D:   actor ped_1 defined
+    then 01C2: remove_references_to_actor ped_1 // Like turning an actor into a random pedestrian
+    end
+    if 056D:   actor ped_2 defined
+    then 01C2: remove_references_to_actor ped_2 // Like turning an actor into a random pedestrian
+    end
+    if 056D:   actor ped_3 defined
+    then 01C2: remove_references_to_actor ped_3 // Like turning an actor into a random pedestrian
+    end
+    if 056D:   actor ped_4 defined
+    then 01C2: remove_references_to_actor ped_4 // Like turning an actor into a random pedestrian
+    end
+
+    repeat
+    wait 0
+    until not locate_char_distance_to_coordinates $player_actor pos coords_x coords_y coords_z radius 120.0
+
+    0A93: terminate_this_custom_script

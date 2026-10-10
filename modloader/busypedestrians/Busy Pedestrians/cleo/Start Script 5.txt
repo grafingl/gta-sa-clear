@@ -1,0 +1,113 @@
+{$CLEO .cs}
+{$USE CLEO+}
+{$USE newOpcodes}
+{$USE ini}
+
+0000: NOP
+
+script_name "StartBP5"
+
+// By ArtemQa146
+
+wait 300
+
+if
+    0AA2: 31@ = load_dynamic_library "CLEO+.cleo"
+then
+    if
+        0AA4: 30@ = get_dynamic_library_procedure "GetCleoPlusVersion" library 31@
+    then
+        0AA7: call_function_return 30@ num_params 0 pop 0 29@
+        if
+            not 29@ >= 0x1020000
+        then
+            0AD1: show_formatted_text_highpriority "Cleo+ 1.2.0 (or higher) version is required, the Busy Pedestrians mod is disabled" time 15000
+            0AA3: free_dynamic_library 31@
+            0A93: terminate_this_custom_script
+        end
+        0AA3: free_dynamic_library 31@
+    end
+else
+    0AD1: show_formatted_text_highpriority "Cleo+ 1.2.0 (or higher) version is required, the Busy Pedestrians mod is disabled" time 15000
+    0AA3: free_dynamic_library 31@
+    0A93: terminate_this_custom_script
+end
+
+if
+    0E2D: is_game_first_start
+then
+    0F00: load_special_model_dff "modelsq\drink_peds" txd "modelsq\EatQ" store_to 0@
+    0AF1: write_int 0@ to_ini_file "cleo\PedsModels.ini" section "Models" key "drink1777"
+    0F00: load_special_model_dff "modelsq\Eat2" txd "modelsq\PedsVndQ" store_to 0@
+    0AF1: write_int 0@ to_ini_file "cleo\PedsModels.ini" section "Models" key "Eat2777"
+    0F00: load_special_model_dff "modelsq\Spanner1" txd "modelsq\ImpInt" store_to 0@
+    0AF1: write_int 0@ to_ini_file "cleo\PedsModels.ini" section "Models" key "Spanner777"
+    0F00: load_special_model_dff "modelsq\Broom1" txd "modelsq\ImpInt" store_to 0@
+    0AF1: write_int 0@ to_ini_file "cleo\PedsModels.ini" section "Models" key "Broom777"
+end
+
+
+timera = 0
+timerb = 0
+
+const
+    render_drink = 31@
+    render_eat = 30@
+    scm_movie = 29@
+    render_broom = 28@
+    render_spaner = 27@
+    pause = 150
+end
+
+0AF0: render_drink = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "drink1777"
+0AF0: render_eat = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "Eat2777"
+
+0AF0: render_broom = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "Broom777"
+0AF0: render_spaner = read_int_from_ini_file "cleo\PedsModels.ini" section "Models" key "Spanner777"
+
+0AF0: scm_movie = read_int_from_ini_file "cleo\Busy Pedestrians.ini" section "Settings" key "Drive in Theatre"
+
+
+while true
+wait pause
+
+    if
+        player.Defined(0)
+    then
+
+        if
+            not $ACTIVE_INTERIOR == 0
+        then
+            continue
+        end
+
+            // movie
+            if and
+                scm_movie == 1
+                $ACTIVE_INTERIOR == 0
+                $ONMISSION == 0
+                0EEA: locate_char_distance_to_coordinates $player_actor pos 106.2514 1051.0931 13.6094 radius 200.0
+            then
+                0AAA: 0@ = get_script_struct_named "MOVIOBJ"
+                0AAA: 1@ = get_script_struct_named "MOVICAR"
+                0AAA: 2@ = get_script_struct_named "MOVIWRK"
+                if or
+                    0@ == 0
+                    1@ == 0
+                    2@ == 0
+                then
+                    if 0@ == 0
+                    then 0A92: stream_custom_script "Movie Object.qa"
+                    end
+                    if 1@ == 0
+                    then 0A92: stream_custom_script "Movie Cars.qa" render_drink render_eat
+                    end
+                    if 2@ == 0
+                    then 0A92: stream_custom_script "Movie Workers.qa" render_broom render_spaner
+                    end
+                    wait 2000
+                end
+            end
+
+    end
+end

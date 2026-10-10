@@ -858,13 +858,13 @@ wait pause
                     not 2@ == 0.0
                     not 3@ == 0.0
                     not locate_char_distance_to_coordinates $player_actor pos 1@ 2@ 3@ radius 20.0
-                    80C2:   not sphere_onscreen 1@ 2@ 3@ radius 5.0
                 then
                 
                     0AAA: 0@ = get_script_struct_named "GRFGQA"
                     if
                         0@ == 0
                     then
+                        5@ = 0
                         08F1: get_zone_at 1@ 2@ 3@ nameB_to 7@s // 8-byte string
                         076D: get_zone 7@s gang 0 density_to 6@
                         if not 6@ == 0
@@ -879,9 +879,9 @@ wait pause
                         then 5@ = 9
                         end
                         if or
-                            not 5@ == 7
-                            not 5@ == 8
-                            not 5@ == 9
+                            5@ == 7
+                            5@ == 8
+                            5@ == 9
                         then
                             0A92: stream_custom_script "Graffiti Gang.qa" 1@ 2@ 3@ 4@ 5@ chanse_graffity
                             wait 2000

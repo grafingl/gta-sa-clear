@@ -85,11 +85,13 @@ wait 500
     if
         player.Defined(0)
     then
-        if
+        if or
+            not $ACTIVE_INTERIOR == 0
             not $ONMISSION == 0
         then
             continue
         end
+        
         // Просто рыбак
         if or
             0EEA: locate_char_distance_to_coordinates $player_actor pos 2235.4229 398.0295 1.1569 radius 100.0
