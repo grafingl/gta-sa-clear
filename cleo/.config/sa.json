@@ -1,7 +1,7 @@
 {
   "meta": {
-    "last_update": 1772237935497,
-    "version": "1.55",
+    "last_update": 1792287523726,
+    "version": "1.68",
     "url": "https://library.sannybuilder.com/#/sa"
   },
   "extensions": [
@@ -10173,7 +10173,7 @@
           "member": "IsPlaying",
           "name": "IS_PLAYER_PLAYING",
           "num_params": 1,
-          "short_desc": "Returns true if the player hasn't been wasted or busted (the player is still playing)"
+          "short_desc": "Returns true if the player is alive and not arrested by the police"
         },
         {
           "id": "0257",
@@ -11352,7 +11352,7 @@
           "member": "GetClosestCarNode",
           "name": "GET_CLOSEST_CAR_NODE",
           "num_params": 6,
-          "short_desc": "Returns the nearest path note from the specified coordinates that a vehicle can drive on"
+          "short_desc": "Returns the nearest path node from the specified coordinates that a vehicle can drive on"
         },
         {
           "input": [
@@ -15745,7 +15745,7 @@
           "member": "ActivateSaveMenu",
           "name": "ACTIVATE_SAVE_MENU",
           "num_params": 0,
-          "short_desc": "Displays a screen prompting the player to save"
+          "short_desc": "Schedules save game menu to be displayed on next render frame"
         },
         {
           "attrs": {
@@ -15757,7 +15757,7 @@
           "member": "HasSaveGameFinished",
           "name": "HAS_SAVE_GAME_FINISHED",
           "num_params": 0,
-          "short_desc": "Returns true if the player has saved their game"
+          "short_desc": "Returns false if save game menu was requested with activate_save_menu command, but not displayed yet"
         },
         {
           "id": "03DA",
@@ -28739,7 +28739,7 @@
             },
             {
               "name": "speed",
-              "type": "int"
+              "type": "float"
             }
           ],
           "id": "06BB",
@@ -32690,7 +32690,7 @@
             },
             {
               "name": "maxAltitude",
-              "type": "any"
+              "type": "float"
             }
           ],
           "id": "0780",
@@ -46679,7 +46679,7 @@
           "id": "0A8C",
           "name": "WRITE_MEMORY",
           "num_params": 4,
-          "short_desc": "Writes the value at the memory address",
+          "short_desc": "Writes a value to a memory address",
           "class": "Memory",
           "member": "Write",
           "attrs": {
@@ -46711,7 +46711,7 @@
           "id": "0A8D",
           "name": "READ_MEMORY",
           "num_params": 4,
-          "short_desc": "Reads a value from the game memory",
+          "short_desc": "Reads a value from a memory address",
           "class": "Memory",
           "member": "Read",
           "attrs": {
@@ -46853,7 +46853,7 @@
           "id": "0A94",
           "name": "LOAD_AND_LAUNCH_CUSTOM_MISSION",
           "num_params": 2,
-          "short_desc": ""
+          "short_desc": "Loads and launches a CLEO custom mission script (.cm file) and returns true if successful"
         },
         {
           "id": "0A95",
@@ -46912,7 +46912,7 @@
         {
           "input": [
             {
-              "name": "object",
+              "name": "handle",
               "type": "Object"
             }
           ],
@@ -46989,7 +46989,7 @@
           "id": "0A9B",
           "name": "CLOSE_FILE",
           "num_params": 1,
-          "short_desc": "Closes the file and frees the memory",
+          "short_desc": "Closes an open file by its handle",
           "class": "File",
           "member": "Close",
           "attrs": {
@@ -47013,7 +47013,7 @@
           "id": "0A9C",
           "name": "GET_FILE_SIZE",
           "num_params": 2,
-          "short_desc": "Gets the file size in bytes",
+          "short_desc": "Gets the size in bytes of an open file",
           "class": "File",
           "member": "GetSize"
         },
@@ -47437,7 +47437,7 @@
           "id": "0AB3",
           "name": "SET_CLEO_SHARED_VAR",
           "num_params": 2,
-          "short_desc": "Sets the value of an element in the global array maintained by CLEO (index is between 0-1023)"
+          "short_desc": "Sets a global CLEO shared variable accessible across all scripts (index is between 0-1023)"
         },
         {
           "input": [
@@ -47456,7 +47456,7 @@
           "id": "0AB4",
           "name": "GET_CLEO_SHARED_VAR",
           "num_params": 2,
-          "short_desc": "Reads the value of an element in the global array maintained by CLEO (index is between 0-1023)"
+          "short_desc": "Gets a global CLEO shared variable set by another script (index is between 0-1023)"
         },
         {
           "input": [
@@ -47505,7 +47505,7 @@
           "id": "0AB6",
           "name": "GET_TARGET_BLIP_COORDS",
           "num_params": 3,
-          "short_desc": "Gets the coordinates of the location targeted in the game map",
+          "short_desc": "Gets the 3D world coordinates of the target blip on the radar",
           "attrs": {
             "is_static": true,
             "is_condition": true
@@ -47530,7 +47530,7 @@
           "id": "0AB7",
           "name": "GET_CAR_NUMBER_OF_GEARS",
           "num_params": 2,
-          "short_desc": "Gets the total number of gears of the vehicle and stores it to the variable",
+          "short_desc": "Gets the number of gears of a vehicle from its handling data",
           "class": "Car",
           "member": "GetNumberOfGears"
         },
@@ -47551,7 +47551,7 @@
           "id": "0AB8",
           "name": "GET_CAR_CURRENT_GEAR",
           "num_params": 2,
-          "short_desc": "Returns the current gear of the vehicle",
+          "short_desc": "Gets the current gear of a vehicle",
           "class": "Car",
           "member": "GetCurrentGear"
         },
@@ -47577,7 +47577,7 @@
           "id": "0ABD",
           "name": "IS_CAR_SIREN_ON",
           "num_params": 1,
-          "short_desc": "",
+          "short_desc": "Checks if a vehicle's siren or alarm is currently active",
           "class": "Car",
           "member": "IsSirenOn",
           "attrs": {
@@ -47598,7 +47598,8 @@
           "member": "IsEngineOn",
           "attrs": {
             "is_condition": true
-          }
+          },
+          "short_desc": "Checks if a vehicle's engine is currently running"
         },
         {
           "input": [
@@ -47614,7 +47615,7 @@
           "id": "0ABF",
           "name": "CLEO_SET_CAR_ENGINE_ON",
           "num_params": 2,
-          "short_desc": "Sets whether the vehicle's engine is turned on or off",
+          "short_desc": "Sets a vehicle's engine state on (true) or off (false)",
           "class": "Car",
           "member": "CleoSetEngineOn"
         },
@@ -47660,7 +47661,7 @@
           "id": "0AC7",
           "name": "GET_VAR_POINTER",
           "num_params": 2,
-          "short_desc": "Stores the absolute address of the variable",
+          "short_desc": "Gets the memory address/pointer of a script variable (local or global)",
           "class": "Memory",
           "member": "GetVarPointer",
           "attrs": {
@@ -47684,7 +47685,7 @@
           "id": "0AC8",
           "name": "ALLOCATE_MEMORY",
           "num_params": 2,
-          "short_desc": "Allocates a chunk of memory of the given size and stores its address to the variable",
+          "short_desc": "Allocates a block of memory of specified size and returns its address",
           "class": "Memory",
           "member": "Allocate",
           "attrs": {
@@ -47910,7 +47911,7 @@
           "id": "0AD2",
           "name": "GET_CHAR_PLAYER_IS_TARGETING",
           "num_params": 2,
-          "short_desc": "",
+          "short_desc": "Gets the character (ped) handle that the specified player is currently targeting",
           "class": "Player",
           "member": "GetCharIsTargeting",
           "attrs": {
@@ -47935,7 +47936,7 @@
           "id": "0AD3",
           "name": "STRING_FORMAT",
           "num_params": 3,
-          "short_desc": "Formats a text according to the format string and given arguments and writes it in the result",
+          "short_desc": "Formats a string with printf-style arguments and stores the result in a variable",
           "class": "Text",
           "member": "StringFormat",
           "attrs": {
@@ -47968,7 +47969,7 @@
           "id": "0AD4",
           "name": "SCAN_STRING",
           "num_params": 4,
-          "short_desc": "Extracts data from a string using sscanf",
+          "short_desc": "Scans/parses a string using sscanf-style format and stores the parsed values",
           "class": "Text",
           "member": "ScanString",
           "attrs": {
@@ -47994,7 +47995,7 @@
           "id": "0AD5",
           "name": "FILE_SEEK",
           "num_params": 3,
-          "short_desc": "Sets the position of the file to the given offset from the origin",
+          "short_desc": "Seeks to a position in an open file (sets the file pointer offset)",
           "class": "File",
           "member": "Seek",
           "attrs": {
@@ -48082,7 +48083,7 @@
           "id": "0AD9",
           "name": "WRITE_FORMATTED_STRING_TO_FILE",
           "num_params": 3,
-          "short_desc": "Writes a formatted string to the file",
+          "short_desc": "Writes a formatted string to a file using printf-style format",
           "class": "File",
           "member": "WriteFormattedString"
         },
@@ -48112,7 +48113,7 @@
           "id": "0ADA",
           "name": "SCAN_FILE",
           "num_params": 4,
-          "short_desc": "Extracts data from a file using fscanf",
+          "short_desc": "Scans/parses content from a file using sscanf-style format",
           "class": "File",
           "member": "Scan",
           "attrs": {
@@ -48136,7 +48137,7 @@
           "id": "0ADB",
           "name": "GET_NAME_OF_VEHICLE_MODEL",
           "num_params": 2,
-          "short_desc": "",
+          "short_desc": "Gets the display name of a vehicle model (e.g. 'INFERNUS')",
           "class": "Streaming",
           "member": "GetNameOfVehicleModel",
           "attrs": {
@@ -48277,7 +48278,7 @@
           "id": "0AE1",
           "name": "GET_RANDOM_CHAR_IN_SPHERE_NO_SAVE_RECURSIVE",
           "num_params": 7,
-          "short_desc": "",
+          "short_desc": "Finds a random character within a sphere, returns handle and true if found",
           "class": "World",
           "member": "GetRandomCharInSphereNoSaveRecursive",
           "attrs": {
@@ -48322,7 +48323,7 @@
           "id": "0AE2",
           "name": "GET_RANDOM_CAR_IN_SPHERE_NO_SAVE_RECURSIVE",
           "num_params": 7,
-          "short_desc": "",
+          "short_desc": "Finds a random vehicle within a sphere, returns handle and true if found",
           "class": "World",
           "member": "GetRandomCarInSphereNoSaveRecursive",
           "attrs": {
@@ -48363,7 +48364,7 @@
           "id": "0AE3",
           "name": "GET_RANDOM_OBJECT_IN_SPHERE_NO_SAVE_RECURSIVE",
           "num_params": 6,
-          "short_desc": "",
+          "short_desc": "Finds a random object within a sphere, returns handle and true if found",
           "class": "World",
           "member": "GetRandomObjectInSphereNoSaveRecursive",
           "attrs": {
@@ -48381,7 +48382,7 @@
           "id": "0AE4",
           "name": "DOES_DIRECTORY_EXIST",
           "num_params": 1,
-          "short_desc": "Returns true if a directory at the given path exists",
+          "short_desc": "Checks if a directory exists at the specified path",
           "class": "Fs",
           "member": "DoesDirectoryExist",
           "attrs": {
@@ -48399,7 +48400,7 @@
           "id": "0AE5",
           "name": "CREATE_DIRECTORY",
           "num_params": 1,
-          "short_desc": "Creates a directory at the given path",
+          "short_desc": "Creates a new directory at the specified path",
           "class": "Fs",
           "member": "CreateDirectory",
           "attrs": {
@@ -48429,7 +48430,7 @@
           "id": "0AE6",
           "name": "FIND_FIRST_FILE",
           "num_params": 3,
-          "short_desc": "Searches a directory for a file or subdirectory with a name that matches a specific name (or partial name if wildcards are used)",
+          "short_desc": "Finds the first file/directory matching a search pattern, returns name and handle",
           "class": "FindFile",
           "member": "First",
           "attrs": {
@@ -48454,7 +48455,7 @@
           "id": "0AE7",
           "name": "FIND_NEXT_FILE",
           "num_params": 2,
-          "short_desc": "Continues a file search from a previous call to 0AE6",
+          "short_desc": "Finds the next file/directory in a search started with FIND_FIRST_FILE",
           "class": "FindFile",
           "member": "Next",
           "attrs": {
@@ -48471,7 +48472,7 @@
           "id": "0AE8",
           "name": "FIND_CLOSE",
           "num_params": 1,
-          "short_desc": "Closes a file search handle opened by 0AE6",
+          "short_desc": "Closes a file search handle opened with FIND_FIRST_FILE",
           "class": "FindFile",
           "member": "Close"
         },
@@ -48586,7 +48587,7 @@
           "id": "0AED",
           "name": "STRING_FLOAT_FORMAT",
           "num_params": 3,
-          "short_desc": "",
+          "short_desc": "Converts a float value to a string with format specifier",
           "class": "Text",
           "member": "StringFloatFormat",
           "attrs": {
@@ -48642,7 +48643,7 @@
           "id": "0AEF",
           "name": "LOG",
           "num_params": 3,
-          "short_desc": "Returns the logarithm of the specified number in the specified base",
+          "short_desc": "Computes the logarithm of a value with a specified base",
           "class": "Math",
           "member": "Log",
           "attrs": {
@@ -48665,7 +48666,7 @@
           },
           "class": "Game",
           "member": "GetPlatform",
-          "short_desc": "Returns platform type info (device/operating system)"
+          "short_desc": "Gets the current platform identifier (e.g. PC, Android, Xbox)"
         },
         {
           "output": [
@@ -48678,7 +48679,7 @@
           "id": "2000",
           "name": "GET_CLEO_ARG_COUNT",
           "num_params": 1,
-          "short_desc": "Gets argument count used to call current cleo function (0AB1)"
+          "short_desc": "Gets the number of arguments passed to the current CLEO_CALL"
         },
         {
           "input": [
@@ -48713,30 +48714,6 @@
             "is_condition": true
           },
           "short_desc": "Returns from the current SCM function (0AB1) and sets the condition result to false, skipping variables in 0AB1"
-        },
-        {
-          "input": [
-            {
-              "name": "",
-              "type": "float"
-            },
-            {
-              "name": "",
-              "type": "float"
-            }
-          ],
-          "output": [
-            {
-              "name": "",
-              "type": "float",
-              "source": "var_any"
-            }
-          ],
-          "id": "290B",
-          "name": "FLOAT_MUL",
-          "num_params": 3,
-          "operator": "*",
-          "short_desc": "Multiplies two float values and writes the result into the variable"
         }
       ]
     },
@@ -49530,14 +49507,13 @@
             {
               "name": "entityToIgnore",
               "type": "int"
+            },
+            {
+              "name": "colPoint",
+              "type": "int"
             }
           ],
           "output": [
-            {
-              "name": "handle",
-              "type": "ColPoint",
-              "source": "var_any"
-            },
             {
               "name": "outX",
               "type": "float",
@@ -49564,8 +49540,7 @@
           "num_params": 20,
           "attrs": {
             "is_condition": true,
-            "is_static": true,
-            "is_constructor": true
+            "is_static": true
           },
           "class": "ColPoint",
           "member": "GetCollisionBetweenPoints",
@@ -49574,8 +49549,8 @@
         {
           "input": [
             {
-              "name": "self",
-              "type": "ColPoint"
+              "name": "colPoint",
+              "type": "int"
             }
           ],
           "output": [
@@ -49600,13 +49575,16 @@
           "num_params": 4,
           "class": "ColPoint",
           "member": "GetNormalVector",
-          "short_desc": "Returns the vector of the specified ColPoint"
+          "short_desc": "Returns the vector of the specified ColPoint",
+          "attrs": {
+            "is_static": true
+          }
         },
         {
           "input": [
             {
-              "name": "self",
-              "type": "ColPoint"
+              "name": "colPoint",
+              "type": "int"
             }
           ],
           "output": [
@@ -49621,13 +49599,16 @@
           "num_params": 2,
           "class": "ColPoint",
           "member": "GetSurface",
-          "short_desc": "Returns the surfaceType of the specified ColPoint"
+          "short_desc": "Returns the surfaceType of the specified ColPoint",
+          "attrs": {
+            "is_static": true
+          }
         },
         {
           "input": [
             {
-              "name": "self",
-              "type": "ColPoint"
+              "name": "colPoint",
+              "type": "int"
             }
           ],
           "output": [
@@ -49642,7 +49623,10 @@
           "num_params": 2,
           "class": "ColPoint",
           "member": "GetDepth",
-          "short_desc": "Returns the depth of the specified ColPoint"
+          "short_desc": "Returns the depth of the specified ColPoint",
+          "attrs": {
+            "is_static": true
+          }
         },
         {
           "input": [
@@ -52381,8 +52365,8 @@
         {
           "input": [
             {
-              "name": "self",
-              "type": "ColPoint"
+              "name": "colPoint",
+              "type": "int"
             },
             {
               "name": "fromNight",
@@ -52401,7 +52385,10 @@
           "num_params": 3,
           "class": "ColPoint",
           "member": "GetLighting",
-          "short_desc": "Returns the lighting of the specified ColPoint"
+          "short_desc": "Returns the lighting of the specified ColPoint",
+          "attrs": {
+            "is_static": true
+          }
         },
         {
           "output": [
@@ -55003,8 +54990,8 @@
         {
           "input": [
             {
-              "name": "self",
-              "type": "ColPoint"
+              "name": "colPoint",
+              "type": "int"
             }
           ],
           "output": [
@@ -55029,7 +55016,10 @@
           "num_params": 4,
           "class": "ColPoint",
           "member": "GetCoordinates",
-          "short_desc": "Returns the coordinates of the specified ColPoint"
+          "short_desc": "Returns the coordinates of the specified ColPoint",
+          "attrs": {
+            "is_static": true
+          }
         },
         {
           "input": [
@@ -56402,13 +56392,12 @@
           "short_desc": "Returns the closest water distance and z level"
         },
         {
-          "input": [
+          "output": [
             {
               "name": "cCamera",
-              "type": "int"
-            }
-          ],
-          "output": [
+              "type": "int",
+              "source": "var_any"
+            },
             {
               "name": "activeCCam",
               "type": "int",
@@ -56555,7 +56544,7 @@
           "id": "0D00",
           "name": "MULTIPLY_MATRICES",
           "num_params": 3,
-          "short_desc": "Multiplies matrices",
+          "short_desc": "Multiplies two RwMatrix matrices: result = matrixA * matrixB",
           "attrs": {
             "is_constructor": true,
             "is_static": true
@@ -56593,7 +56582,7 @@
           "id": "0D01",
           "name": "ROTATE_MATRIX_ON_AXIS",
           "num_params": 6,
-          "short_desc": "Rotates matrix on axis",
+          "short_desc": "Rotates a matrix around a specified axis vector by an angle (degrees) using the given combine operation (RwOpCombineType)",
           "class": "Matrix",
           "member": "RotateOnAxis"
         },
@@ -56614,7 +56603,7 @@
           "id": "0D02",
           "name": "GET_MATRIX_X_ANGLE",
           "num_params": 2,
-          "short_desc": "Gets the X angle of matrix (in degrees)",
+          "short_desc": "Gets the X (right vector) Euler angle of a matrix in degrees",
           "class": "Matrix",
           "member": "GetXAngle"
         },
@@ -56635,7 +56624,7 @@
           "id": "0D03",
           "name": "GET_MATRIX_Y_ANGLE",
           "num_params": 2,
-          "short_desc": "Gets the Y angle of matrix (in degrees)",
+          "short_desc": "Gets the Y (up vector) Euler angle of a matrix in degrees",
           "class": "Matrix",
           "member": "GetYAngle"
         },
@@ -56656,7 +56645,7 @@
           "id": "0D04",
           "name": "GET_MATRIX_Z_ANGLE",
           "num_params": 2,
-          "short_desc": "Gets the Z angle of matrix (in degrees)",
+          "short_desc": "Gets the Z (at vector) Euler angle of a matrix in degrees",
           "class": "Matrix",
           "member": "GetZAngle"
         },
@@ -56682,7 +56671,7 @@
           "id": "0D05",
           "name": "SET_MATRIX_POSITION",
           "num_params": 4,
-          "short_desc": "Sets position for matrix",
+          "short_desc": "Sets the position (translation) component of a matrix from X, Y, Z coordinates",
           "class": "Matrix",
           "member": "SetPosition"
         },
@@ -56713,7 +56702,7 @@
           "id": "0D06",
           "name": "GET_MATRIX_POSITION",
           "num_params": 4,
-          "short_desc": "Gets position of matrix"
+          "short_desc": "Extracts the position (translation) X, Y, Z components from a matrix"
         },
         {
           "input": [
@@ -56754,7 +56743,7 @@
           "id": "0D07",
           "name": "GET_COORDS_OFFSETS_RELATIVE_TO_MATRIX",
           "num_params": 7,
-          "short_desc": "Gets point relative offset on matrix",
+          "short_desc": "Transforms world-space coordinates into local coordinates relative to a matrix (inverse transform)",
           "attrs": {
             "is_static": true
           }
@@ -56781,7 +56770,7 @@
           "id": "0D08",
           "name": "SET_MATRIX_ROTATION",
           "num_params": 4,
-          "short_desc": "Sets matrix angles",
+          "short_desc": "Sets the rotation of a matrix from Euler angles (pitch, yaw, roll in degrees) while preserving its position",
           "class": "Matrix",
           "member": "Rotate"
         },
@@ -56799,7 +56788,7 @@
           "id": "0D09",
           "name": "COPY_MATRIX",
           "num_params": 2,
-          "short_desc": "Copies matrix to another matrix",
+          "short_desc": "Copies all 16 elements of one RwMatrix to another (deep copy)",
           "class": "Matrix",
           "member": "Copy"
         },
@@ -56842,7 +56831,7 @@
           "id": "0D0A",
           "name": "GET_OFFSET_FROM_MATRIX_IN_WORLD_COORDS",
           "num_params": 7,
-          "short_desc": "Gets coords on offset from matrix",
+          "short_desc": "Transforms a local offset vector into world-space coordinates using the matrix",
           "class": "Matrix",
           "member": "GetOffset"
         },
@@ -56870,7 +56859,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Gets char's bone world matrix"
+          "short_desc": "Gets the world matrix (LTM) of a character's specified bone for direct manipulation"
         },
         {
           "input": [
@@ -56896,7 +56885,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Gets matrix of car component",
+          "short_desc": "Gets the world matrix (LTM) of a named vehicle component frame (e.g. wheel, door, bumper)",
           "class": "Car",
           "member": "GetComponentMatrix"
         },
@@ -56924,7 +56913,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Gets car component by name",
+          "short_desc": "Finds and returns a pointer to a vehicle component (RwFrame) by its dummy name",
           "class": "Car",
           "member": "GetComponent"
         },
@@ -56949,7 +56938,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Sets component state"
+          "short_desc": "Sets the visibility/state of a named vehicle component (e.g. damaged, broken, intact)"
         },
         {
           "input": [
@@ -56968,7 +56957,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Sets alpha value for car's model"
+          "short_desc": "Sets the alpha (transparency) for a car's model (0=invisible, 255=opaque)"
         },
         {
           "input": [
@@ -56987,7 +56976,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Sets alpha value for char's model"
+          "short_desc": "Sets the alpha (transparency) for a character's model (0=invisible, 255=opaque)"
         },
         {
           "input": [
@@ -57006,7 +56995,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Sets alpha value for object's model"
+          "short_desc": "Sets the alpha (transparency) for an object's model (0=invisible, 255=opaque)"
         },
         {
           "input": [
@@ -57029,7 +57018,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Sets alpha value for car's component model",
+          "short_desc": "Sets the alpha (transparency) for a specific named vehicle component model",
           "class": "Car",
           "member": "SetComponentModelAlpha"
         },
@@ -57047,7 +57036,7 @@
           "id": "0D13",
           "name": "SET_MATRIX_X_ROTATION",
           "num_params": 2,
-          "short_desc": "Sets matrix x angle"
+          "short_desc": "Sets only the X (right vector) rotation angle of a matrix in degrees, preserving Y and Z"
         },
         {
           "input": [
@@ -57063,7 +57052,7 @@
           "id": "0D14",
           "name": "SET_MATRIX_Y_ROTATION",
           "num_params": 2,
-          "short_desc": "Sets matrix y angle"
+          "short_desc": "Sets only the Y (up vector) rotation angle of a matrix in degrees, preserving X and Z"
         },
         {
           "input": [
@@ -57079,7 +57068,7 @@
           "id": "0D15",
           "name": "SET_MATRIX_Z_ROTATION",
           "num_params": 2,
-          "short_desc": "Sets matrix z angle"
+          "short_desc": "Sets only the Z (at vector) rotation angle of a matrix in degrees, preserving X and Y"
         },
         {
           "input": [
@@ -57095,7 +57084,7 @@
           "id": "0D16",
           "name": "SET_MATRIX_ROTATION_FROM_QUAT",
           "num_params": 2,
-          "short_desc": "Sets matrix rotation from quaternion"
+          "short_desc": "Sets a matrix's rotation from a quaternion (CQuaternion)"
         },
         {
           "input": [
@@ -57111,7 +57100,7 @@
           "id": "0D17",
           "name": "SET_QUAT_FROM_MATRIX",
           "num_params": 2,
-          "short_desc": "Sets quaternion from matrix"
+          "short_desc": "Converts a matrix's rotation into a quaternion (CQuaternion)"
         },
         {
           "input": [
@@ -57143,7 +57132,7 @@
           "id": "0D18",
           "name": "ROTATE_QUAT_ON_AXIS",
           "num_params": 6,
-          "short_desc": "Rotates quaternion"
+          "short_desc": "Rotates a quaternion around a specified axis by an angle (degrees) with combine operation"
         },
         {
           "input": [
@@ -57162,7 +57151,7 @@
           "id": "0D19",
           "name": "GET_NORMALISED_QUAT",
           "num_params": 2,
-          "short_desc": "Normalizes quaternion"
+          "short_desc": "Normalizes a quaternion to unit length and stores the result"
         },
         {
           "input": [
@@ -57185,7 +57174,7 @@
           "id": "0D1A",
           "name": "MULTIPLY_QUATS",
           "num_params": 3,
-          "short_desc": "Multiplies quaternions"
+          "short_desc": "Multiplies two quaternions: result = quat1 * quat2 (quaternion concatenation)"
         },
         {
           "input": [
@@ -57209,7 +57198,7 @@
           "id": "0D1B",
           "name": "GET_ENTITY_TYPE_AND_CLASS",
           "num_params": 3,
-          "short_desc": "Gets information about entity type"
+          "short_desc": "Gets the entity type and class (vtable identifier) of any game entity pointer"
         },
         {
           "input": [
@@ -57221,7 +57210,7 @@
           "id": "0D1C",
           "name": "NORMALISE_VECTOR",
           "num_params": 1,
-          "short_desc": "Normalizes vector"
+          "short_desc": "Normalizes a 3D vector (CVector) to unit length in-place"
         },
         {
           "input": [
@@ -57245,7 +57234,7 @@
           "id": "0D1D",
           "name": "INTERPOLATE_MATRIX",
           "num_params": 4,
-          "short_desc": "Performs matrix slerp"
+          "short_desc": "Performs spherical linear interpolation (slerp) between two matrix rotations via quaternions"
         },
         {
           "input": [
@@ -57269,7 +57258,7 @@
           "id": "0D1E",
           "name": "QUAT_SLERP",
           "num_params": 4,
-          "short_desc": "Performs quaternion slerp"
+          "short_desc": "Performs spherical linear interpolation (slerp) between two quaternions with factor t"
         },
         {
           "input": [
@@ -57288,7 +57277,7 @@
           "id": "0D1F",
           "name": "GET_COMPONENT_CHILD_COMPONENT",
           "num_params": 2,
-          "short_desc": "Gets component child component",
+          "short_desc": "Gets the first child frame (RwFrame) of a component",
           "class": "Component",
           "member": "GetChildComponent"
         },
@@ -57309,7 +57298,7 @@
           "id": "0D20",
           "name": "GET_COMPONENT_NEXT_COMPONENT",
           "num_params": 2,
-          "short_desc": "Gets component next component",
+          "short_desc": "Gets the next sibling frame (RwFrame) of a component",
           "class": "Component",
           "member": "GetNextComponent"
         },
@@ -57330,7 +57319,7 @@
           "id": "0D21",
           "name": "GET_COMPONENT_NAME",
           "num_params": 2,
-          "short_desc": "Gets component name component",
+          "short_desc": "Gets the name string of a component (RwFrame) node",
           "class": "Component",
           "member": "GetName"
         },
@@ -57351,7 +57340,7 @@
           "id": "0D22",
           "name": "GET_COMPONENT_WORLD_MATRIX",
           "num_params": 2,
-          "short_desc": "Gets component world matrix",
+          "short_desc": "Gets the world matrix (Local Transform Matrix/LTM) of a component",
           "class": "Component",
           "member": "GetWorldMatrix"
         },
@@ -57372,7 +57361,7 @@
           "id": "0D23",
           "name": "GET_COMPONENT_MODELLING_MATRIX",
           "num_params": 2,
-          "short_desc": "Gets component modelling matrix",
+          "short_desc": "Gets the local modelling matrix of a component (relative to its parent)",
           "class": "Component",
           "member": "GetModellingMatrix"
         },
@@ -57402,7 +57391,7 @@
           "id": "0D24",
           "name": "INITIALISE_QUAT",
           "num_params": 5,
-          "short_desc": "Sets quaternion elements"
+          "short_desc": "Initializes a quaternion from X, Y, Z axis components and angle (degrees)"
         },
         {
           "input": [
@@ -57478,7 +57467,7 @@
           "id": "0D25",
           "name": "INITIALISE_MATRIX",
           "num_params": 17,
-          "short_desc": "Sets matrix elements"
+          "short_desc": "Sets all 16 elements of a matrix individually (right, up, at vectors and position with flags)"
         },
         {
           "input": [
@@ -57502,7 +57491,7 @@
           "id": "0D26",
           "name": "INITIALISE_VECTOR",
           "num_params": 4,
-          "short_desc": "Sets vector elements"
+          "short_desc": "Initializes a 3D vector (CVector) from X, Y, Z components"
         },
         {
           "input": [
@@ -57522,7 +57511,7 @@
           "id": "0D27",
           "name": "MEMCPY",
           "num_params": 3,
-          "short_desc": "Copies block of memory"
+          "short_desc": "Copies a block of memory from source to destination with specified byte size"
         },
         {
           "input": [
@@ -57551,7 +57540,7 @@
           "id": "0D28",
           "name": "GET_VECTOR_ELEMENTS",
           "num_params": 4,
-          "short_desc": "Gets vector elements"
+          "short_desc": "Extracts the X, Y, Z components from a 3D vector (CVector)"
         },
         {
           "input": [
@@ -57585,7 +57574,7 @@
           "id": "0D29",
           "name": "GET_QUAT_ELEMENTS",
           "num_params": 5,
-          "short_desc": "Gets quaternion elements"
+          "short_desc": "Extracts the X, Y, Z, W components from a quaternion (CQuaternion)"
         },
         {
           "input": [
@@ -57604,7 +57593,7 @@
           "id": "0D2A",
           "name": "GET_CAR_NUM_COLLIDED_ENTITIES",
           "num_params": 2,
-          "short_desc": "Gets car number of collided entities"
+          "short_desc": "Gets the number of entities currently collided with by a car"
         },
         {
           "input": [
@@ -57623,7 +57612,7 @@
           "id": "0D2B",
           "name": "GET_CHAR_NUM_COLLIDED_ENTITIES",
           "num_params": 2,
-          "short_desc": "Gets char number of collided entities"
+          "short_desc": "Gets the number of entities currently collided with by a character"
         },
         {
           "input": [
@@ -57642,7 +57631,7 @@
           "id": "0D2C",
           "name": "GET_OBJECT_NUM_COLLIDED_ENTITIES",
           "num_params": 2,
-          "short_desc": "Gets object number of collided entities"
+          "short_desc": "Gets the number of entities currently collided with by an object"
         },
         {
           "output": [
@@ -57690,7 +57679,7 @@
           "id": "0D2D",
           "name": "GET_LOCAL_TIME",
           "num_params": 8,
-          "short_desc": "Gets current time from OS"
+          "short_desc": "Gets the current local system time: year, month, day-of-week, day, hour, minute, second, ms"
         },
         {
           "input": [
@@ -57710,7 +57699,7 @@
           "id": "0D2E",
           "name": "SET_THREAD_VAR",
           "num_params": 3,
-          "short_desc": "Sets value of thread's local variable"
+          "short_desc": "Sets a local variable value in another script thread by variable index"
         },
         {
           "input": [
@@ -57733,7 +57722,7 @@
           "id": "0D2F",
           "name": "GET_THREAD_VAR",
           "num_params": 3,
-          "short_desc": "Gets value of thread's local variable"
+          "short_desc": "Gets a local variable value from another script thread by variable index"
         },
         {
           "input": [
@@ -57759,7 +57748,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Gets char's bone"
+          "short_desc": "Gets a character's bone frame data by bone index or bone name (string)"
         },
         {
           "input": [
@@ -57778,7 +57767,7 @@
           "id": "0D31",
           "name": "GET_BONE_OFFSET",
           "num_params": 2,
-          "short_desc": "Gets bone offset"
+          "short_desc": "Gets the offset vector (relative position) of a bone frame"
         },
         {
           "input": [
@@ -57797,7 +57786,7 @@
           "id": "0D32",
           "name": "GET_BONE_QUAT",
           "num_params": 2,
-          "short_desc": "Returns pointer to the quaterion under bone address obtained with GET_CHAR_BONE"
+          "short_desc": "Returns a pointer to the rotation quaternion (RtQuat) of a bone frame"
         },
         {
           "input": [
@@ -57817,7 +57806,7 @@
           "id": "0D33",
           "name": "SET_CAR_DOOR_WINDOW_STATE",
           "num_params": 3,
-          "short_desc": "Sets car window state"
+          "short_desc": "Sets a car door window state to opened (1) or closed (0)"
         },
         {
           "input": [
@@ -57861,7 +57850,7 @@
           "id": "0D34",
           "name": "GET_CAR_COLLIDED_ENTITIES",
           "num_params": 7,
-          "short_desc": "Stores car collided entities"
+          "short_desc": "Stores up to 6 entities that a car has collided with into variables"
         },
         {
           "input": [
@@ -57905,7 +57894,7 @@
           "id": "0D35",
           "name": "GET_CHAR_COLLIDED_ENTITIES",
           "num_params": 7,
-          "short_desc": "Stores char collided entities"
+          "short_desc": "Stores up to 6 entities that a character has collided with into variables"
         },
         {
           "input": [
@@ -57949,7 +57938,7 @@
           "id": "0D36",
           "name": "GET_OBJECT_COLLIDED_ENTITIES",
           "num_params": 7,
-          "short_desc": "Stores object collided entities"
+          "short_desc": "Stores up to 6 entities that an object has collided with into variables"
         },
         {
           "input": [
@@ -57969,7 +57958,7 @@
           "id": "0D37",
           "name": "SET_STRUCT_PARAM",
           "num_params": 3,
-          "short_desc": "Sets struct with 4b alignment param value"
+          "short_desc": "Sets a 4-byte parameter value in a struct by element index (raw memory write)"
         },
         {
           "input": [
@@ -57992,7 +57981,7 @@
           "id": "0D38",
           "name": "GET_STRUCT_PARAM",
           "num_params": 3,
-          "short_desc": "Gets struct with 4b alignment param value"
+          "short_desc": "Gets a 4-byte parameter value from a struct by element index (raw memory read)"
         },
         {
           "input": [
@@ -58011,7 +58000,7 @@
           "id": "0D39",
           "name": "GET_CHAR_MAX_HEALTH",
           "num_params": 2,
-          "short_desc": "Gets char max health value"
+          "short_desc": "Gets the maximum health value of a character (CPed.m_fMaxHealth)"
         },
         {
           "input": [
@@ -58074,14 +58063,13 @@
             {
               "name": "entityToIgnore",
               "type": "int"
+            },
+            {
+              "name": "colPoint",
+              "type": "int"
             }
           ],
           "output": [
-            {
-              "name": "colPoint",
-              "type": "any",
-              "source": "var_any"
-            },
             {
               "name": "outX",
               "type": "float",
@@ -58106,13 +58094,13 @@
           "id": "0D3A",
           "name": "GET_COLLISION_BETWEEN_POINTS",
           "num_params": 20,
-          "short_desc": "Gets collision data between two points"
+          "short_desc": "Performs a line-of-sight collision test between two 3D points with configurable filter flags"
         },
         {
           "input": [
             {
               "name": "colPoint",
-              "type": "any"
+              "type": "int"
             }
           ],
           "output": [
@@ -58135,13 +58123,13 @@
           "id": "0D3B",
           "name": "GET_COL_DATA_NORMAL_VECTOR",
           "num_params": 4,
-          "short_desc": "Gets colpoint normal vector"
+          "short_desc": "Gets the surface normal vector (X, Y, Z) from a CColPoint"
         },
         {
           "input": [
             {
               "name": "colpoint",
-              "type": "any"
+              "type": "int"
             }
           ],
           "output": [
@@ -58154,13 +58142,13 @@
           "id": "0D3C",
           "name": "GET_COL_DATA_SURFACE",
           "num_params": 2,
-          "short_desc": "Gets colpoint data surface ID"
+          "short_desc": "Gets the surface type ID from a CColPoint"
         },
         {
           "input": [
             {
               "name": "colPoint",
-              "type": "any"
+              "type": "int"
             }
           ],
           "output": [
@@ -58173,13 +58161,13 @@
           "id": "0D3D",
           "name": "GET_COL_DATA_LIGHTING",
           "num_params": 2,
-          "short_desc": "Gets colpoint data lighting value"
+          "short_desc": "Gets the lighting value (packed day/night) from a CColPoint"
         },
         {
           "input": [
             {
               "name": "colPoint",
-              "type": "any"
+              "type": "int"
             }
           ],
           "output": [
@@ -58192,7 +58180,7 @@
           "id": "0D3E",
           "name": "GET_COL_DATA_DEPTH",
           "num_params": 2,
-          "short_desc": "Gets colpoint data depth value"
+          "short_desc": "Gets the depth value from a CColPoint"
         },
         {
           "input": [
@@ -58249,7 +58237,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Finds intersection coordinates between two circles"
+          "short_desc": "Finds the intersection point(s) between two 2D circles, returns true if they intersect"
         },
         {
           "input": [
@@ -58289,7 +58277,7 @@
           "id": "0D40",
           "name": "DRAW_SHAPE",
           "num_params": 8,
-          "short_desc": "Draws 2D shape"
+          "short_desc": "Draws a 2D polygon shape with primitive type, texture, vertex data and blend modes"
         },
         {
           "input": [
@@ -58353,7 +58341,7 @@
           "id": "0D41",
           "name": "SETUP_SHAPE_VERTEX",
           "num_params": 14,
-          "short_desc": "Sets vertex params"
+          "short_desc": "Sets up a vertex for a 2D shape with position, RHW, color, UV and optional screen-flip"
         },
         {
           "input": [
@@ -58372,7 +58360,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Loads txd from file"
+          "short_desc": "Loads a TXD texture dictionary from a file and registers it by a name"
         },
         {
           "input": [
@@ -58391,7 +58379,7 @@
           "id": "0D43",
           "name": "GET_TXD_ID",
           "num_params": 2,
-          "short_desc": "Gets txd's id"
+          "short_desc": "Gets the TXD slot ID for a named texture dictionary"
         },
         {
           "input": [
@@ -58417,7 +58405,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Finds texture in txd"
+          "short_desc": "Finds a texture by name within a named texture dictionary and returns its pointer"
         },
         {
           "input": [
@@ -58445,7 +58433,7 @@
           "id": "0D45",
           "name": "ROTATE_SHAPE_VERTICES",
           "num_params": 5,
-          "short_desc": "Rotates vertices of 2D shape around point"
+          "short_desc": "Rotates all vertices of a 2D shape around a pivot point by an angle (degrees)"
         },
         {
           "input": [
@@ -58471,7 +58459,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Finds texture in txd"
+          "short_desc": "Finds a texture by name within a texture dictionary identified by slot ID"
         },
         {
           "input": [
@@ -58493,7 +58481,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Gets txd's id for model"
+          "short_desc": "Gets the TXD slot index used by a given model"
         },
         {
           "input": [
@@ -58515,7 +58503,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Gets model's CRC32 key"
+          "short_desc": "Gets the CRC32 hash key of a model (from CBaseModelInfo.m_nKey)"
         },
         {
           "input": [
@@ -58541,7 +58529,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Compares two strings"
+          "short_desc": "Compares two strings, returns 0 if equal, condition true if equal"
         },
         {
           "input": [
@@ -58558,7 +58546,7 @@
           "id": "0D4A",
           "name": "STRING_CAT",
           "num_params": 2,
-          "short_desc": "Concatenates two strings"
+          "short_desc": "Concatenates (appends) a source string to a destination string buffer"
         },
         {
           "input": [
@@ -58585,7 +58573,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Finds the first occurrence of a string"
+          "short_desc": "Finds the first occurrence of a substring within a string, returns pointer or NULL"
         },
         {
           "input": [
@@ -58604,7 +58592,7 @@
           "id": "0D4C",
           "name": "STRING_LEN",
           "num_params": 2,
-          "short_desc": "Gets string length"
+          "short_desc": "Gets the length of a string (strlen)"
         },
         {
           "input": [
@@ -58621,7 +58609,7 @@
           "id": "0D4D",
           "name": "STRING_CPY",
           "num_params": 2,
-          "short_desc": "Copies string to another string"
+          "short_desc": "Copies a source string to a destination string buffer (strcpy)"
         },
         {
           "input": [
@@ -58648,7 +58636,7 @@
           "id": "0D4E",
           "name": "GET_STRUCT_FIELD",
           "num_params": 4,
-          "short_desc": "Gets value at struct offset"
+          "short_desc": "Reads a value from a struct at a byte offset with specifiable size (supports string reads)"
         },
         {
           "input": [
@@ -58672,7 +58660,7 @@
           "id": "0D4F",
           "name": "SET_STRUCT_FIELD",
           "num_params": 4,
-          "short_desc": "Sets value at struct offset"
+          "short_desc": "Writes a value to a struct at a byte offset with specifiable size (supports string writes)"
         },
         {
           "input": [
@@ -58736,7 +58724,7 @@
           "id": "0D50",
           "name": "DRAW_TEMPORARY_SHADOW",
           "num_params": 14,
-          "short_desc": "Draws shadow"
+          "short_desc": "Draws a temporary shadow with position, size, rotation, texture, color and intensity"
         },
         {
           "input": [
@@ -58800,7 +58788,7 @@
           "id": "0D51",
           "name": "DRAW_PERMANENT_SHADOW",
           "num_params": 14,
-          "short_desc": "Draws permanent shadow"
+          "short_desc": "Draws a permanent shadow with position, size, rotation, texture, color and duration (ms)"
         },
         {
           "input": [
@@ -58856,7 +58844,7 @@
           "id": "0D52",
           "name": "DRAW_TEMPORARY_LIGHT",
           "num_params": 12,
-          "short_desc": "Draws light"
+          "short_desc": "Draws a temporary point light with type, position, direction, radius and RGB color"
         },
         {
           "input": [
@@ -58904,7 +58892,7 @@
           "id": "0D53",
           "name": "DRAW_TEMPORARY_CORONA",
           "num_params": 10,
-          "short_desc": "Draws corona"
+          "short_desc": "Draws a temporary corona (glow) with texture, RGBA color, position and size"
         },
         {
           "input": [
@@ -58984,7 +58972,7 @@
           "id": "0D54",
           "name": "DRAW_TEMPORARY_CORONA_EX",
           "num_params": 18,
-          "short_desc": "Draws corona with some extra parameters"
+          "short_desc": "Draws a corona with extended parameters: farClip, nearClip, flare type, reflection, fade speed"
         },
         {
           "output": [
@@ -59022,7 +59010,7 @@
           "id": "0D55",
           "name": "GET_SUN_COLORS",
           "num_params": 6,
-          "short_desc": "Gets sun colors"
+          "short_desc": "Gets the current sun core RGB color and sun corona (glow) RGB color"
         },
         {
           "output": [
@@ -59040,7 +59028,7 @@
           "id": "0D56",
           "name": "GET_SUN_SCREEN_COORS",
           "num_params": 2,
-          "short_desc": "Gets sun 2D position"
+          "short_desc": "Gets the sun's 2D screen coordinates"
         },
         {
           "output": [
@@ -59066,7 +59054,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Gets sun 3D position"
+          "short_desc": "Gets the sun's 3D world position, returns false if sun is below horizon"
         },
         {
           "output": [
@@ -59084,7 +59072,7 @@
           "id": "0D58",
           "name": "GET_SUN_SIZE",
           "num_params": 2,
-          "short_desc": "Gets sun size"
+          "short_desc": "Gets the sun's core size and glow (corona) size"
         },
         {
           "output": [
@@ -59097,7 +59085,7 @@
           "id": "0D59",
           "name": "GET_CURRENT_WEATHER",
           "num_params": 1,
-          "short_desc": "Gets current weather"
+          "short_desc": "Gets the current weather type (CWeather::OldWeatherType)"
         },
         {
           "output": [
@@ -59115,7 +59103,7 @@
           "id": "0D5A",
           "name": "GET_TRAFFICLIGHTS_CURRENT_COLOR",
           "num_params": 2,
-          "short_desc": "Gets trafficlight colors"
+          "short_desc": "Gets the current traffic light colors for North-South and West-East directions"
         },
         {
           "input": [
@@ -59171,7 +59159,7 @@
           "id": "0D5B",
           "name": "DRAW_SPOTLIGHT",
           "num_params": 12,
-          "short_desc": "Draws spotlight"
+          "short_desc": "Draws a spotlight cone from origin to target with base/target radius and shadow options"
         },
         {
           "input": [
@@ -59194,7 +59182,7 @@
           "id": "0D5C",
           "name": "GET_CAR_LIGHT_DAMAGE_STATUS",
           "num_params": 3,
-          "short_desc": "Gets car light damaging state"
+          "short_desc": "Gets the damage state of a specific car light (e.g. headlight, taillight)"
         },
         {
           "input": [
@@ -59214,7 +59202,7 @@
           "id": "0D5D",
           "name": "SET_CAR_LIGHT_DAMAGE_STATUS",
           "num_params": 3,
-          "short_desc": "Sets car light damaging state"
+          "short_desc": "Sets the damage state of a specific car light (e.g. headlight, taillight)"
         },
         {
           "input": [
@@ -59238,7 +59226,7 @@
           "id": "0D5E",
           "name": "GET_VEHICLE_CLASS_AND_SUBCLASS",
           "num_params": 3,
-          "short_desc": "Gets vehicle class and subclass"
+          "short_desc": "Gets the vehicle class and subclass type identifiers"
         },
         {
           "input": [
@@ -59282,7 +59270,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Gets vehicle dummy position"
+          "short_desc": "Gets the position of a vehicle dummy element by type index (world or local space)"
         },
         {
           "input": [
@@ -59333,7 +59321,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Creates projectile"
+          "short_desc": "Creates a projectile (e.g. missile) from an entity toward a target with configurable force"
         },
         {
           "input": [
@@ -59360,7 +59348,7 @@
             "is_condition": true,
             "is_static": true
           },
-          "short_desc": "Loads texture from BMP file. Can be used with texture memory option to load file from memory",
+          "short_desc": "Loads a texture from a BMP file, optionally with a separate mask file for alpha channel",
           "class": "Texture",
           "member": "LoadFromBmpFile"
         },
@@ -59385,7 +59373,7 @@
             "is_condition": true,
             "is_static": true
           },
-          "short_desc": "Loads texture from PNG file. Can be used with texturememory option to load file from memory",
+          "short_desc": "Loads a texture from a PNG file",
           "class": "Texture",
           "member": "LoadFromPngFile"
         },
@@ -59419,7 +59407,7 @@
           "id": "0D65",
           "name": "PRINT_TEMPORARY_TEXT",
           "num_params": 6,
-          "short_desc": "Prints a text into display (\"light\" version)"
+          "short_desc": "Prints temporary text on screen at position with scale and font style (basic version)"
         },
         {
           "input": [
@@ -59527,7 +59515,7 @@
           "id": "0D66",
           "name": "PRINT_TEMPORARY_TEXT_EX",
           "num_params": 25,
-          "short_desc": "Prints a text into display"
+          "short_desc": "Prints temporary text on screen with full formatting: font, color, alignment, outline, shadow"
         },
         {
           "input": [
@@ -59551,7 +59539,7 @@
           "id": "0D72",
           "name": "GET_GAME_VOLUME",
           "num_params": 3,
-          "short_desc": "Gets game sfx and radio volume"
+          "short_desc": "Gets the current SFX and music/radio volume settings as int or float"
         },
         {
           "input": [
@@ -59575,7 +59563,7 @@
           "id": "0D73",
           "name": "GET_SCREEN_WIDTH_AND_HEIGHT",
           "num_params": 3,
-          "short_desc": "Gets screen width and height"
+          "short_desc": "Gets the screen width and height as integer or float values"
         },
         {
           "input": [
@@ -59594,7 +59582,7 @@
           "id": "0D74",
           "name": "GET_COMPONENT_PARENT_COMPONENT",
           "num_params": 2,
-          "short_desc": "Gets component parent component",
+          "short_desc": "Gets the parent frame (RwFrame) of a component",
           "class": "Component",
           "member": "GetParentComponent"
         },
@@ -59615,7 +59603,7 @@
           "id": "0D75",
           "name": "GET_COMPONENT_NUM_OBJECTS",
           "num_params": 2,
-          "short_desc": "Gets component number of objects",
+          "short_desc": "Gets the number of RpAtomic objects within a component",
           "class": "Component",
           "member": "GetNumObjects"
         },
@@ -59643,7 +59631,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Gets component object"
+          "short_desc": "Gets an RpAtomic object by index from a component's child objects"
         },
         {
           "input": [
@@ -59659,7 +59647,7 @@
           "id": "0D77",
           "name": "HIDE_OBJECT_ATOMIC",
           "num_params": 2,
-          "short_desc": "Hides object atomic"
+          "short_desc": "Hides (1) or shows (0) an atomic object by modifying its render flags"
         },
         {
           "input": [
@@ -59682,7 +59670,7 @@
           "id": "0D78",
           "name": "GET_OBJECT_ATOMIC_FLAG",
           "num_params": 3,
-          "short_desc": "Gets object atomic flag"
+          "short_desc": "Checks if a specific visibility flag is set on an atomic object"
         },
         {
           "input": [
@@ -59702,7 +59690,7 @@
           "id": "0D79",
           "name": "SET_OBJECT_ATOMIC_FLAG",
           "num_params": 3,
-          "short_desc": "Sets object atomic flag"
+          "short_desc": "Sets or clears a visibility flag on an atomic object"
         },
         {
           "input": [
@@ -59724,7 +59712,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Gets object atomic material texture"
+          "short_desc": "Gets the number of materials in an atomic object's geometry"
         },
         {
           "input": [
@@ -59750,7 +59738,7 @@
           "attrs": {
             "is_condition": true
           },
-          "short_desc": "Gets object atomic material texture"
+          "short_desc": "Gets the texture pointer for a material by index from an atomic geometry"
         },
         {
           "input": [
@@ -59769,7 +59757,7 @@
           "id": "0D7C",
           "name": "LOAD_TEXTURE_FROM_DDS_FILE",
           "num_params": 2,
-          "short_desc": "Loads texture from DDS file",
+          "short_desc": "Loads a texture from a DDS file",
           "class": "Texture",
           "member": "LoadFromDdsFile",
           "attrs": {
@@ -59787,7 +59775,7 @@
           "id": "0D7D",
           "name": "CLEAN_LOADED_TEXTURE",
           "num_params": 1,
-          "short_desc": "Cleans loaded texture",
+          "short_desc": "Unloads/frees a previously loaded texture from memory",
           "class": "Texture",
           "member": "CleanLoaded"
         },
@@ -59837,7 +59825,7 @@
           "id": "0D7E",
           "name": "DRAW_2D_SPRITE",
           "num_params": 10,
-          "short_desc": "Draws 2D sprite",
+          "short_desc": "Draws a 2D sprite with texture, rectangle corners, RGBA color and rotation angle",
           "class": "Sprite",
           "member": "Draw2D",
           "attrs": {
@@ -59938,7 +59926,7 @@
           "id": "0D7F",
           "name": "DRAW_2D_SPRITE_WITH_GRADIENT",
           "num_params": 22,
-          "short_desc": "Draws 2D sprite with gradient",
+          "short_desc": "Draws a 2D sprite with per-vertex colors (gradient) using texture and rectangle",
           "class": "Sprite",
           "member": "Draw2DWithGradient",
           "attrs": {
@@ -69055,7 +69043,7 @@
           "id": "0AAE",
           "name": "REMOVE_AUDIO_STREAM",
           "num_params": 1,
-          "short_desc": "Unloads the audio stream and frees the memory",
+          "short_desc": "Releases/destroys an audio stream and frees its resources",
           "attrs": {
             "is_destructor": true
           },
@@ -69121,7 +69109,7 @@
           "id": "0ABB",
           "name": "GET_AUDIO_STREAM_VOLUME",
           "num_params": 2,
-          "short_desc": "Returns the audio stream volume (from 0.0 to 1.0)",
+          "short_desc": "Gets the volume level of an audio stream (range 0.0 to 1.0)",
           "class": "AudioStream",
           "member": "GetVolume"
         },
@@ -69139,7 +69127,7 @@
           "id": "0ABC",
           "name": "SET_AUDIO_STREAM_VOLUME",
           "num_params": 2,
-          "short_desc": "Sets the audio stream volume (default is 1.0). Pauses/Starts stream playback if neccesarry",
+          "short_desc": "Sets the audio stream volume (default is 1.0). Pauses/Starts stream playback if necessary",
           "class": "AudioStream",
           "member": "SetVolume"
         },
@@ -69178,7 +69166,7 @@
           "id": "0AC1",
           "name": "LOAD_3D_AUDIO_STREAM",
           "num_params": 2,
-          "short_desc": "Loads an audio file and creates a new 3d audio stream (see 0AAC)",
+          "short_desc": "Loads an audio stream with 3D positional audio support",
           "class": "AudioStream3D",
           "member": "Load",
           "attrs": {
@@ -69208,7 +69196,7 @@
           "id": "0AC2",
           "name": "SET_PLAY_3D_AUDIO_STREAM_AT_COORDS",
           "num_params": 4,
-          "short_desc": "Sets sound source position to specific world location",
+          "short_desc": "Sets the 3D position for a 3D audio stream to play from",
           "class": "AudioStream3D",
           "member": "SetPlayAtCoords"
         },
@@ -69226,7 +69214,7 @@
           "id": "0AC3",
           "name": "SET_PLAY_3D_AUDIO_STREAM_AT_OBJECT",
           "num_params": 2,
-          "short_desc": "Attaches sound source to the object",
+          "short_desc": "Attaches a 3D audio stream to an object's position",
           "class": "AudioStream3D",
           "member": "SetPlayAtObject"
         },
@@ -69244,7 +69232,7 @@
           "id": "0AC4",
           "name": "SET_PLAY_3D_AUDIO_STREAM_AT_CHAR",
           "num_params": 2,
-          "short_desc": "Attaches sound source to the character",
+          "short_desc": "Attaches a 3D audio stream to a character's position",
           "class": "AudioStream3D",
           "member": "SetPlayAtChar"
         },
@@ -69262,7 +69250,7 @@
           "id": "0AC5",
           "name": "SET_PLAY_3D_AUDIO_STREAM_AT_CAR",
           "num_params": 2,
-          "short_desc": "Attaches sound source to the vehicle",
+          "short_desc": "Attaches a 3D audio stream to a vehicle's position",
           "class": "AudioStream3D",
           "member": "SetPlayAtCar"
         },
@@ -69323,7 +69311,7 @@
           "num_params": 2,
           "class": "AudioStream",
           "member": "GetSpeed",
-          "short_desc": "Gets audio stream playback speed multiplier"
+          "short_desc": "Gets the playback speed multiplier of an audio stream"
         },
         {
           "input": [
@@ -69339,7 +69327,7 @@
           "id": "2503",
           "name": "SET_AUDIO_STREAM_SPEED",
           "num_params": 2,
-          "short_desc": "Sets audio stream playback speed multiplier",
+          "short_desc": "Sets the playback speed multiplier of an audio stream",
           "class": "AudioStream",
           "member": "SetSpeed"
         },
@@ -69385,7 +69373,7 @@
           "num_params": 3,
           "class": "AudioStream",
           "member": "SetSpeedWithTransition",
-          "short_desc": "Changes stream speed with smooth transition. Pauses/Starts stream playback if neccesarry"
+          "short_desc": "Changes stream speed with smooth transition. Pauses/Starts stream playback if necessary"
         },
         {
           "input": [
@@ -69403,7 +69391,7 @@
           "num_params": 2,
           "class": "AudioStream3D",
           "member": "SetSourceSize",
-          "short_desc": "Sets size of 3d audio stream sound source in the world. Volume will not decay within the specified distance"
+          "short_desc": "Sets the spatial source size for a 3D audio stream"
         },
         {
           "input": [
@@ -69442,7 +69430,7 @@
           "num_params": 2,
           "class": "AudioStream",
           "member": "SetProgress",
-          "short_desc": "Sets audio stream playback position. Progress range is from 0.0 to 1.0"
+          "short_desc": "Sets audio stream playback progress as value from 0.0 to 1.0"
         },
         {
           "input": [
@@ -69463,7 +69451,7 @@
           "num_params": 2,
           "class": "AudioStream",
           "member": "GetType",
-          "short_desc": "Returns current volume settings type group of the stream"
+          "short_desc": "Gets the audio stream type (e.g. music, SFX)"
         },
         {
           "input": [
@@ -69481,7 +69469,7 @@
           "num_params": 2,
           "class": "AudioStream",
           "member": "SetType",
-          "short_desc": "Sets which game's master volume settings the stream should follow"
+          "short_desc": "Sets the audio stream type (e.g. music, SFX)"
         },
         {
           "input": [
@@ -69502,7 +69490,7 @@
           "num_params": 2,
           "class": "AudioStream",
           "member": "GetProgressSeconds",
-          "short_desc": "Returns current playback progress in seconds. Does not take in consideration current stream's playback speed"
+          "short_desc": "Gets the current playback progress of an audio stream in seconds irrespective of its speed (see 2505)"
         },
         {
           "input": [
@@ -69518,7 +69506,7 @@
           "id": "250C",
           "name": "SET_AUDIO_STREAM_PROGRESS_SECONDS",
           "num_params": 2,
-          "short_desc": "Sets current playback progress in seconds. Does not take in consideration current stream's playback speed",
+          "short_desc": "Sets the current playback progress of an audio stream in seconds irrespective of its speed (see 2505)",
           "class": "AudioStream",
           "member": "SetProgressSeconds"
         }
@@ -69640,7 +69628,7 @@
           "id": "0B14",
           "name": "MOD",
           "num_params": 3,
-          "short_desc": "Returns the modulo; remainder of a division, after the first number is divided by the second number",
+          "short_desc": "Computes the modulo (remainder) of integer division",
           "operator": "%"
         },
         {
@@ -69706,7 +69694,7 @@
           "id": "0B17",
           "name": "BIT_AND_COMPOUND",
           "num_params": 2,
-          "short_desc": "Reads a value from the variable, performs bitwise AND operation on it and the operand (BIT_AND) and stores the result back to the variable",
+          "short_desc": "Performs in-place bitwise AND assignment",
           "operator": "&"
         },
         {
@@ -69724,7 +69712,7 @@
           "id": "0B18",
           "name": "BIT_OR_COMPOUND",
           "num_params": 2,
-          "short_desc": "Reads a value from the variable, performs bitwise OR operation on it and the operand (BIT_OR) and stores the result back to the variable",
+          "short_desc": "Performs in-place bitwise OR assignment",
           "operator": "|"
         },
         {
@@ -69742,7 +69730,7 @@
           "id": "0B19",
           "name": "BIT_XOR_COMPOUND",
           "num_params": 2,
-          "short_desc": "Reads a value from the variable, performs bitwise XOR operation on it and the operand (BIT_XOR) and stores the result back to the variable",
+          "short_desc": "Performs in-place bitwise XOR assignment",
           "operator": "^"
         },
         {
@@ -69756,7 +69744,7 @@
           "id": "0B1A",
           "name": "BIT_NOT_COMPOUND",
           "num_params": 1,
-          "short_desc": "Reads a value from the variable, performs bitwise NOT operation on it (BIT_NOT) and stores the result back to the variable",
+          "short_desc": "Performs in-place bitwise NOT assignment",
           "operator": "~"
         },
         {
@@ -69774,7 +69762,7 @@
           "id": "0B1B",
           "name": "MOD_COMPOUND",
           "num_params": 2,
-          "short_desc": "Reads a value from the variable, divides it by the number and stores the remainder (MOD) back to the variable",
+          "short_desc": "Performs in-place modulo assignment",
           "operator": "%"
         },
         {
@@ -69792,7 +69780,7 @@
           "id": "0B1C",
           "name": "BIT_SHR_COMPOUND",
           "num_params": 2,
-          "short_desc": "Reads a value from the variable, shifts right by n bits (BIT_SHR) and stores the result back to the variable",
+          "short_desc": "Performs in-place shift-right assignment",
           "operator": ">>"
         },
         {
@@ -69810,7 +69798,7 @@
           "id": "0B1D",
           "name": "BIT_SHL_COMPOUND",
           "num_params": 2,
-          "short_desc": "Reads a value from the variable, shifts left by n bits (BIT_SHL) and stores the result back to the variable",
+          "short_desc": "Performs in-place shift-left assignment",
           "operator": "<<"
         },
         {
@@ -69896,7 +69884,8 @@
           ],
           "id": "0662",
           "name": "WRITE_DEBUG",
-          "num_params": 1
+          "num_params": 1,
+          "short_desc": "Writes a debug string to the game's debug output"
         },
         {
           "input": [
@@ -69911,7 +69900,8 @@
           ],
           "id": "0663",
           "name": "WRITE_DEBUG_WITH_INT",
-          "num_params": 2
+          "num_params": 2,
+          "short_desc": "Writes an integer value to the game's debug output"
         },
         {
           "input": [
@@ -69926,7 +69916,8 @@
           ],
           "id": "0664",
           "name": "WRITE_DEBUG_WITH_FLOAT",
-          "num_params": 2
+          "num_params": 2,
+          "short_desc": "Writes a float value to the game's debug output"
         },
         {
           "input": [
@@ -69952,7 +69943,7 @@
           "attrs": {
             "is_static": true
           },
-          "short_desc": "Creates a debug breakpoint in script"
+          "short_desc": "Pauses script execution at a breakpoint, can be continued with F5-F12 keys"
         },
         {
           "input": [
@@ -70063,7 +70054,7 @@
           "id": "0B02",
           "name": "MOVE_FILE",
           "num_params": 2,
-          "short_desc": "Moves an existing file and returns true if the operation is successful",
+          "short_desc": "Moves or renames a file and returns true if the operation is successful",
           "class": "Fs",
           "member": "MoveFile",
           "attrs": {
@@ -70091,7 +70082,7 @@
             "is_static": true,
             "is_condition": true
           },
-          "short_desc": "Moves an existing directory and returns true if the operation is successful"
+          "short_desc": "Moves or renames a directory and returns true if the operation is successful"
         },
         {
           "input": [
@@ -70109,7 +70100,7 @@
           "num_params": 2,
           "class": "Fs",
           "member": "CopyFile",
-          "short_desc": "Copies an existing file to a new file and returns true if the operation is successful",
+          "short_desc": "Copies a file and returns true if the operation is successful",
           "attrs": {
             "is_static": true,
             "is_condition": true
@@ -70129,7 +70120,7 @@
           "id": "0B05",
           "name": "COPY_DIRECTORY",
           "num_params": 2,
-          "short_desc": "Copies an existing directory to a new directory and returns true if the operation is successful",
+          "short_desc": "Copies a directory and all its contents and returns true if the operation is successful",
           "class": "Fs",
           "member": "CopyDirectory",
           "attrs": {
@@ -70154,7 +70145,7 @@
           "id": "2300",
           "name": "GET_FILE_POSITION",
           "num_params": 2,
-          "short_desc": "Gets current offset of read-write carret within the file stream",
+          "short_desc": "Gets the current read/write position within an open file",
           "class": "File",
           "member": "GetPosition"
         },
@@ -70178,7 +70169,7 @@
           "num_params": 3,
           "class": "File",
           "member": "ReadBlock",
-          "short_desc": "Reads data from file into buffer at specified address",
+          "short_desc": "Reads a block of raw binary data from a file into a buffer",
           "attrs": {
             "is_condition": true
           }
@@ -70201,7 +70192,7 @@
           "id": "2302",
           "name": "WRITE_BLOCK_TO_FILE",
           "num_params": 3,
-          "short_desc": "Writes data from memory address into file",
+          "short_desc": "Writes a block of raw binary data from a buffer to a file",
           "class": "File",
           "member": "WriteBlock",
           "attrs": {
@@ -70227,7 +70218,7 @@
           "num_params": 2,
           "class": "Fs",
           "member": "ResolvePath",
-          "short_desc": "Resolves absolute filepath. Input path can be relative, starts with 'virtual path' prefix or be already absolute filepath",
+          "short_desc": "Resolves absolute filepath. Input path can be relative, start with a 'virtual path' prefix or be already absolute filepath",
           "attrs": {
             "is_static": true
           }
@@ -70255,7 +70246,7 @@
           "num_params": 3,
           "class": "Fs",
           "member": "GetScriptFilename",
-          "short_desc": "Returns a file name or full file path of a script at the address (0A9F, 0AAA, 2404). If the address is -1 then this script is used. If no script with a given pointer is found, then the condition result is set to false and output argument is not modified",
+          "short_desc": "Gets the filename of the currently running script",
           "attrs": {
             "is_static": true,
             "is_condition": true
@@ -72306,7 +72297,7 @@
           "num_params": 4,
           "class": "IniFile",
           "member": "ReadInt",
-          "short_desc": "Reads an integer value from the ini file",
+          "short_desc": "Reads an integer value from an INI file section and key",
           "attrs": {
             "is_static": true,
             "is_condition": true
@@ -72336,7 +72327,7 @@
           "num_params": 4,
           "class": "IniFile",
           "member": "WriteInt",
-          "short_desc": "Writes the integer value to the ini file",
+          "short_desc": "Writes an integer value to an INI file section and key",
           "attrs": {
             "is_static": true,
             "is_condition": true
@@ -72369,7 +72360,7 @@
           "num_params": 4,
           "class": "IniFile",
           "member": "ReadFloat",
-          "short_desc": "Reads a floating-point value from the ini file",
+          "short_desc": "Reads a float value from an INI file section and key",
           "attrs": {
             "is_static": true,
             "is_condition": true
@@ -72399,7 +72390,7 @@
           "num_params": 4,
           "class": "IniFile",
           "member": "WriteFloat",
-          "short_desc": "Writes the floating-point value to the ini file",
+          "short_desc": "Writes a float value to an INI file section and key",
           "attrs": {
             "is_static": true,
             "is_condition": true
@@ -72432,7 +72423,7 @@
           "num_params": 4,
           "class": "IniFile",
           "member": "ReadString",
-          "short_desc": "Reads a string value from the ini file",
+          "short_desc": "Reads a string value from an INI file section and key",
           "attrs": {
             "is_static": true,
             "is_condition": true
@@ -72460,7 +72451,7 @@
           "id": "0AF5",
           "name": "WRITE_STRING_TO_INI_FILE",
           "num_params": 4,
-          "short_desc": "Writes the string value to the ini file",
+          "short_desc": "Writes a string value to an INI file section and key",
           "attrs": {
             "is_static": true,
             "is_condition": true
@@ -72484,7 +72475,7 @@
           "num_params": 2,
           "class": "IniFile",
           "member": "DeleteSection",
-          "short_desc": "Deletes the section from the ini file",
+          "short_desc": "Deletes an entire section from an INI file",
           "attrs": {
             "is_condition": true,
             "is_static": true
@@ -72510,7 +72501,7 @@
           "num_params": 3,
           "class": "IniFile",
           "member": "DeleteKey",
-          "short_desc": "Deletes the key from the ini file",
+          "short_desc": "Deletes a specific key from an INI file section",
           "attrs": {
             "is_condition": true,
             "is_static": true
@@ -72537,7 +72528,7 @@
             "is_static": true,
             "is_condition": true
           },
-          "short_desc": "Returns true if the player has just started to press a specified key this frame"
+          "short_desc": "Checks if a virtual key was just pressed this frame (not held)"
         },
         {
           "input": [
@@ -72562,7 +72553,7 @@
           "num_params": 3,
           "class": "Pad",
           "member": "GetKeyPressedInRange",
-          "short_desc": "Gets code of first currently hold down key in range between minKeyCode and maxKeyCode. If no key is pressed return value is unmodified and logical result is set to false",
+          "short_desc": "Checks if any key from a range of virtual key codes is currently held",
           "attrs": {
             "is_condition": true,
             "is_static": true
@@ -72589,7 +72580,7 @@
           "id": "2082",
           "name": "GET_KEY_JUST_PRESSED_IN_RANGE",
           "num_params": 3,
-          "short_desc": "Gets code of first just pressed key in range between minKeyCode and maxKeyCode. If no key was pressed return value is unmodified and logical result is set to false",
+          "short_desc": "Checks if any key from a range was just pressed this frame",
           "member": "GetKeyJustPressedInRange",
           "attrs": {
             "is_static": true,
@@ -72609,7 +72600,7 @@
           "num_params": 1,
           "class": "Pad",
           "member": "EmulateKeyPress",
-          "short_desc": "Simulates key press event",
+          "short_desc": "Emulates/simulates a key press event for a virtual key code",
           "attrs": {
             "is_static": true
           }
@@ -72626,7 +72617,7 @@
           "num_params": 1,
           "class": "Pad",
           "member": "EmulateKeyRelease",
-          "short_desc": "Simulates key release event",
+          "short_desc": "Emulates/simulates a key release event for a virtual key code",
           "attrs": {
             "is_static": true
           }
@@ -72710,7 +72701,7 @@
             "is_condition": true
           },
           "member": "IsBitSet",
-          "short_desc": "Checks if n-th bit of the number is set"
+          "short_desc": "Checks if a specific bit (by index 0-31) is set in an integer value"
         },
         {
           "input": [
@@ -72731,7 +72722,7 @@
           "attrs": {
             "is_static": true
           },
-          "short_desc": "Sets n-th bit of the number",
+          "short_desc": "Sets a specific bit (by index 0-31) in an integer variable to 1",
           "member": "SetBit"
         },
         {
@@ -72754,7 +72745,7 @@
             "is_static": true
           },
           "member": "ClearBit",
-          "short_desc": "Clears n-th bit of the number"
+          "short_desc": "Clears a specific bit (by index 0-31) in an integer variable to 0"
         },
         {
           "input": [
@@ -72780,7 +72771,7 @@
           },
           "class": "Math",
           "member": "ToggleBit",
-          "short_desc": "Sets state of n-th bit in the number"
+          "short_desc": "Sets or clears a specific bit (by index 0-31) in an integer variable based on state"
         },
         {
           "input": [
@@ -72798,7 +72789,7 @@
           },
           "class": "Math",
           "member": "IsTruthy",
-          "short_desc": "Checks if value contains number different than 0 or not empty string"
+          "short_desc": "Checks if a value is truthy (non-zero, non-empty string), sets condition flag"
         },
         {
           "input": [
@@ -72819,7 +72810,7 @@
           "num_params": 2,
           "class": "Math",
           "member": "RandomPick",
-          "short_desc": "Selects one random integer from provided values",
+          "short_desc": "Picks a random integer value from a list of provided values",
           "attrs": {
             "is_static": true
           }
@@ -72846,7 +72837,7 @@
           },
           "class": "Math",
           "member": "RandomPick",
-          "short_desc": "Selects one random float from provided values"
+          "short_desc": "Picks a random float value from a list of provided values"
         },
         {
           "input": [
@@ -72870,7 +72861,7 @@
             "is_static": true
           },
           "member": "RandomPick",
-          "short_desc": "Selects one random text from provided values"
+          "short_desc": "Picks a random text string from a list of provided values"
         },
         {
           "input": [
@@ -72882,7 +72873,7 @@
           "id": "2708",
           "name": "RANDOM_CHANCE",
           "num_params": 1,
-          "short_desc": "Sets random condition result, with percent chance to be true",
+          "short_desc": "Returns true with a given percentage chance (0.0-100.0)",
           "class": "Math",
           "member": "RandomChance",
           "attrs": {
@@ -73046,7 +73037,7 @@
           },
           "class": "Memory",
           "member": "ReadWithOffset",
-          "short_desc": "Reads a value from the given offset from the memory address (see: 2402)"
+          "short_desc": "Reads memory at a base address with a byte offset"
         },
         {
           "input": [
@@ -73075,7 +73066,7 @@
           },
           "class": "Memory",
           "member": "WriteWithOffset",
-          "short_desc": "Writes the value at the given offset from the memory address (see: 2401)"
+          "short_desc": "Writes a value to memory at a base address with a byte offset"
         },
         {
           "input": [
@@ -73128,7 +73119,7 @@
           },
           "class": "Memory",
           "member": "IsScriptRunning",
-          "short_desc": "Checks if address points at valid and running script"
+          "short_desc": "Checks if address points at a valid and running script"
         },
         {
           "input": [
@@ -73154,7 +73145,7 @@
           },
           "class": "Memory",
           "member": "IsEqual",
-          "short_desc": "Compares two memory blocks"
+          "short_desc": "Compares two blocks of memory for equality and returns true if they match"
         },
         {
           "input": [
@@ -73189,7 +73180,7 @@
             "is_condition": true,
             "is_static": true
           },
-          "short_desc": "Checks if string length is equal to zero"
+          "short_desc": "Checks if a text string variable is empty (zero-length)"
         },
         {
           "input": [
@@ -73241,7 +73232,7 @@
             "is_static": true,
             "is_condition": true
           },
-          "short_desc": "Checks if text contains specified text"
+          "short_desc": "Checks if one text string contains another (substring search)"
         },
         {
           "input": [
@@ -73267,7 +73258,7 @@
             "is_static": true,
             "is_condition": true
           },
-          "short_desc": "Checks if text starts with specified prefix text"
+          "short_desc": "Checks if one text string starts with a given prefix"
         },
         {
           "input": [
@@ -73289,7 +73280,7 @@
           "num_params": 3,
           "class": "Text",
           "member": "EndsWith",
-          "short_desc": "Checks if text ends with specified suffix text",
+          "short_desc": "Checks if one text string ends with a given suffix",
           "attrs": {
             "is_condition": true,
             "is_static": true
@@ -73336,7 +73327,7 @@
           "num_params": 1,
           "class": "Text",
           "member": "LoadFxt",
-          "short_desc": "Loads GXT texts from selected FXT dictionary file",
+          "short_desc": "Loads custom text entries from a FXT file",
           "attrs": {
             "is_static": true,
             "is_condition": true
@@ -73354,7 +73345,7 @@
           "num_params": 1,
           "class": "Text",
           "member": "UnloadFxt",
-          "short_desc": "Unloads GXT labels defined in selected Fxt file",
+          "short_desc": "Unloads custom text entries loaded from a FXT file",
           "attrs": {
             "is_static": true,
             "is_condition": true
@@ -73788,8 +73779,8 @@
     },
     {
       "name": "ColPoint",
-      "constructable": true,
-      "desc": "Collision point information"
+      "constructable": false,
+      "desc": "Collision point object"
     },
     {
       "name": "Entity",
