@@ -5,8 +5,8 @@
 # GTA San Andreas Сборка grafingl
 [**`Скачать`**](https://github.com/grafingl/gta-sa-clear/releases/latest)
 
-![20260322203012_1](https://github.com/user-attachments/assets/a5942412-c45a-4042-9e84-b3c4407bfe0a)
+<img width="1920" height="1080" alt="20261109022143_1" src="https://github.com/user-attachments/assets/c1ee06bf-3c82-4b53-910d-f6cedfbd8ed2" />
 
-![20260322203037_1](https://github.com/user-attachments/assets/39cc697a-9823-4b0d-83c8-badf66ecec3c)
+<img width="1920" height="1080" alt="20261109022200_1" src="https://github.com/user-attachments/assets/4c1ec876-de62-4091-af1d-03a34d843f92" />
 
 
